@@ -1,0 +1,267 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #4300ff;
+    --accent-blue: #0065f8;
+    --accent-cyan: #00caff;
+    --accent-mint: #00ffde;
+
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --success: 142.1 76.2% 36.3%;
+    --warning: 38.4 92.1% 50.2%;
+    --info: 221.2 83.2% 53.3%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 217.2 32.6% 17.5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --success: 142.1 70.6% 45.3%;
+    --warning: 38.4 92.1% 50.2%;
+    --info: 221.2 83.2% 53.3%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #4300ff 0%, #0065f8 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #00caff 0%, #00ffde 100%);
+  }
+
+  .gradient-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  }
+
+  .gradient-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  }
+
+  .gradient-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass-effect {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  .nav-link-active {
+    @apply text-primary border-b-2 border-primary;
+  }
+
+  /* Toast Styles */
+  .toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .toast-container {
+      top: 0.5rem;
+      right: 0.5rem;
+      left: 0.5rem;
+      max-width: none;
+    }
+  }
+
+  /* High Contrast Button Styles */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90;
+    color: white !important;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 dark:bg-secondary dark:text-secondary-foreground dark:hover:bg-secondary/80;
+  }
+
+  .btn-success {
+    @apply bg-green-600 text-white hover:bg-green-700 dark:bg-green-600 dark:text-white dark:hover:bg-green-700;
+    color: white !important;
+  }
+
+  .btn-warning {
+    @apply bg-yellow-600 text-white hover:bg-yellow-700 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700;
+    color: white !important;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-white dark:hover:bg-red-700;
+    color: white !important;
+  }
+
+  /* High Contrast Card Styles */
+  .card-available {
+    @apply bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800;
+  }
+
+  .card-occupied {
+    @apply bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800;
+  }
+
+  .card-maintenance {
+    @apply bg-yellow-50 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800;
+  }
+
+  .card-offline {
+    @apply bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800;
+  }
+
+  /* High Contrast Text */
+  .text-contrast {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+
+  .text-muted-contrast {
+    @apply text-gray-600 dark:text-gray-300;
+  }
+
+  /* Ensure proper contrast for all interactive elements */
+  button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-2 ring-primary ring-offset-2 dark:ring-offset-background;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .mobile-grid {
+      @apply grid-cols-1;
+    }
+
+    .mobile-text {
+      @apply text-sm;
+    }
+
+    .mobile-padding {
+      @apply px-4 py-2;
+    }
+  }
+}
