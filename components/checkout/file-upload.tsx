@@ -86,21 +86,21 @@ export function FileUpload({ file, onFileSelect }: FileUploadProps) {
           onDragLeave={handleDragLeave}
           onClick={() => fileInputRef.current?.click()}
         >
-          <CardContent className="p-8 text-center">
-            <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h4 className="font-semibold text-foreground mb-2">Upload Bukti Pembayaran</h4>
-            <p className="text-sm text-muted-foreground mb-4">Drag & drop file atau klik untuk memilih</p>
+          <CardContent className="p-6 sm:p-8 text-center">
+            <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+            <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Upload Bukti Pembayaran</h4>
+            <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">Drag & drop file atau klik untuk memilih</p>
             <p className="text-xs text-muted-foreground">Format: JPG, JPEG, PNG • Maksimal 5MB</p>
           </CardContent>
         </Card>
       ) : (
         <Card className="bg-card border-border">
-          <CardContent className="p-4">
-            <div className="flex items-start space-x-4">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-start gap-3 sm:gap-4">
               {/* Preview */}
               <div className="flex-shrink-0">
                 {preview ? (
-                  <div className="w-20 h-20 rounded-lg overflow-hidden border border-border">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-border">
                     <img
                       src={preview || "/placeholder.svg"}
                       alt="Preview bukti pembayaran"
@@ -108,28 +108,40 @@ export function FileUpload({ file, onFileSelect }: FileUploadProps) {
                     />
                   </div>
                 ) : (
-                  <div className="w-20 h-20 rounded-lg bg-muted flex items-center justify-center border border-border">
-                    <ImageIcon className="w-8 h-8 text-muted-foreground" />
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-muted flex items-center justify-center border border-border">
+                    <ImageIcon className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
                   </div>
                 )}
               </div>
 
               {/* File Info */}
               <div className="flex-1 min-w-0">
-                <h4 className="font-medium text-foreground truncate">{file.name}</h4>
-                <p className="text-sm text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                <div className="flex items-center space-x-2 mt-2">
+                <h4 className="font-medium text-foreground truncate text-sm sm:text-base">{file.name}</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                <div className="flex items-center gap-2 mt-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-green-600 dark:text-green-400">Siap diupload</span>
+                  <span className="text-xs sm:text-sm text-green-600 dark:text-green-400">Siap diupload</span>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-xs sm:text-sm h-7 px-2"
+                  >
+                    Ganti File
+                  </Button>
                 </div>
               </div>
 
               {/* Remove Button */}
               <Button
-                variant="outline"
+                variant="outline"  
                 size="sm"
                 onClick={removeFile}
-                className="text-red-600 border-red-200 hover:bg-red-50 dark:text-red-400 dark:border-red-800 dark:hover:bg-red-900/20"
+                className="text-red-600 border-red-200 hover:bg-red-50 dark:text-red-400 dark:border-red-800 dark:hover:bg-red-900/20 flex-shrink-0 h-8 w-8 p-0"
               >
                 <X className="w-4 h-4" />
               </Button>

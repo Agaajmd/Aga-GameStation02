@@ -18,12 +18,7 @@ export function HeroSection() {
       image: "/placeholder.svg?height=600&width=800",
       cta: "Booking Sekarang",
     },
-    {
-      title: "Turnamen Gaming Mingguan",
-      subtitle: "Ikuti turnamen dan menangkan hadiah menarik setiap minggu",
-      image: "/placeholder.svg?height=600&width=800",
-      cta: "Daftar Turnamen",
-    },
+
     {
       title: "Promo Spesial Hari Ini",
       subtitle: "Dapatkan diskon hingga 50% untuk booking hari ini",
@@ -76,54 +71,54 @@ export function HeroSection() {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 lg:py-0">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Content */}
           <div
             className={`text-center lg:text-left transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
-            <Badge variant="secondary" className="mb-4 bg-white/10 text-white border-white/20">
+            <Badge variant="secondary" className="mb-4 bg-white/10 text-white border-white/20 inline-flex">
               <Star className="w-4 h-4 mr-1 text-yellow-400" />
               Gaming Center #1 di Indonesia
             </Badge>
 
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               {slides[currentSlide].title}
             </h1>
 
-            <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl">{slides[currentSlide].subtitle}</p>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">{slides[currentSlide].subtitle}</p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12">
               <Button
                 asChild
                 size="lg"
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-14 px-8 text-lg font-semibold shadow-2xl"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold shadow-2xl"
               >
                 <Link href="/booking">
-                  <Gamepad2 className="w-5 h-5 mr-2" />
+                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   {slides[currentSlide].cta}
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
               </Button>
 
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 h-14 px-8 text-lg font-semibold bg-transparent"
+                className="border-white/30 text-white hover:bg-white/10 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold bg-transparent"
               >
-                <Play className="w-5 h-5 mr-2" />
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Tonton Video
               </Button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
               {stats.map((stat, index) => (
                 <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm">
-                  <CardContent className="p-4 text-center">
-                    <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-white/70">{stat.label}</div>
+                  <CardContent className="p-3 sm:p-4 text-center">
+                    <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
+                    <div className="text-lg sm:text-2xl font-bold text-white">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-white/70">{stat.label}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -132,9 +127,9 @@ export function HeroSection() {
 
           {/* Hero Image/Slider */}
           <div
-            className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+            className={`relative mt-8 lg:mt-0 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl mx-auto max-w-lg lg:max-w-none">
               <img
                 src={slides[currentSlide].image || "/placeholder.svg"}
                 alt="Gaming Setup"
@@ -148,7 +143,7 @@ export function HeroSection() {
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all ${
+                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
                       index === currentSlide ? "bg-white" : "bg-white/50"
                     }`}
                   />
@@ -156,26 +151,43 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Floating Feature Cards */}
-            <div className="absolute -bottom-6 -left-6 right-6 grid grid-cols-2 gap-3">
-              {features.slice(0, 2).map((feature, index) => (
-                <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-                  <CardContent className="p-4">
-                    <feature.icon className="w-8 h-8 text-blue-600 mb-2" />
-                    <h3 className="font-semibold text-gray-900 text-sm">{feature.title}</h3>
-                    <p className="text-xs text-gray-600">{feature.desc}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {/* Floating Feature Cards - Hidden on small screens */}
+            <div className="hidden sm:block">
+              <div className="absolute -bottom-4 lg:-bottom-6 -left-3 lg:-left-6 right-3 lg:right-6 grid grid-cols-2 gap-2 lg:gap-3">
+                {features.slice(0, 2).map((feature, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
+                    <CardContent className="p-3 lg:p-4">
+                      <feature.icon className="w-6 h-6 lg:w-8 lg:h-8 text-blue-600 mb-2" />
+                      <h3 className="font-semibold text-gray-900 text-xs lg:text-sm">{feature.title}</h3>
+                      <p className="text-xs text-gray-600 hidden lg:block">{feature.desc}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
-            <div className="absolute -top-6 -right-6 left-6 grid grid-cols-2 gap-3">
-              {features.slice(2, 4).map((feature, index) => (
+              <div className="absolute -top-4 lg:-top-6 -right-3 lg:-right-6 left-3 lg:left-6 grid grid-cols-2 gap-2 lg:gap-3">
+                {features.slice(2, 4).map((feature, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
+                    <CardContent className="p-3 lg:p-4">
+                      <feature.icon className="w-6 h-6 lg:w-8 lg:h-8 text-purple-600 mb-2" />
+                      <h3 className="font-semibold text-gray-900 text-xs lg:text-sm">{feature.title}</h3>
+                      <p className="text-xs text-gray-600 hidden lg:block">{feature.desc}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Feature Cards - Visible only on small screens */}
+          <div className="sm:hidden mt-6">
+            <div className="grid grid-cols-2 gap-3">
+              {features.map((feature, index) => (
                 <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-                  <CardContent className="p-4">
-                    <feature.icon className="w-8 h-8 text-purple-600 mb-2" />
-                    <h3 className="font-semibold text-gray-900 text-sm">{feature.title}</h3>
-                    <p className="text-xs text-gray-600">{feature.desc}</p>
+                  <CardContent className="p-3 text-center">
+                    <feature.icon className={`w-6 h-6 mx-auto mb-2 ${index < 2 ? 'text-blue-600' : 'text-purple-600'}`} />
+                    <h3 className="font-semibold text-gray-900 text-xs">{feature.title}</h3>
+                    <p className="text-xs text-gray-600 mt-1">{feature.desc}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -185,9 +197,9 @@ export function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+          <div className="w-1 h-2 sm:h-3 bg-white/70 rounded-full mt-1 sm:mt-2 animate-pulse" />
         </div>
       </div>
     </section>

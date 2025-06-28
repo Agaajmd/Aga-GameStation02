@@ -47,74 +47,139 @@ interface BranchSelectorProps {
 
 export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-foreground mb-4">Pilih Cabang</h3>
+    <div className="space-y-6">
+      <div className="text-center sm:text-left">
+        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Pilih Lokasi Gaming Center</h3>
+        <p className="text-sm text-muted-foreground">Temukan cabang terdekat dengan fasilitas terbaik</p>
+      </div>
 
-      <div className="space-y-3">
+      <div className="grid gap-4 sm:gap-6">
         {branches.map((branch) => {
           const isSelected = selected === branch.id
 
           return (
             <Card
               key={branch.id}
-              className={`cursor-pointer transition-all duration-300 hover:shadow-md card-hover ${
-                isSelected ? "ring-2 ring-primary shadow-lg bg-primary/5 border-primary/20" : "hover:shadow-md"
+              className={`group cursor-pointer transition-all duration-300 overflow-hidden ${
+                isSelected 
+                  ? "ring-2 ring-primary shadow-xl bg-gradient-to-r from-primary/5 to-blue-50 dark:to-blue-950 border-primary scale-[1.02]" 
+                  : "hover:shadow-lg hover:scale-[1.01] border-gray-200 dark:border-gray-700"
               }`}
               onClick={() => onSelect(branch.id)}
             >
-              <CardContent className="p-4 relative">
+              <CardContent className="p-0 relative">
+                {/* Header with colored accent */}
+                <div className={`h-2 w-full ${isSelected ? 'bg-gradient-to-r from-primary to-blue-500' : 'bg-gray-100 dark:bg-gray-800'}`} />
+                
+                {/* Popular Badge */}
                 {branch.popular && (
-                  <Badge className="absolute -top-2 left-4 bg-accent-cyan text-white text-xs">Populer</Badge>
-                )}
-
-                {isSelected && (
-                  <div className="absolute top-3 right-3 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                    <Check className="w-4 h-4 text-white" />
+                  <div className="absolute top-4 left-4 z-10">
+                    <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold px-3 py-1 shadow-lg">
+                      🔥 Populer
+                    </Badge>
                   </div>
                 )}
 
-                <div className="flex flex-col space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm md:text-base">{branch.name}</h4>
-                      <div className="flex items-center space-x-1 mt-1">
-                        <MapPin className="w-3 h-3 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">{branch.address}</span>
+                {/* Selection Indicator */}
+                {isSelected && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      <Check className="w-5 h-5 text-white font-bold" />
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-4 sm:p-6">
+                  {/* Branch Name & Status */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1 pr-4">
+                      <h4 className="font-bold text-foreground text-base sm:text-lg mb-1 group-hover:text-primary transition-colors">
+                        {branch.name}
+                      </h4>
+                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="line-clamp-1">{branch.address}</span>
                       </div>
                     </div>
                     <Badge
                       variant="outline"
-                      className={
-                        branch.status === "open" ? "text-green-600 border-green-600" : "text-red-600 border-red-600"
-                      }
+                      className={`px-3 py-1 font-semibold ${
+                        branch.status === "open" 
+                          ? "text-green-700 border-green-300 bg-green-50 dark:bg-green-950 dark:text-green-400 dark:border-green-700" 
+                          : "text-red-700 border-red-300 bg-red-50 dark:bg-red-950 dark:text-red-400 dark:border-red-700"
+                      }`}
                     >
+                      <div className={`w-2 h-2 rounded-full mr-2 ${branch.status === "open" ? "bg-green-500" : "bg-red-500"}`} />
                       {branch.status === "open" ? "Buka" : "Tutup"}
                     </Badge>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <MapPin className="w-3 h-3 text-muted-foreground" />
-                      <span className="text-muted-foreground">{branch.distance}</span>
+                  {/* Quick Info Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
+                    <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Jarak</p>
+                        <p className="text-sm font-semibold text-foreground">{branch.distance}</p>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                      <span className="text-muted-foreground">{branch.rating}</span>
+
+                    <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center">
+                        <Star className="w-4 h-4 text-yellow-600 dark:text-yellow-400 fill-current" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Rating</p>
+                        <p className="text-sm font-semibold text-foreground">{branch.rating}/5</p>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3 text-muted-foreground" />
-                      <span className="text-muted-foreground">{branch.openHours}</span>
+
+                    <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3 col-span-2 sm:col-span-1">
+                      <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                        <Clock className="w-4 h-4 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Jam Buka</p>
+                        <p className="text-sm font-semibold text-foreground">{branch.openHours}</p>
+                      </div>
                     </div>
-                    <div className="text-muted-foreground">{branch.facilities[0]}</div>
                   </div>
 
-                  <div className="flex flex-wrap gap-1">
-                    {branch.facilities.slice(1).map((facility, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs">
-                        {facility}
-                      </Badge>
-                    ))}
+                  {/* Facilities */}
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold text-foreground">Fasilitas:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {branch.facilities.map((facility, idx) => (
+                        <Badge 
+                          key={idx} 
+                          variant="secondary" 
+                          className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
+                        >
+                          {facility}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
+
+                  {/* Selection Hint */}
+                  {!isSelected && (
+                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                      <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
+                        👆 Klik untuk memilih cabang ini
+                      </p>
+                    </div>
+                  )}
+
+                  {isSelected && (
+                    <div className="mt-4 pt-3 border-t border-primary/20">
+                      <div className="flex items-center justify-center space-x-2 text-primary">
+                        <Check className="w-4 h-4" />
+                        <p className="text-sm font-semibold">Cabang dipilih</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

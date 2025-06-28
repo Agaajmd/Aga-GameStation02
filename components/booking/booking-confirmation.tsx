@@ -18,7 +18,7 @@ export function BookingConfirmation({ data }: BookingConfirmationProps) {
   const { showSuccess } = useToast()
 
   useEffect(() => {
-    if (data.paymentMethod === "cash") {
+    if (data.paymentMethod === "cash-counter") {
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
@@ -190,7 +190,7 @@ export function BookingConfirmation({ data }: BookingConfirmationProps) {
             </Card>
 
             {/* Payment Code for Cash */}
-            {data.paymentMethod === "cash" && (
+            {data.paymentMethod === "cash-counter" && (
               <Card className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2 text-orange-800 dark:text-orange-200">

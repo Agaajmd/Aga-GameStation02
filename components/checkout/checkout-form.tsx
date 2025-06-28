@@ -22,6 +22,7 @@ export function CheckoutForm() {
   const { showSuccess, showError } = useToast()
 
   const [paymentMethod, setPaymentMethod] = useState("")
+  const [transferProof, setTransferProof] = useState<File | null>(null)
   const [customerInfo, setCustomerInfo] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -39,6 +40,14 @@ export function CheckoutForm() {
 
     if (!paymentMethod) {
       showError("Pilih metode pembayaran", "Silakan pilih metode pembayaran terlebih dahulu")
+      return
+    }
+
+    // Check if transfer proof is required for non-cash payments
+    const requiresTransferProof = ["ewallet-dana", "ewallet-gopay", "ewallet-ovo", "bank-bca", "bank-mandiri", "bank-bri", "qris"].includes(paymentMethod)
+    
+    if (requiresTransferProof && !transferProof) {
+      showError("Upload bukti pembayaran", "Silakan upload bukti pembayaran untuk metode pembayaran yang dipilih")
       return
     }
 
@@ -61,13 +70,15 @@ export function CheckoutForm() {
         customerEmail: customerInfo.email,
         customerPhone: customerInfo.phone,
         paymentMethod,
+        transferProof: transferProof?.name || null,
+        transferProofUploaded: !!transferProof,
         subtotal,
         discount,
         adminFee,
         total,
-        paymentCode: paymentMethod === "cash" ? `PAY${Math.random().toString(36).substr(2, 8).toUpperCase()}` : null,
+        paymentCode: paymentMethod === "cash-counter" ? `PAY${Date.now().toString().slice(-6)}${Math.random().toString(36).substr(2, 3).toUpperCase()}` : null,
         createdAt: new Date().toISOString(),
-        status: paymentMethod === "cash" ? "pending" : "confirmed",
+        status: paymentMethod === "cash-counter" ? "pending" : "confirmed",
         // For display purposes, use first item details
         branch: cart[0]?.branch || "",
         category: cart[0]?.category || "",
@@ -194,7 +205,12 @@ export function CheckoutForm() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <PaymentMethodSelector selected={paymentMethod} onSelect={setPaymentMethod} />
+                  <PaymentMethodSelector 
+                    selected={paymentMethod} 
+                    onSelect={setPaymentMethod}
+                    transferProof={transferProof}
+                    onTransferProofSelect={setTransferProof}
+                  />
                 </CardContent>
               </Card>
             </div>
