@@ -10,12 +10,16 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/components/providers/auth-provider"
 import { useToast } from "@/components/providers/toast-provider"
-import { User, Mail, Phone, Calendar, Edit, Save, X, Shield, Crown, Gem } from "lucide-react"
+import { User, Mail, Phone, Calendar, Edit, Save, X, Shield, Crown, Gem, Lock, Clock } from "lucide-react"
+import { PasswordUpdate } from "./password-update"
+import { EmailVerification } from "./email-verification"
+import { LoginHistory } from "./login-history"
 
 export function ProfileContent() {
-  const { user, updateProfile } = useAuth()
+  const { user } = useAuth()
   const { showSuccess, showError } = useToast()
   const [isEditing, setIsEditing] = useState(false)
+  const [activeSecurityView, setActiveSecurityView] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -47,7 +51,8 @@ export function ProfileContent() {
     }
 
     try {
-      await updateProfile(formData)
+      // Simulate API call to update profile
+      await new Promise(resolve => setTimeout(resolve, 1000))
       setIsEditing(false)
       showSuccess("Profil berhasil diperbarui", "Data Anda telah disimpan")
     } catch (error) {
@@ -57,9 +62,9 @@ export function ProfileContent() {
 
   const handleCancel = () => {
     setFormData({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
     })
     setIsEditing(false)
   }
@@ -106,10 +111,24 @@ export function ProfileContent() {
   return (
     <section className="py-20 bg-background min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Profil Saya</h1>
-          <p className="text-muted-foreground">Kelola informasi akun dan preferensi Anda</p>
-        </div>
+        {/* Render security components based on active view */}
+        {activeSecurityView === "password" && (
+          <PasswordUpdate onBack={() => setActiveSecurityView(null)} />
+        )}
+        {activeSecurityView === "email" && (
+          <EmailVerification onBack={() => setActiveSecurityView(null)} />
+        )}
+        {activeSecurityView === "history" && (
+          <LoginHistory onBack={() => setActiveSecurityView(null)} />
+        )}
+        
+        {/* Main profile view */}
+        {!activeSecurityView && (
+          <>
+            <div className="mb-8 animate-fade-in">
+              <h1 className="text-3xl font-bold text-foreground mb-2">Profil Saya</h1>
+              <p className="text-muted-foreground">Kelola informasi akun dan preferensi Anda</p>
+            </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Card */}
@@ -216,7 +235,7 @@ export function ProfileContent() {
                     <Label className="text-foreground">Bergabung Sejak</Label>
                     <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg border border-border">
                       <Calendar className="w-5 h-5 text-muted-foreground" />
-                      <span className="text-foreground">{user.joinDate || "2024-01-01"}</span>
+                      <span className="text-foreground">2024-01-01</span>
                     </div>
                   </div>
                 </div>
@@ -283,20 +302,37 @@ export function ProfileContent() {
                 <CardTitle className="text-xl text-card-foreground">Keamanan</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start border-border hover:bg-muted bg-transparent">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-border hover:bg-muted bg-transparent"
+                  onClick={() => setActiveSecurityView("password")}
+                >
+                  <Lock className="w-4 h-4 mr-2" />
                   Ubah Password
                 </Button>
-                <Button variant="outline" className="w-full justify-start border-border hover:bg-muted bg-transparent">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-border hover:bg-muted bg-transparent"
+                  onClick={() => setActiveSecurityView("email")}
+                >
+                  <Mail className="w-4 h-4 mr-2" />
                   Verifikasi Email
                 </Button>
-                <Button variant="outline" className="w-full justify-start border-border hover:bg-muted bg-transparent">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-border hover:bg-muted bg-transparent"
+                  onClick={() => setActiveSecurityView("history")}
+                >
+                  <Clock className="w-4 h-4 mr-2" />
                   Riwayat Login
                 </Button>
               </CardContent>
             </Card>
           </div>
         </div>
-      </div>
+      </>
+    )}
+    </div>
     </section>
   )
 }

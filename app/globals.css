@@ -74,7 +74,7 @@
   }
 
   .animate-slide-up {
-    animation: slideUp 0.8s ease-out;
+    animation: slideUp 0.5s ease-out forwards;
   }
 
   .animate-scale-in {
@@ -97,7 +97,7 @@
   @keyframes slideUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
