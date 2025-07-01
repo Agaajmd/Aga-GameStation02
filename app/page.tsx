@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { HeroSection } from "@/components/home/hero-section"
 import { CategorySlider } from "@/components/home/category-slider"
-import { PromoSection } from "@/components/home/promo-section"
+import { AnnouncementSection } from "@/components/home/announcement-section"
 import { ContactSection } from "@/components/home/contact-section"
 import { TestimonialCarousel } from "@/components/home/testimonial-carousel"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -65,7 +65,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-background">
       <HeroSection />
       <CategorySlider />
-      <PromoSection />
+      <AnnouncementSection />
       <TestimonialCarousel />
       <ContactSection />
     </div>

@@ -144,7 +144,7 @@ export function CategorySlider() {
                       {/* Image */}
                       <div className="relative aspect-[4/3] lg:aspect-auto">
                         <img
-                          src={category.image || "/placeholder.svg"}
+                          src={category.image || "/imgVIP1.jpg"}
                           alt={category.title}
                           className="w-full h-full object-cover"
                         />

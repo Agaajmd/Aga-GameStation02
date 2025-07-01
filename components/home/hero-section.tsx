@@ -15,14 +15,14 @@ export function HeroSection() {
     {
       title: "PlayStation Gaming Center Terbaik",
       subtitle: "Nikmati pengalaman gaming terbaik dengan konsol PlayStation terbaru",
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/Ps1.jpg",
       cta: "Booking Sekarang",
     },
 
     {
       title: "Promo Spesial Hari Ini",
       subtitle: "Dapatkan diskon hingga 50% untuk booking hari ini",
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/ps2.jpg",
       cta: "Lihat Promo",
     },
   ]
@@ -53,7 +53,7 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-20" />
+        <div className="absolute inset-0 bg-[url('/Ps1.jpg')] bg-cover bg-center opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/80 to-indigo-900/80" />
 
         {/* Floating Particles */}
@@ -131,7 +131,7 @@ export function HeroSection() {
           >
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl mx-auto max-w-lg lg:max-w-none">
               <img
-                src={slides[currentSlide].image || "/placeholder.svg"}
+                src={slides[currentSlide].image || "/Ps1.jpg"}
                 alt="Gaming Setup"
                 className="w-full h-full object-cover transition-all duration-500"
               />

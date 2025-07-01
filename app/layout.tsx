@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Aga Game - PlayStation Booking",
   description: "Booking PlayStation terbaik dengan fasilitas lengkap",
-    generator: 'v0.dev'
+  generator: "Aga"
 }
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider defaultTheme="system" storageKey="aga-game-theme">
           <ToastProvider>
             <AuthProvider>
               <BookingProvider>{children}</BookingProvider>

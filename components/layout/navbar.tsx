@@ -30,7 +30,7 @@ export function Navbar() {
   const customerLinks = [
     { href: "/", label: "Beranda" },
     { href: "/booking", label: "Booking" },
-    { href: "/promo", label: "Promo" },
+    { href: "/announcement", label: "Pengumuman" },
     { href: "/riwayat", label: "Riwayat" },
   ]
 
