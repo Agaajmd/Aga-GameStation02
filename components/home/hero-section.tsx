@@ -80,51 +80,6 @@ export function HeroSection() {
             <Badge variant="secondary" className="mb-4 bg-white/10 text-white border-white/20 inline-flex">
               <Star className="w-4 h-4 mr-1 text-yellow-400" />
               Gaming Center #1 di Indonesia
-            </Badge>
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              {slides[currentSlide].title}
-            </h1>
-
-            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">{slides[currentSlide].subtitle}</p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold shadow-2xl"
-              >
-                <Link href="/booking">
-                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  {slides[currentSlide].cta}
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-white/30 text-white hover:bg-white/10 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold bg-transparent"
-              >
-                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Tonton Video
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
-              {stats.map((stat, index) => (
-                <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm">
-                  <CardContent className="p-3 sm:p-4 text-center">
-                    <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
-                    <div className="text-lg sm:text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-white/70">{stat.label}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
           {/* Hero Image/Slider */}
           <div
             className={`relative mt-8 lg:mt-0 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
@@ -178,6 +133,51 @@ export function HeroSection() {
               </div>
             </div>
           </div>
+            </Badge>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+              {slides[currentSlide].title}
+            </h1>
+
+            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">{slides[currentSlide].subtitle}</p>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold shadow-2xl"
+              >
+                <Link href="/booking">
+                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  {slides[currentSlide].cta}
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                </Link>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold bg-transparent"
+              >
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Tonton Video
+              </Button>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
+              {stats.map((stat, index) => (
+                <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm">
+                  <CardContent className="p-3 sm:p-4 text-center">
+                    <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
+                    <div className="text-lg sm:text-2xl font-bold text-white">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-white/70">{stat.label}</div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
 
           {/* Mobile Feature Cards - Visible only on small screens */}
           <div className="sm:hidden mt-6">
