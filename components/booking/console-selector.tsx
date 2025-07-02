@@ -129,8 +129,8 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         {/* Selection Indicator */}
         {isSelected && (
           <div className={`absolute top-${isMobile ? '2' : '5'} right-${isMobile ? '2' : '5'} z-10`}>
-            <div className={`w-${isMobile ? '6' : '10'} h-${isMobile ? '6' : '10'} bg-primary rounded-full flex items-center justify-center shadow-lg animate-pulse`}>
-              <Check className={`w-${isMobile ? '4' : '6'} h-${isMobile ? '4' : '6'} text-white font-bold`} />
+            <div className={`${isMobile ? 'w-5 h-5' : 'w-10 h-10'} bg-primary rounded-full flex items-center justify-center shadow-lg animate-pulse`}>
+              <Check className={`${isMobile ? 'w-3 h-3' : 'w-6 h-6'} text-white font-bold`} />
             </div>
           </div>
         )}
@@ -140,30 +140,34 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <Button
             variant="default"
             size={isMobile ? "sm" : "default"}
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-semibold animate-pulse hover:animate-none transition-all duration-300"
+            className={`bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 ${
+              isMobile ? 'px-2 py-1 text-xs h-6 min-w-0' : ''
+            }`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <Joystick className={`w-${isMobile ? '3' : '4'} h-${isMobile ? '3' : '4'} mr-1`} />
-            🎮 Games
+            <Joystick className={`${isMobile ? 'w-2.5 h-2.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
+            {isMobile ? 'Games' : '🎮 Games'}
           </Button>
         </div>
 
         {/* Availability Badge */}
-        <div className={`absolute top-${isMobile ? '12' : '20'} right-${isMobile ? '2' : '5'} z-10`}>
+        <div className={`absolute top-${isMobile ? '9' : '20'} right-${isMobile ? '2' : '5'} z-10`}>
           <Badge
             variant="secondary"
-            className={`text-xs font-semibold ${isMobile ? 'px-2 py-1' : ''} ${
+            className={`text-xs font-semibold ${
+              isMobile ? 'px-1.5 py-0.5 text-xs' : ''
+            } ${
               option.available
                 ? "bg-green-100 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700"
                 : "bg-red-100 text-red-700 border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700"
             }`}
           >
-            <div className={`w-1.5 h-1.5 rounded-full mr-1 ${option.available ? "bg-green-500" : "bg-red-500"}`} />
+            <div className={`${isMobile ? 'w-1 h-1' : 'w-1.5 h-1.5'} rounded-full mr-1 ${option.available ? "bg-green-500" : "bg-red-500"}`} />
             {option.available ? "Tersedia" : "Penuh"}
           </Badge>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '8' : '16'} h-full flex flex-col`}>
+        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '6' : '16'} h-full flex flex-col`}>
           <div className={`text-center mb-${isMobile ? '3' : '6'}`}>
             <div className={`inline-flex items-center justify-center w-${isMobile ? '10' : '16'} h-${isMobile ? '10' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '2' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''}`}>
               <CategoryIcon className={`w-${isMobile ? '5' : '8'} h-${isMobile ? '5' : '8'}`} />
@@ -228,11 +232,13 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <Button
             variant="default"
             size={isMobile ? "sm" : "default"}
-            className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-semibold transition-all duration-300"
+            className={`bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-semibold transition-all duration-300 ${
+              isMobile ? 'px-2 py-1 text-xs h-6 min-w-0' : ''
+            }`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <RotateCcw className={`w-${isMobile ? '3' : '4'} h-${isMobile ? '3' : '4'} mr-1`} />
-            ⬅️ Back
+            <RotateCcw className={`${isMobile ? 'w-2.5 h-2.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
+            {isMobile ? 'Back' : '⬅️ Back'}
           </Button>
         </div>
 
