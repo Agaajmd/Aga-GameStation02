@@ -218,6 +218,7 @@ export function AnnouncementList() {
     maintenance: AlertCircle,
     achievement: Star
   }
+  
   const sortOptions = [
     { value: "newest", label: "Terbaru" },
     { value: "priority", label: "Prioritas" },
@@ -355,162 +356,159 @@ export function AnnouncementList() {
           </p>
         </div>
 
-        {/* Announcements Grid */}
+        {/* Announcements Grid - Mobile Optimized */}
         {filteredAndSortedAnnouncements.length > 0 ? (
-          <div className="space-y-6 mb-8">
+          <div className="space-y-4 mb-8">
             {filteredAndSortedAnnouncements.map((announcement) => {
               const TypeIcon = typeIcons[announcement.type as keyof typeof typeIcons] || Bell
               return (
                 <Card
                   key={announcement.id}
-                  className={`overflow-hidden hover:shadow-2xl transition-all duration-300 group bg-white dark:bg-gray-800 ${
+                  className={`overflow-hidden hover:shadow-lg transition-all duration-300 group bg-white dark:bg-gray-800 ${
                     announcement.isPinned ? 'ring-2 ring-blue-500 ring-opacity-50' : ''
                   }`}
                 >
-                  <div className="p-6">
-                    <div className="flex flex-col lg:flex-row gap-6">
-                      {/* Image */}
-                      <div className="relative lg:w-80 h-48 lg:h-auto">
+                  <div className="p-3 sm:p-4 md:p-6">
+                    <div className="flex flex-col gap-3 sm:gap-4">
+                      {/* Mobile: Image first, then content */}
+                      <div className="relative w-full h-40 sm:h-48 md:h-56">
                         <img
                           src={announcement.image || "/imgVIP1.jpg"}
                           alt={announcement.title}
                           className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
 
-                        {/* Priority Badge */}
-                        <div className="absolute top-3 left-3">
-                          <Badge className={`${priorityColors[announcement.priority as keyof typeof priorityColors]} text-white`}>
+                        {/* Badges - Mobile optimized */}
+                        <div className="absolute top-2 left-2 flex flex-col gap-1">
+                          <Badge className={`${priorityColors[announcement.priority as keyof typeof priorityColors]} text-white text-xs px-2 py-1`}>
                             <TypeIcon className="w-3 h-3 mr-1" />
                             {announcement.priority.toUpperCase()}
                           </Badge>
-                        </div>
-
-                        {/* Pinned Badge */}
-                        {announcement.isPinned && (
-                          <div className="absolute top-3 right-3">
-                            <Badge className="bg-yellow-500 text-white">
+                          {announcement.isPinned && (
+                            <Badge className="bg-yellow-500 text-white text-xs px-2 py-1">
                               <Star className="w-3 h-3 mr-1" />
                               PINNED
                             </Badge>
-                          </div>
-                        )}
+                          )}
+                        </div>
 
                         {/* Expiring Soon */}
                         {isExpiringSoon(announcement.validUntil) && (
-                          <div className="absolute bottom-3 left-3">
-                            <Badge className="bg-red-500 text-white animate-pulse">
+                          <div className="absolute bottom-2 left-2">
+                            <Badge className="bg-red-500 text-white animate-pulse text-xs px-2 py-1">
                               <Clock className="w-3 h-3 mr-1" />
                               Berakhir Segera
                             </Badge>
                           </div>
                         )}
+
+                        {/* Quick Actions - Mobile positioned on image */}
+                        <div className="absolute top-2 right-2 flex gap-1">
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            className="h-8 w-8 p-0 bg-white/90 hover:bg-white backdrop-blur-sm"
+                            onClick={() => handleBookmarkAnnouncement(announcement.id)}
+                          >
+                            <BookmarkPlus className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="secondary" 
+                            className="h-8 w-8 p-0 bg-white/90 hover:bg-white backdrop-blur-sm"
+                            onClick={() => handleShareAnnouncement(announcement)}
+                          >
+                            <Share2 className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </div>
 
                       {/* Content */}
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant="outline" className="text-xs">
-                                {categories.find(c => c.value === announcement.type)?.label}
-                              </Badge>
-                              {announcement.tags.slice(0, 2).map((tag, idx) => (
-                                <Badge key={idx} variant="secondary" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                            <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">
-                              {announcement.title}
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                              {announcement.description}
-                            </p>
-                          </div>
+                      <div className="space-y-3">
+                        {/* Tags */}
+                        <div className="flex items-center gap-1 flex-wrap">
+                          <Badge variant="outline" className="text-xs px-2 py-1">
+                            {categories.find(c => c.value === announcement.type)?.label}
+                          </Badge>
+                          {announcement.tags.slice(0, 2).map((tag, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs px-2 py-1">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
 
-                          {/* Actions */}
-                          <div className="flex gap-2 ml-4">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => handleBookmarkAnnouncement(announcement.id)}
-                            >
-                              <BookmarkPlus className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => handleShareAnnouncement(announcement)}
-                            >
-                              <Share2 className="w-4 h-4" />
-                            </Button>
+                        {/* Title */}
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors line-clamp-2">
+                          {announcement.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 line-clamp-3">
+                          {announcement.description}
+                        </p>
+
+                        {/* Stats - Simplified for mobile */}
+                        <div className="flex items-center gap-3 text-xs text-gray-500">
+                          <div className="flex items-center">
+                            <Eye className="w-3 h-3 mr-1" />
+                            {announcement.views > 1000 ? `${(announcement.views/1000).toFixed(1)}k` : announcement.views}
+                          </div>
+                          <div className="flex items-center">
+                            <ThumbsUp className="w-3 h-3 mr-1" />
+                            {announcement.likes}
+                          </div>
+                          <div className="flex items-center">
+                            <Calendar className="w-3 h-3 mr-1" />
+                            {new Date(announcement.publishedAt).toLocaleDateString("id-ID", {
+                              day: "numeric",
+                              month: "short"
+                            })}
                           </div>
                         </div>
 
-                        {/* Stats */}
-                        <div className="flex items-center gap-6 text-sm text-gray-500 mb-4">
-                          <div className="flex items-center">
-                            <Eye className="w-4 h-4 mr-1" />
-                            {announcement.views.toLocaleString()} views
-                          </div>
-                          <div className="flex items-center">
-                            <ThumbsUp className="w-4 h-4 mr-1" />
-                            {announcement.likes} likes
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {formatDate(announcement.publishedAt)}
-                          </div>
-                          <div className="flex items-center">
-                            <Users className="w-4 h-4 mr-1" />
-                            {announcement.author}
-                          </div>
-                        </div>
-
-                        {/* Special Details for Different Types */}
+                        {/* Special Details for Promo */}
                         {announcement.type === 'promo' && announcement.details && (
-                          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-4">
-                            <div className="flex items-center gap-4">
+                          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
+                            <div className="flex items-center justify-between">
                               <div>
-                                <span className="text-2xl font-bold text-green-600">{announcement.details.discountPrice}</span>
-                                <span className="text-sm text-gray-500 line-through ml-2">{announcement.details.originalPrice}</span>
+                                <span className="text-base sm:text-lg font-bold text-green-600">{announcement.details.discountPrice}</span>
+                                <span className="text-xs sm:text-sm text-gray-500 line-through ml-2">{announcement.details.originalPrice}</span>
                               </div>
-                              <Badge className="bg-green-500 text-white">
+                              <Badge className="bg-green-500 text-white text-xs">
                                 -{announcement.details.discount}
                               </Badge>
-                              <div className="text-sm text-gray-600">
-                                Stok: {announcement.details.stock}/{announcement.details.totalStock}
-                              </div>
                             </div>
                           </div>
                         )}
 
-                        {/* Actions */}
-                        <div className="flex gap-3">
+                        {/* Actions - Mobile optimized */}
+                        <div className="flex flex-col gap-2 pt-2">
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button
                                 variant="outline"
+                                size="sm"
+                                className="w-full h-10 text-sm"
                                 onClick={() => setSelectedAnnouncement(announcement)}
                               >
                                 <Eye className="w-4 h-4 mr-2" />
                                 Baca Selengkapnya
                               </Button>
                             </DialogTrigger>
-                            <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                            <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-y-auto">
                               <DialogHeader>
-                                <DialogTitle className="flex items-center gap-2">
+                                <DialogTitle className="flex items-center gap-2 text-left">
                                   <TypeIcon className="w-5 h-5" />
                                   {selectedAnnouncement?.title}
                                 </DialogTitle>
                               </DialogHeader>
                               {selectedAnnouncement && (
-                                <div className="space-y-6">
+                                <div className="space-y-4 sm:space-y-6">
                                   <img
                                     src={selectedAnnouncement.image || "/imgVIP1.jpg"}
                                     alt={selectedAnnouncement.title}
-                                    className="w-full h-64 object-cover rounded-lg"
+                                    className="w-full h-48 sm:h-64 object-cover rounded-lg"
                                   />
 
                                   <div className="flex items-center gap-2 flex-wrap">
@@ -524,37 +522,37 @@ export function AnnouncementList() {
                                     ))}
                                   </div>
 
-                                  <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                                  <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
                                     {selectedAnnouncement.longDescription}
                                   </p>
 
                                   {/* Special Content Based on Type */}
                                   {selectedAnnouncement.type === 'promo' && selectedAnnouncement.details && (
-                                    <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6">
+                                    <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 sm:p-6">
                                       <h4 className="font-semibold mb-4 flex items-center">
                                         <Gift className="w-5 h-5 mr-2 text-green-600" />
                                         Detail Promo
                                       </h4>
-                                      <div className="grid grid-cols-2 gap-4">
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                           <span className="text-sm text-gray-600">Harga Normal:</span>
                                           <div className="text-lg line-through">{selectedAnnouncement.details.originalPrice}</div>
                                         </div>
                                         <div>
                                           <span className="text-sm text-gray-600">Harga Promo:</span>
-                                          <div className="text-2xl font-bold text-green-600">{selectedAnnouncement.details.discountPrice}</div>
+                                          <div className="text-xl sm:text-2xl font-bold text-green-600">{selectedAnnouncement.details.discountPrice}</div>
                                         </div>
                                       </div>
                                     </div>
                                   )}
 
                                   {selectedAnnouncement.type === 'event' && selectedAnnouncement.details && (
-                                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+                                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 sm:p-6">
                                       <h4 className="font-semibold mb-4 flex items-center">
                                         <Trophy className="w-5 h-5 mr-2 text-blue-600" />
                                         Detail Event
                                       </h4>
-                                      <div className="space-y-3">
+                                      <div className="space-y-3 text-sm sm:text-base">
                                         <div><strong>Prize Pool:</strong> {selectedAnnouncement.details.prizePool}</div>
                                         <div><strong>Biaya Daftar:</strong> {selectedAnnouncement.details.registrationFee}</div>
                                         <div><strong>Tanggal:</strong> {selectedAnnouncement.details.tournamentDate}</div>
@@ -562,113 +560,123 @@ export function AnnouncementList() {
                                     </div>
                                   )}
 
-                                  <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t">
+                                  <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 pt-4 border-t">
                                     <span>Dipublikasi: {formatDate(selectedAnnouncement.publishedAt)}</span>
                                     <span>Berlaku hingga: {formatDate(selectedAnnouncement.validUntil)}</span>
                                   </div>
 
-                                  {selectedAnnouncement.type === 'promo' && (
-                                    <Button
-                                      asChild
-                                      className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                                    >
-                                      <Link href="/booking">
-                                        <Gift className="w-4 h-4 mr-2" />
-                                        Ambil Promo Sekarang
-                                        <ArrowRight className="w-4 h-4 ml-2" />
-                                      </Link>
-                                    </Button>
-                                  )}
+                                  {/* Action Buttons in Dialog */}
+                                  <div className="flex flex-col gap-2 sm:gap-3">
+                                    {selectedAnnouncement.type === 'promo' && (
+                                      <Button
+                                        asChild
+                                        className="w-full h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                                      >
+                                        <Link href="/booking">
+                                          <Gift className="w-4 h-4 mr-2" />
+                                          Ambil Promo Sekarang
+                                          <ArrowRight className="w-4 h-4 ml-2" />
+                                        </Link>
+                                      </Button>
+                                    )}
 
-                                  {selectedAnnouncement.type === 'event' && selectedAnnouncement.isExternal && (
-                                    <Button
-                                      asChild
-                                      className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
-                                    >
-                                      <a href={selectedAnnouncement.externalLink} target="_blank" rel="noopener noreferrer">
-                                        <Trophy className="w-4 h-4 mr-2" />
-                                        Daftar Turnamen
-                                        <ExternalLink className="w-4 h-4 ml-2" />
-                                      </a>
-                                    </Button>
-                                  )}
+                                    {selectedAnnouncement.type === 'event' && selectedAnnouncement.isExternal && (
+                                      <Button
+                                        asChild
+                                        className="w-full h-12 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+                                      >
+                                        <a href={selectedAnnouncement.externalLink} target="_blank" rel="noopener noreferrer">
+                                          <Trophy className="w-4 h-4 mr-2" />
+                                          Daftar Turnamen
+                                          <ExternalLink className="w-4 h-4 ml-2" />
+                                        </a>
+                                      </Button>
+                                    )}
 
-                                  {selectedAnnouncement.type === 'event' && !selectedAnnouncement.isExternal && (
-                                    <Button
-                                      asChild
-                                      className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
-                                    >
-                                      <Link href="/booking">
-                                        <Trophy className="w-4 h-4 mr-2" />
-                                        Booking untuk Event
-                                        <ArrowRight className="w-4 h-4 ml-2" />
-                                      </Link>
-                                    </Button>
-                                  )}
+                                    {selectedAnnouncement.type === 'event' && !selectedAnnouncement.isExternal && (
+                                      <Button
+                                        asChild
+                                        className="w-full h-12 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+                                      >
+                                        <Link href="/booking">
+                                          <Trophy className="w-4 h-4 mr-2" />
+                                          Booking untuk Event
+                                          <ArrowRight className="w-4 h-4 ml-2" />
+                                        </Link>
+                                      </Button>
+                                    )}
 
-                                  {(selectedAnnouncement.type === 'update' || selectedAnnouncement.type === 'maintenance' || selectedAnnouncement.type === 'tips') && (
-                                    <Button
-                                      asChild
-                                      className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                                    >
-                                      <Link href="/booking">
-                                        <Info className="w-4 h-4 mr-2" />
-                                        Booking Sekarang
-                                        <ArrowRight className="w-4 h-4 ml-2" />
-                                      </Link>
-                                    </Button>
-                                  )}
+                                    {(selectedAnnouncement.type === 'update' || selectedAnnouncement.type === 'maintenance' || selectedAnnouncement.type === 'tips') && (
+                                      <Button
+                                        asChild
+                                        className="w-full h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                                      >
+                                        <Link href="/booking">
+                                          <Info className="w-4 h-4 mr-2" />
+                                          Booking Sekarang
+                                          <ArrowRight className="w-4 h-4 ml-2" />
+                                        </Link>
+                                      </Button>
+                                    )}
+                                  </div>
                                 </div>
                               )}
                             </DialogContent>
                           </Dialog>
 
-                          {announcement.type === 'promo' && (
-                            <Button
-                              asChild
-                              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                            >
-                              <Link href="/booking">
-                                <Gift className="w-4 h-4 mr-2" />
-                                Ambil Promo
-                              </Link>
-                            </Button>
-                          )}
+                          {/* Primary Action Buttons */}
+                          <div className="flex flex-col gap-2">
+                            {announcement.type === 'promo' && (
+                              <Button
+                                asChild
+                                size="sm"
+                                className="w-full h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                              >
+                                <Link href="/booking">
+                                  <Gift className="w-4 h-4 mr-2" />
+                                  Ambil Promo
+                                </Link>
+                              </Button>
+                            )}
 
-                          {announcement.type === 'event' && announcement.isExternal ? (
-                            <Button
-                              asChild
-                              className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
-                            >
-                              <a href={announcement.externalLink} target="_blank" rel="noopener noreferrer">
-                                <Trophy className="w-4 h-4 mr-2" />
-                                Daftar Turnamen
-                                <ExternalLink className="w-4 h-4 ml-1" />
-                              </a>
-                            </Button>
-                          ) : announcement.type === 'event' ? (
-                            <Button
-                              asChild
-                              className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
-                            >
-                              <Link href="/booking">
-                                <Trophy className="w-4 h-4 mr-2" />
-                                Booking untuk Event
-                              </Link>
-                            </Button>
-                          ) : null}
+                            {announcement.type === 'event' && announcement.isExternal ? (
+                              <Button
+                                asChild
+                                size="sm"
+                                className="w-full h-10 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+                              >
+                                <a href={announcement.externalLink} target="_blank" rel="noopener noreferrer">
+                                  <Trophy className="w-4 h-4 mr-2" />
+                                  Daftar Turnamen
+                                  <ExternalLink className="w-4 h-4 ml-1" />
+                                </a>
+                              </Button>
+                            ) : announcement.type === 'event' ? (
+                              <Button
+                                asChild
+                                size="sm"
+                                className="w-full h-10 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+                              >
+                                <Link href="/booking">
+                                  <Trophy className="w-4 h-4 mr-2" />
+                                  Booking untuk Event
+                                </Link>
+                              </Button>
+                            ) : null}
 
-                          {(announcement.type === 'update' || announcement.type === 'maintenance' || announcement.type === 'tips' || announcement.type === 'achievement') && (
-                            <Button
-                              asChild
-                              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                            >
-                              <Link href="/booking">
-                                <Info className="w-4 h-4 mr-2" />
-                                Booking Sekarang
-                              </Link>
-                            </Button>
-                          )}
+                            {(announcement.type === 'update' || announcement.type === 'maintenance' || announcement.type === 'tips' || announcement.type === 'achievement') && (
+                              <Button
+                                asChild
+                                size="sm"
+                                className="w-full h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                              >
+                                <Link href="/booking">
+                                  <Info className="w-4 h-4 mr-2" />
+                                  Booking Sekarang
+                                </Link>
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -699,10 +707,10 @@ export function AnnouncementList() {
         {/* CTA Section */}
         <div className="text-center">
           <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 max-w-2xl mx-auto">
-            <CardContent className="p-8">
-              <Bell className="w-12 h-12 mx-auto mb-4 animate-pulse" />
-              <h3 className="text-2xl font-bold mb-2">Jangan Lewatkan Update Terbaru!</h3>
-              <p className="text-white/90 mb-6">
+            <CardContent className="p-6 sm:p-8">
+              <Bell className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4 animate-pulse" />
+              <h3 className="text-xl sm:text-2xl font-bold mb-2">Jangan Lewatkan Update Terbaru!</h3>
+              <p className="text-white/90 mb-6 text-sm sm:text-base">
                 Daftar newsletter untuk mendapatkan notifikasi pengumuman terbaru dan update penting dari gaming center
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
