@@ -136,62 +136,62 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         )}
 
         {/* Game List Button */}
-        <div className={`absolute top-${isMobile ? '2' : '5'} ${isSelected ? 'left-2' : `left-${isMobile ? '2' : '5'}`} z-10`}>
+        <div className={`absolute top-${isMobile ? '1.5' : '5'} ${isSelected ? 'left-1.5' : `left-${isMobile ? '1.5' : '5'}`} z-10`}>
           <Button
             variant="default"
             size={isMobile ? "sm" : "default"}
-            className={`bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 ${
-              isMobile ? 'px-2 py-1 text-xs h-6 min-w-0' : ''
+            className={`bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-md font-medium animate-pulse hover:animate-none transition-all duration-300 ${
+              isMobile ? 'px-1 py-0.5 text-[9px] h-4 min-w-0 rounded-sm leading-none' : ''
             }`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <Joystick className={`${isMobile ? 'w-2.5 h-2.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
-            {isMobile ? 'Games' : '🎮 Games'}
+            <Joystick className={`${isMobile ? 'w-1.5 h-1.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
+            {isMobile ? 'Game' : '🎮 Games'}
           </Button>
         </div>
 
         {/* Availability Badge */}
-        <div className={`absolute top-${isMobile ? '9' : '20'} right-${isMobile ? '2' : '5'} z-10`}>
+        <div className={`absolute top-${isMobile ? '7' : '20'} right-${isMobile ? '1' : '5'} z-10`}>
           <Badge
             variant="secondary"
-            className={`text-xs font-semibold ${
-              isMobile ? 'px-1.5 py-0.5 text-xs' : ''
+            className={`text-[10px] font-medium border ${
+              isMobile ? 'px-0.5 py-0.5 h-3.5 text-[8px] rounded-sm leading-none' : ''
             } ${
               option.available
                 ? "bg-green-100 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700"
                 : "bg-red-100 text-red-700 border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700"
             }`}
           >
-            <div className={`${isMobile ? 'w-1 h-1' : 'w-1.5 h-1.5'} rounded-full mr-1 ${option.available ? "bg-green-500" : "bg-red-500"}`} />
-            {option.available ? "Tersedia" : "Penuh"}
+            <div className={`${isMobile ? 'w-1 h-1' : 'w-1.5 h-1.5'} rounded-full mr-0.5 ${option.available ? "bg-green-500" : "bg-red-500"}`} />
+            {isMobile ? (option.available ? "OK" : "X") : (option.available ? "Tersedia" : "Penuh")}
           </Badge>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '6' : '16'} h-full flex flex-col`}>
-          <div className={`text-center mb-${isMobile ? '3' : '6'}`}>
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '10' : '16'} h-${isMobile ? '10' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '2' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''}`}>
-              <CategoryIcon className={`w-${isMobile ? '5' : '8'} h-${isMobile ? '5' : '8'}`} />
+        <div className={`p-${isMobile ? '2.5' : '6'} pt-${isMobile ? '5' : '16'} h-full flex flex-col`}>
+          <div className={`text-center mb-${isMobile ? '2.5' : '6'}`}>
+            <div className={`inline-flex items-center justify-center w-${isMobile ? '8' : '16'} h-${isMobile ? '8' : '16'} rounded-${isMobile ? 'lg' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '1.5' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''}`}>
+              <CategoryIcon className={`w-${isMobile ? '4' : '8'} h-${isMobile ? '4' : '8'}`} />
             </div>
-            <h4 className={`font-bold text-foreground text-${isMobile ? 'sm' : 'lg'} mb-${isMobile ? '1' : '2'} group-hover:text-primary transition-colors ${isMobile ? 'leading-tight' : ''}`}>
+            <h4 className={`font-bold text-foreground text-${isMobile ? 'xs' : 'lg'} mb-${isMobile ? '0.5' : '2'} group-hover:text-primary transition-colors ${isMobile ? 'leading-tight' : ''}`}>
               {option.name}
             </h4>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-primary font-semibold mb-1`}>{option.number}</p>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground ${isMobile ? 'leading-tight' : ''}`}>{option.console}</p>
+            <p className={`text-${isMobile ? '[10px]' : 'sm'} text-primary font-semibold mb-0.5`}>{option.number}</p>
+            <p className={`text-${isMobile ? '[10px]' : 'sm'} text-muted-foreground ${isMobile ? 'leading-tight' : ''}`}>{option.console}</p>
           </div>
 
           {/* Features for VIP/VVIP */}
           {(category === "vip" || category === "vvip") && option.features && (
-            <div className={`space-y-${isMobile ? '1' : '3'} mb-${isMobile ? '3' : '6'} flex-grow`}>
-              <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold text-foreground ${isMobile ? '' : 'text-center'}`}>Fasilitas:</p>
-              <div className={`space-y-${isMobile ? '1' : '2'}`}>
+            <div className={`space-y-${isMobile ? '1' : '3'} mb-${isMobile ? '2' : '6'} flex-grow`}>
+              <p className={`text-${isMobile ? '[10px]' : 'sm'} font-semibold text-foreground ${isMobile ? '' : 'text-center'}`}>Fasilitas:</p>
+              <div className={`space-y-${isMobile ? '0.5' : '2'}`}>
                 {(isMobile ? option.features.slice(0, 2) : option.features).map((feature: string, idx: number) => (
-                  <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-800 rounded-${isMobile ? 'md' : 'lg'} p-${isMobile ? '2' : '3'}`}>
+                  <div key={idx} className={`flex items-center space-x-${isMobile ? '1.5' : '3'} bg-gray-50 dark:bg-gray-800 rounded-${isMobile ? 'sm' : 'lg'} p-${isMobile ? '1.5' : '3'}`}>
                     <div className={`w-${isMobile ? '1' : '2'} h-${isMobile ? '1' : '2'} bg-primary rounded-full flex-shrink-0`}></div>
-                    <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
+                    <span className={`text-${isMobile ? '[9px]' : 'sm'} text-foreground ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
                   </div>
                 ))}
                 {isMobile && option.features.length > 2 && (
-                  <p className="text-xs text-muted-foreground text-center">+{option.features.length - 2} lainnya</p>
+                  <p className="text-[8px] text-muted-foreground text-center">+{option.features.length - 2} lainnya</p>
                 )}
               </div>
             </div>
@@ -200,18 +200,18 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           {/* Selection Status */}
           <div className="mt-auto">
             {!isSelected && option.available && (
-              <div className={`pt-${isMobile ? '2' : '4'} border-t border-gray-200 dark:border-gray-700`}>
-                <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
+              <div className={`pt-${isMobile ? '1.5' : '4'} border-t border-gray-200 dark:border-gray-700`}>
+                <p className={`text-${isMobile ? '[8px]' : 'xs'} text-muted-foreground text-center group-hover:text-primary transition-colors`}>
                   👆 {isMobile ? 'Pilih' : 'Klik untuk memilih'}
                 </p>
               </div>
             )}
 
             {isSelected && (
-              <div className={`pt-${isMobile ? '2' : '4'} border-t border-primary/20`}>
+              <div className={`pt-${isMobile ? '1.5' : '4'} border-t border-primary/20`}>
                 <div className={`flex items-center justify-center space-x-${isMobile ? '1' : '2'} text-primary`}>
-                  <Check className={`w-${isMobile ? '3' : '4'} h-${isMobile ? '3' : '4'}`} />
-                  <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold`}>Terpilih</p>
+                  <Check className={`w-${isMobile ? '2.5' : '4'} h-${isMobile ? '2.5' : '4'}`} />
+                  <p className={`text-${isMobile ? '[9px]' : 'sm'} font-semibold`}>Terpilih</p>
                 </div>
               </div>
             )}
@@ -228,45 +228,45 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         <div className={`h-${isMobile ? '2' : '3'} w-full bg-gradient-to-r from-indigo-500 to-purple-600`} />
 
         {/* Back Button */}
-        <div className={`absolute top-${isMobile ? '2' : '5'} left-${isMobile ? '2' : '5'} z-10`}>
+        <div className={`absolute top-${isMobile ? '1.5' : '5'} left-${isMobile ? '1.5' : '5'} z-10`}>
           <Button
             variant="default"
             size={isMobile ? "sm" : "default"}
-            className={`bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-semibold transition-all duration-300 ${
-              isMobile ? 'px-2 py-1 text-xs h-6 min-w-0' : ''
+            className={`bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-md font-medium transition-all duration-300 ${
+              isMobile ? 'px-1 py-0.5 text-[9px] h-4 min-w-0 rounded-sm leading-none' : ''
             }`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <RotateCcw className={`${isMobile ? 'w-2.5 h-2.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
+            <RotateCcw className={`${isMobile ? 'w-1.5 h-1.5 mr-0.5' : 'w-4 h-4 mr-1'}`} />
             {isMobile ? 'Back' : '⬅️ Back'}
           </Button>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '8' : '16'} h-full flex flex-col`}>
+        <div className={`p-${isMobile ? '2.5' : '6'} pt-${isMobile ? '6' : '16'} h-full flex flex-col`}>
           <div className="text-center mb-4">
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '8' : '12'} h-${isMobile ? '8' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
-              <Joystick className={`w-${isMobile ? '4' : '6'} h-${isMobile ? '4' : '6'}`} />
+            <div className={`inline-flex items-center justify-center w-${isMobile ? '6' : '12'} h-${isMobile ? '6' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
+              <Joystick className={`w-${isMobile ? '3' : '6'} h-${isMobile ? '3' : '6'}`} />
             </div>
-            <h4 className={`font-bold text-foreground text-${isMobile ? 'sm' : 'lg'} mb-1`}>
+            <h4 className={`font-bold text-foreground text-${isMobile ? 'xs' : 'lg'} mb-1`}>
               Game Library
             </h4>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground`}>{option.console}</p>
+            <p className={`text-${isMobile ? '[10px]' : 'sm'} text-muted-foreground`}>{option.console}</p>
           </div>
 
           {/* Games List */}
           <div className="flex-grow overflow-hidden">
-            <div className={`grid grid-cols-1 gap-${isMobile ? '1' : '2'} max-h-full overflow-y-auto scrollbar-hide`}>
+            <div className={`grid grid-cols-1 gap-${isMobile ? '0.5' : '2'} max-h-full overflow-y-auto scrollbar-hide`}>
               {option.games?.map((game, idx) => (
-                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-800/50 rounded-md p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors`}>
-                  <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
-                  <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{game}</span>
+                <div key={idx} className={`flex items-center space-x-${isMobile ? '1.5' : '3'} bg-white/50 dark:bg-gray-800/50 rounded-sm p-${isMobile ? '1.5' : '3'} hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors`}>
+                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full flex-shrink-0"></div>
+                  <span className={`text-${isMobile ? '[9px]' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{game}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div className={`mt-${isMobile ? '2' : '4'} pt-${isMobile ? '2' : '4'} border-t border-indigo-200 dark:border-indigo-700 text-center`}>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground`}>
+            <p className={`text-${isMobile ? '[9px]' : 'sm'} text-muted-foreground`}>
               Total: {option.games?.length || 0} games
             </p>
           </div>
