@@ -113,16 +113,16 @@ export function CategorySlider() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
-          className={`text-center mb-8 sm:mb-12 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`text-center mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 inline-flex">
+          <Badge variant="secondary" className="mb-4 lg:mb-6 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 inline-flex text-sm lg:text-base">
             <Gamepad2 className="w-4 h-4 mr-1" />
             Kategori Gaming
           </Badge>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 lg:mb-6 px-4">
             Pilih Pengalaman Gaming Terbaik
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
             Dari PlayStation terbaru hingga turnamen kompetitif, temukan pengalaman gaming yang sesuai dengan passion
             Anda
           </p>
@@ -130,19 +130,19 @@ export function CategorySlider() {
 
         {/* Main Slider */}
         <div
-          className={`relative mb-8 sm:mb-12 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`relative mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl">
+          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {categories.map((category, index) => (
                 <div key={category.id} className="w-full flex-shrink-0">
-                  <Card className="mx-1 sm:mx-2 overflow-hidden border-0 shadow-xl sm:shadow-2xl bg-white dark:bg-gray-800">
+                  <Card className="mx-1 sm:mx-2 lg:mx-3 overflow-hidden border-0 shadow-xl sm:shadow-2xl lg:shadow-3xl bg-white dark:bg-gray-800">
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Image */}
-                      <div className="relative aspect-[4/3] lg:aspect-auto">
+                      <div className="relative aspect-[4/3] lg:aspect-[3/4] xl:aspect-[4/5]">
                         <img
                           src={category.image || "/imgVIP1.jpg"}
                           alt={category.title}
@@ -151,7 +151,7 @@ export function CategorySlider() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
                         {/* Badges */}
-                        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex flex-wrap gap-1 sm:gap-2">
+                        <div className="absolute top-3 sm:top-4 lg:top-6 left-3 sm:left-4 lg:left-6 flex flex-wrap gap-1 sm:gap-2">
                           {category.popular && (
                             <Badge className="bg-red-500 hover:bg-red-600 text-white border-0 text-xs sm:text-sm">
                               <Heart className="w-3 h-3 mr-1" />
@@ -164,7 +164,7 @@ export function CategorySlider() {
                         </div>
 
                         {/* Availability */}
-                        <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
+                        <div className="absolute bottom-3 sm:bottom-4 lg:bottom-6 left-3 sm:left-4 lg:left-6">
                           <Badge variant="secondary" className="bg-white/95 text-gray-900 border-0 text-xs sm:text-sm">
                             <Zap className="w-3 h-3 mr-1 text-green-500" />
                             {category.available} Unit Tersedia
@@ -173,67 +173,67 @@ export function CategorySlider() {
                       </div>
 
                       {/* Content */}
-                      <CardContent className="p-4 sm:p-6 lg:p-8 xl:p-12 flex flex-col justify-center">
-                        <div className="mb-4 sm:mb-6">
-                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
+                      <CardContent className="p-4 sm:p-6 lg:p-8 xl:p-12 2xl:p-16 flex flex-col justify-center">
+                        <div className="mb-4 sm:mb-6 lg:mb-8">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 lg:mb-4">
                             {category.title}
                           </h3>
-                          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg mb-3 sm:mb-4">{category.description}</p>
+                          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg xl:text-xl mb-3 sm:mb-4 lg:mb-6">{category.description}</p>
 
                           {/* Rating */}
-                          <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                          <div className="flex items-center gap-2 mb-3 sm:mb-4 lg:mb-6">
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  className={`w-3 h-3 sm:w-4 sm:h-4 ${
+                                  className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ${
                                     i < Math.floor(category.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
                                   }`}
                                 />
                               ))}
                             </div>
-                            <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">{category.rating}</span>
-                            <span className="text-xs sm:text-sm text-gray-500">({category.reviews} ulasan)</span>
+                            <span className="text-xs sm:text-sm lg:text-base font-medium text-gray-900 dark:text-white">{category.rating}</span>
+                            <span className="text-xs sm:text-sm lg:text-base text-gray-500">({category.reviews} ulasan)</span>
                           </div>
 
                           {/* Features */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 mb-4 sm:mb-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 lg:gap-3 mb-4 sm:mb-6 lg:mb-8">
                             {category.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                                <Shield className="w-3 h-3 mr-2 text-green-500 flex-shrink-0" />
+                              <div key={idx} className="flex items-center text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-300">
+                                <Shield className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mr-2 text-green-500 flex-shrink-0" />
                                 <span className="truncate">{feature}</span>
                               </div>
                             ))}
                           </div>
 
                           {/* Price */}
-                          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                            <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400">
+                          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-8">
+                            <span className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-blue-600 dark:text-blue-400">
                               {category.price}
                             </span>
                             {category.originalPrice && (
-                              <span className="text-sm sm:text-base lg:text-lg text-gray-500 line-through">{category.originalPrice}</span>
+                              <span className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-500 line-through">{category.originalPrice}</span>
                             )}
                           </div>
 
                           {/* CTA */}
-                          <div className="flex flex-col gap-2 sm:gap-3">
+                          <div className="flex flex-col gap-2 sm:gap-3 lg:gap-4">
                             <Button
                               asChild
                               size="lg"
-                              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-10 sm:h-12 text-sm sm:text-base font-semibold shadow-lg"
+                              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-10 sm:h-12 lg:h-14 text-sm sm:text-base lg:text-lg font-semibold shadow-lg"
                             >
                               <Link href="/booking">
-                                <Gamepad2 className="w-4 h-4 mr-2" />
+                                <Gamepad2 className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
                                 Booking Sekarang
                               </Link>
                             </Button>
                             <Button 
                               variant="outline" 
                               size="lg" 
-                              className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 h-10 sm:h-12 text-sm sm:text-base font-semibold"
+                              className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 h-10 sm:h-12 lg:h-14 text-sm sm:text-base lg:text-lg font-semibold"
                             >
-                              <Clock className="w-4 h-4 mr-2" />
+                              <Clock className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
                               Lihat Jadwal
                             </Button>
                           </div>
@@ -250,30 +250,30 @@ export function CategorySlider() {
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-lg z-10 w-8 h-8 sm:w-10 sm:h-10"
+            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-lg z-10 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
             onClick={prevSlide}
           >
-            <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+            <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
           </Button>
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-lg z-10 w-8 h-8 sm:w-10 sm:h-10"
+            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-lg z-10 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
             onClick={nextSlide}
           >
-            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
           </Button>
 
           {/* Dots Navigation */}
-          <div className="flex justify-center mt-4 sm:mt-6 space-x-1 sm:space-x-2">
+          <div className="flex justify-center mt-4 sm:mt-6 lg:mt-8 space-x-1 sm:space-x-2">
             {categories.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`h-2 sm:h-3 rounded-full transition-all ${
+                className={`h-2 sm:h-3 lg:h-4 rounded-full transition-all ${
                   index === currentIndex 
-                    ? "bg-blue-600 w-6 sm:w-8" 
-                    : "bg-gray-300 hover:bg-gray-400 w-2 sm:w-3"
+                    ? "bg-blue-600 w-6 sm:w-8 lg:w-10" 
+                    : "bg-gray-300 hover:bg-gray-400 w-2 sm:w-3 lg:w-4"
                 }`}
               />
             ))}
@@ -282,14 +282,14 @@ export function CategorySlider() {
 
         {/* Stats Grid */}
         <div
-          className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 xl:gap-8 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           {stats.map((stat, index) => (
-            <Card key={index} className="text-center p-3 sm:p-4 lg:p-6 hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+            <Card key={index} className="text-center p-3 sm:p-4 lg:p-6 xl:p-8 hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
               <CardContent className="p-0">
-                <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 ${stat.color}`} />
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
-                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">{stat.label}</div>
+                <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 mx-auto mb-2 sm:mb-3 lg:mb-4 ${stat.color}`} />
+                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
+                <div className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-300">{stat.label}</div>
               </CardContent>
             </Card>
           ))}

@@ -10,7 +10,23 @@ import { useAuth } from "@/components/providers/auth-provider"
 import { useToast } from "@/components/providers/toast-provider"
 import { Gamepad2, Power, PowerOff, Wrench, CheckCircle, Search, Edit } from "lucide-react"
 
-const mockPSUnits = [
+interface PSUnit {
+  id: string
+  name: string
+  type: string
+  category: string
+  location: string
+  status: "available" | "occupied" | "maintenance" | "offline"
+  condition: "excellent" | "good" | "fair" | "needs_repair"
+  lastMaintenance: string
+  totalHours: number
+  currentBooking: string | null
+  currentUser?: string
+  playingSince?: string
+  maintenanceReason?: string
+}
+
+const mockPSUnits: PSUnit[] = [
   // Available units first
   {
     id: "PS001",
@@ -99,7 +115,13 @@ export function PSAvailability() {
   const [units, setUnits] = useState(mockPSUnits)
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [selectedUnit, setSelectedUnit] = useState<any>(null)
+  const [selectedUnit, setSelectedUnit] = useState<PSUnit | null>(null)
+  const [editForm, setEditForm] = useState({
+    name: "",
+    type: "",
+    category: "",
+    location: ""
+  })
 
   // Sort units: available first, then occupied, then maintenance
   const sortedUnits = [...units].sort((a, b) => {
@@ -121,7 +143,7 @@ export function PSAvailability() {
   const maintenanceUnits = units.filter((u) => u.status === "maintenance").length
   const offlineUnits = units.filter((u) => u.status === "offline").length
 
-  const handleStatusChange = (unitId: string, newStatus: string) => {
+  const handleStatusChange = (unitId: string, newStatus: PSUnit["status"]) => {
     setUnits((prev) =>
       prev.map((unit) =>
         unit.id === unitId
@@ -138,6 +160,37 @@ export function PSAvailability() {
     }
 
     showSuccess("Status berhasil diubah", `Unit ${unitId} sekarang ${statusText[newStatus as keyof typeof statusText]}`)
+  }
+
+  const handleEditUnit = (unit: PSUnit) => {
+    setSelectedUnit(unit)
+    setEditForm({
+      name: unit.name,
+      type: unit.type,
+      category: unit.category,
+      location: unit.location
+    })
+  }
+
+  const handleSaveChanges = () => {
+    if (!selectedUnit) return
+
+    setUnits(prev => 
+      prev.map(unit => 
+        unit.id === selectedUnit.id 
+          ? { ...unit, ...editForm }
+          : unit
+      )
+    )
+
+    showSuccess("Unit berhasil diperbarui", "Perubahan telah disimpan")
+    setSelectedUnit(null)
+    setEditForm({ name: "", type: "", category: "", location: "" })
+  }
+
+  const handleCloseModal = () => {
+    setSelectedUnit(null)
+    setEditForm({ name: "", type: "", category: "", location: "" })
   }
 
   const getStatusColor = (status: string) => {
@@ -399,7 +452,7 @@ export function PSAvailability() {
                 </div>
 
                 <div className="flex space-x-2">
-                  <Select value={unit.status} onValueChange={(value) => handleStatusChange(unit.id, value)}>
+                  <Select value={unit.status} onValueChange={(value) => handleStatusChange(unit.id, value as PSUnit["status"])}>
                     <SelectTrigger className="flex-1 bg-background border-border text-foreground">
                       <SelectValue />
                     </SelectTrigger>
@@ -413,7 +466,7 @@ export function PSAvailability() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setSelectedUnit(unit)}
+                    onClick={() => handleEditUnit(unit)}
                     className="border-border hover:bg-muted"
                   >
                     <Edit className="w-4 h-4" />
@@ -435,15 +488,26 @@ export function PSAvailability() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">Nama Unit</label>
-                    <Input value={selectedUnit.name} className="mt-1 bg-background border-border text-foreground" />
+                    <Input 
+                      value={editForm.name} 
+                      onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                      className="mt-1 bg-background border-border text-foreground" 
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">Tipe</label>
-                    <Input value={selectedUnit.type} className="mt-1 bg-background border-border text-foreground" />
+                    <Input 
+                      value={editForm.type} 
+                      onChange={(e) => setEditForm(prev => ({ ...prev, type: e.target.value }))}
+                      className="mt-1 bg-background border-border text-foreground" 
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">Kategori</label>
-                    <Select value={selectedUnit.category}>
+                    <Select 
+                      value={editForm.category}
+                      onValueChange={(value) => setEditForm(prev => ({ ...prev, category: value }))}
+                    >
                       <SelectTrigger className="mt-1 bg-background border-border text-foreground">
                         <SelectValue />
                       </SelectTrigger>
@@ -456,23 +520,24 @@ export function PSAvailability() {
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">Lokasi</label>
-                    <Input value={selectedUnit.location} className="mt-1 bg-background border-border text-foreground" />
+                    <Input 
+                      value={editForm.location} 
+                      onChange={(e) => setEditForm(prev => ({ ...prev, location: e.target.value }))}
+                      className="mt-1 bg-background border-border text-foreground" 
+                    />
                   </div>
                 </div>
 
                 <div className="flex space-x-2">
                   <Button
-                    onClick={() => setSelectedUnit(null)}
+                    onClick={handleCloseModal}
                     variant="outline"
                     className="flex-1 border-border hover:bg-muted"
                   >
                     Batal
                   </Button>
                   <Button
-                    onClick={() => {
-                      showSuccess("Unit berhasil diperbarui", "Perubahan telah disimpan")
-                      setSelectedUnit(null)
-                    }}
+                    onClick={handleSaveChanges}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground flex-1"
                   >
                     Simpan Perubahan

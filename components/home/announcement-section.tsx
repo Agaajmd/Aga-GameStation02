@@ -161,37 +161,37 @@ export function AnnouncementSection() {
 
         {/* Flash Sale Banner */}
         <div
-          className={`mb-12 transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mb-12 lg:mb-16 transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           <Card className="bg-gradient-to-r from-red-500 to-orange-500 text-white border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-[url('/imgVIP4.jpg')] bg-cover bg-center opacity-20" />
-            <CardContent className="p-8 relative z-10">
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-                <div className="text-center lg:text-left">
-                  <div className="flex items-center justify-center lg:justify-start gap-2 mb-2">
-                    <Fire className="w-6 h-6 animate-pulse" />
-                    <Badge className="bg-white text-red-500 font-bold">FLASH SALE</Badge>
+            <CardContent className="p-6 lg:p-8 xl:p-12 relative z-10">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+                <div className="text-center lg:text-left flex-1">
+                  <div className="flex items-center justify-center lg:justify-start gap-2 mb-3 lg:mb-4">
+                    <Fire className="w-6 h-6 lg:w-8 lg:h-8 animate-pulse" />
+                    <Badge className="bg-white text-red-500 font-bold text-sm lg:text-base">FLASH SALE</Badge>
                   </div>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-2">Diskon Hingga 50% Hari Ini!</h3>
-                  <p className="text-white/90">
+                  <h3 className="text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 lg:mb-3">Diskon Hingga 50% Hari Ini!</h3>
+                  <p className="text-white/90 text-base lg:text-lg">
                     Booking sekarang dan nikmati gaming dengan harga terbaik sepanjang masa
                   </p>
                 </div>
 
-                <div className="text-center">
-                  <div className="text-sm font-medium mb-2">Berakhir dalam:</div>
-                  <div className="flex gap-2 justify-center">
-                    <div className="bg-white/20 rounded-lg p-3 min-w-[60px]">
-                      <div className="text-2xl font-bold">{timeLeft.hours.toString().padStart(2, "0")}</div>
-                      <div className="text-xs">Jam</div>
+                <div className="text-center lg:text-right">
+                  <div className="text-sm lg:text-base font-medium mb-3 lg:mb-4">Berakhir dalam:</div>
+                  <div className="flex gap-2 lg:gap-3 justify-center lg:justify-end">
+                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                      <div className="text-2xl lg:text-3xl font-bold">{timeLeft.hours.toString().padStart(2, "0")}</div>
+                      <div className="text-xs lg:text-sm">Jam</div>
                     </div>
-                    <div className="bg-white/20 rounded-lg p-3 min-w-[60px]">
-                      <div className="text-2xl font-bold">{timeLeft.minutes.toString().padStart(2, "0")}</div>
-                      <div className="text-xs">Menit</div>
+                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                      <div className="text-2xl lg:text-3xl font-bold">{timeLeft.minutes.toString().padStart(2, "0")}</div>
+                      <div className="text-xs lg:text-sm">Menit</div>
                     </div>
-                    <div className="bg-white/20 rounded-lg p-3 min-w-[60px]">
-                      <div className="text-2xl font-bold">{timeLeft.seconds.toString().padStart(2, "0")}</div>
-                      <div className="text-xs">Detik</div>
+                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                      <div className="text-2xl lg:text-3xl font-bold">{timeLeft.seconds.toString().padStart(2, "0")}</div>
+                      <div className="text-xs lg:text-sm">Detik</div>
                     </div>
                   </div>
                 </div>
@@ -202,27 +202,30 @@ export function AnnouncementSection() {
 
         {/* Search and Filter */}
         <div
-          className={`mb-8 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mb-8 lg:mb-12 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-4 lg:gap-6 max-w-4xl mx-auto">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Cari pengumuman..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-10 h-12 text-base"
               />
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full md:w-48 h-12">
+              <SelectTrigger className="w-full md:w-56 lg:w-64 h-12 text-base">
                 <Filter className="w-4 h-4 mr-2" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {categories.map((category) => (
                   <SelectItem key={category.value} value={category.value}>
-                    {category.label}
+                    <div className="flex items-center">
+                      <category.icon className="w-4 h-4 mr-2" />
+                      {category.label}
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -232,32 +235,32 @@ export function AnnouncementSection() {
 
         {/* Announcement Grid */}
         <div
-          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 transition-all duration-1000 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6 lg:gap-8 mb-12 lg:mb-16 transition-all duration-1000 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           {filteredAnnouncements.map((announcement, index) => (
             <Card
               key={announcement.id}
-              className="overflow-hidden hover:shadow-2xl transition-all duration-300 group bg-white dark:bg-gray-800"
+              className="overflow-hidden hover:shadow-2xl transition-all duration-300 group bg-white dark:bg-gray-800 h-full flex flex-col"
             >
               <div className="relative">
                 <img
                   src={announcement.image || "/placeholder.svg"}
                   alt={announcement.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-48 lg:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
                 {/* Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
+                <div className="absolute top-3 lg:top-4 left-3 lg:left-4 flex flex-col gap-1 lg:gap-2">
                   {announcement.isFlashSale && (
-                    <Badge className="bg-red-500 text-white animate-pulse">
+                    <Badge className="bg-red-500 text-white animate-pulse text-xs">
                       <Fire className="w-3 h-3 mr-1" />
                       FLASH SALE
                     </Badge>
                   )}
                   
                   {/* Type Badge */}
-                  <Badge className={`text-white ${typeColors[announcement.type as keyof typeof typeColors]}`}>
+                  <Badge className={`text-white text-xs ${typeColors[announcement.type as keyof typeof typeColors]}`}>
                     {announcement.type === 'promo' && <Gift className="w-3 h-3 mr-1" />}
                     {announcement.type === 'update' && <Bell className="w-3 h-3 mr-1" />}
                     {announcement.type === 'tournament' && <Trophy className="w-3 h-3 mr-1" />}
@@ -267,7 +270,7 @@ export function AnnouncementSection() {
                   </Badge>
 
                   {/* Priority Badge */}
-                  <Badge className={`text-white ${priorityColors[announcement.priority as keyof typeof priorityColors]}`}>
+                  <Badge className={`text-white text-xs ${priorityColors[announcement.priority as keyof typeof priorityColors]}`}>
                     {announcement.priority === 'urgent' && 'URGENT'}
                     {announcement.priority === 'high' && 'PENTING'}
                     {announcement.priority === 'medium' && 'INFO'}
@@ -275,25 +278,25 @@ export function AnnouncementSection() {
 
                   {/* Discount Badge for Promos */}
                   {announcement.type === 'promo' && announcement.discount && (
-                    <Badge className="bg-green-500 text-white">
+                    <Badge className="bg-green-500 text-white text-xs">
                       <Percent className="w-3 h-3 mr-1" />-{announcement.discount}
                     </Badge>
                   )}
                 </div>
               </div>
 
-              <CardContent className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">
+              <CardContent className="p-4 lg:p-6 flex-1 flex flex-col">
+                <div className="flex-1 mb-4">
+                  <h3 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {announcement.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">{announcement.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm lg:text-base line-clamp-3">{announcement.description}</p>
                 </div>
 
                 {/* Price for Promos */}
                 {announcement.type === 'promo' && announcement.discountPrice && (
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{announcement.discountPrice}</span>
+                    <span className="text-xl lg:text-2xl font-bold text-blue-600 dark:text-blue-400">{announcement.discountPrice}</span>
                     {announcement.originalPrice && (
                       <span className="text-sm text-gray-500 line-through">{announcement.originalPrice}</span>
                     )}
@@ -301,8 +304,8 @@ export function AnnouncementSection() {
                 )}
 
                 {/* Valid Until */}
-                <div className="flex items-center text-sm text-gray-500 mb-4">
-                  <Calendar className="w-4 h-4 mr-1" />
+                <div className="flex items-center text-xs lg:text-sm text-gray-500 mb-4">
+                  <Calendar className="w-3 h-3 lg:w-4 lg:h-4 mr-1" />
                   Berlaku hingga {new Date(announcement.validUntil).toLocaleDateString("id-ID")}
                 </div>
 
@@ -310,7 +313,7 @@ export function AnnouncementSection() {
                 {announcement.isExternal ? (
                   <Button
                     asChild
-                    className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700"
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 h-10 lg:h-12 text-sm lg:text-base"
                   >
                     <a href={announcement.ctaLink} target="_blank" rel="noopener noreferrer">
                       <Trophy className="w-4 h-4 mr-2" />
@@ -321,7 +324,7 @@ export function AnnouncementSection() {
                 ) : (
                   <Button
                     asChild
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 h-10 lg:h-12 text-sm lg:text-base"
                   >
                     <Link href={announcement.ctaLink}>
                       {announcement.type === 'promo' && <Gift className="w-4 h-4 mr-2" />}
@@ -341,17 +344,17 @@ export function AnnouncementSection() {
         <div
           className={`text-center transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 max-w-2xl mx-auto">
-            <CardContent className="p-8">
-              <Megaphone className="w-12 h-12 mx-auto mb-4 animate-pulse" />
-              <h3 className="text-2xl font-bold mb-2">Masih Ada Pengumuman Lainnya!</h3>
-              <p className="text-white/90 mb-6">
+          <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 max-w-3xl lg:max-w-4xl mx-auto">
+            <CardContent className="p-6 lg:p-8 xl:p-12">
+              <Megaphone className="w-12 h-12 lg:w-16 lg:h-16 mx-auto mb-4 lg:mb-6 animate-pulse" />
+              <h3 className="text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 lg:mb-3">Masih Ada Pengumuman Lainnya!</h3>
+              <p className="text-white/90 mb-6 lg:mb-8 text-base lg:text-lg max-w-2xl mx-auto">
                 Lihat semua pengumuman penting dan jangan sampai terlewat info terbaru dari gaming center kami
               </p>
-              <Button asChild variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                <Link href="/announcement">
+              <Button asChild variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-gray-100 h-12 lg:h-14 px-6 lg:px-8 text-base lg:text-lg">
+                <Link href="/promo">
                   Lihat Semua Pengumuman
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5 ml-2" />
                 </Link>
               </Button>
             </CardContent>

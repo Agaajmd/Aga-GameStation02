@@ -9,6 +9,7 @@ interface User {
   role: "customer" | "admin" | "super-admin"
   phone?: string
   avatar?: string
+  branch?: string
 }
 
 interface AuthContextType {
@@ -38,6 +39,7 @@ const demoUsers = [
     password: "admin123",
     role: "admin" as const,
     phone: "+62 812 3456 7891",
+    branch: "Jakarta Pusat",
   },
   {
     id: "3",
@@ -46,6 +48,7 @@ const demoUsers = [
     password: "superadmin123",
     role: "super-admin" as const,
     phone: "+62 812 3456 7892",
+    branch: "Pusat",
   },
 ]
 

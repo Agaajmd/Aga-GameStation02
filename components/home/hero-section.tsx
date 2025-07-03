@@ -11,19 +11,22 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
 
+  // Static content - tidak berubah
+  const heroContent = {
+    title: "PlayStation Gaming Center Terbaik",
+    subtitle: "Nikmati pengalaman gaming terbaik dengan konsol PlayStation terbaru dan fasilitas premium",
+    primaryCta: "Booking Sekarang",
+    secondaryCta: "Tonton Video"
+  }
+
   const slides = [
     {
-      title: "PlayStation Gaming Center Terbaik",
-      subtitle: "Nikmati pengalaman gaming terbaik dengan konsol PlayStation terbaru",
       image: "/Ps1.jpg",
-      cta: "Booking Sekarang",
+      alt: "PlayStation Gaming Setup"
     },
-
     {
-      title: "Promo Spesial Hari Ini",
-      subtitle: "Dapatkan diskon hingga 50% untuk booking hari ini",
-      image: "/ps2.jpg",
-      cta: "Lihat Promo",
+      image: "/ps2.jpg", 
+      alt: "Gaming Console Collection"
     },
   ]
 
@@ -71,126 +74,148 @@ export function HeroSection() {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 lg:py-0">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 lg:py-12">
+        <div className="max-w-7xl mx-auto">
+          {/* Content Section */}
           <div
-            className={`text-center lg:text-left transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
-            <Badge variant="secondary" className="mb-4 bg-white/10 text-white border-white/20 inline-flex">
+            <Badge variant="secondary" className="mb-4 lg:mb-6 bg-white/10 text-white border-white/20 inline-flex">
               <Star className="w-4 h-4 mr-1 text-yellow-400" />
               Gaming Center #1 di Indonesia
-          {/* Hero Image/Slider */}
-          <div
-            className={`relative mt-8 lg:mt-0 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-          >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl mx-auto max-w-lg lg:max-w-none">
-              <img
-                src={slides[currentSlide].image || "/Ps1.jpg"}
-                alt="Gaming Setup"
-                className="w-full h-full object-cover transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-
-              {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-                      index === currentSlide ? "bg-white" : "bg-white/50"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Floating Feature Cards - Hidden on small screens */}
-            <div className="hidden sm:block">
-              <div className="absolute -bottom-4 lg:-bottom-6 -left-3 lg:-left-6 right-3 lg:right-6 grid grid-cols-2 gap-2 lg:gap-3">
-                {features.slice(0, 2).map((feature, index) => (
-                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-                    <CardContent className="p-3 lg:p-4">
-                      <feature.icon className="w-6 h-6 lg:w-8 lg:h-8 text-blue-600 mb-2" />
-                      <h3 className="font-semibold text-gray-900 text-xs lg:text-sm">{feature.title}</h3>
-                      <p className="text-xs text-gray-600 hidden lg:block">{feature.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <div className="absolute -top-4 lg:-top-6 -right-3 lg:-right-6 left-3 lg:left-6 grid grid-cols-2 gap-2 lg:gap-3">
-                {features.slice(2, 4).map((feature, index) => (
-                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-                    <CardContent className="p-3 lg:p-4">
-                      <feature.icon className="w-6 h-6 lg:w-8 lg:h-8 text-purple-600 mb-2" />
-                      <h3 className="font-semibold text-gray-900 text-xs lg:text-sm">{feature.title}</h3>
-                      <p className="text-xs text-gray-600 hidden lg:block">{feature.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
             </Badge>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              {slides[currentSlide].title}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-tight max-w-6xl mx-auto">
+              {heroContent.title}
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">{slides[currentSlide].subtitle}</p>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-8 sm:mb-12 lg:mb-16 max-w-4xl mx-auto">{heroContent.subtitle}</p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12">
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center mb-12 lg:mb-20">
               <Button
                 asChild
                 size="lg"
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold shadow-2xl"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 h-12 sm:h-14 lg:h-16 px-6 sm:px-8 lg:px-12 text-base sm:text-lg lg:text-xl font-semibold shadow-2xl"
               >
                 <Link href="/booking">
-                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  {slides[currentSlide].cta}
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-2" />
+                  {heroContent.primaryCta}
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 ml-2" />
                 </Link>
               </Button>
 
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold bg-transparent"
+                className="border-white/30 text-white hover:bg-white/10 h-12 sm:h-14 lg:h-16 px-6 sm:px-8 lg:px-12 text-base sm:text-lg lg:text-xl font-semibold bg-transparent"
               >
-                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Tonton Video
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-2" />
+                {heroContent.secondaryCta}
               </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
-              {stats.map((stat, index) => (
-                <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm">
-                  <CardContent className="p-3 sm:p-4 text-center">
-                    <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
-                    <div className="text-lg sm:text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-white/70">{stat.label}</div>
-                  </CardContent>
-                </Card>
-              ))}
             </div>
           </div>
 
+          {/* Main Grid Layout for Desktop */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-start">
+            {/* Left Side - Image and Features */}
+            <div
+              className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+            >
+              {/* Hero Image/Slider */}
+              <div className="relative mb-8 lg:mb-12">
+                <div className="relative aspect-[4/3] lg:aspect-[16/10] rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl">
+                  <img
+                    src={slides[currentSlide].image || "/Ps1.jpg"}
+                    alt={slides[currentSlide].alt || "Gaming Setup"}
+                    className="w-full h-full object-cover transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-          {/* Mobile Feature Cards - Visible only on small screens */}
-          <div className="sm:hidden mt-6">
-            <div className="grid grid-cols-2 gap-3">
-              {features.map((feature, index) => (
-                <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-                  <CardContent className="p-3 text-center">
-                    <feature.icon className={`w-6 h-6 mx-auto mb-2 ${index < 2 ? 'text-blue-600' : 'text-purple-600'}`} />
-                    <h3 className="font-semibold text-gray-900 text-xs">{feature.title}</h3>
-                    <p className="text-xs text-gray-600 mt-1">{feature.desc}</p>
-                  </CardContent>
-                </Card>
-              ))}
+                  {/* Slide Indicators */}
+                  <div className="absolute bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {slides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentSlide(index)}
+                        className={`w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 rounded-full transition-all ${
+                          index === currentSlide ? "bg-white" : "bg-white/50"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature Cards Grid */}
+              <div className="grid grid-cols-2 gap-4 lg:gap-6">
+                {features.map((feature, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 group">
+                    <CardContent className="p-4 lg:p-6 text-center">
+                      <feature.icon className={`w-8 h-8 lg:w-10 lg:h-10 mx-auto mb-3 lg:mb-4 ${index < 2 ? 'text-blue-600' : 'text-purple-600'} group-hover:scale-110 transition-transform`} />
+                      <h3 className="font-semibold text-gray-900 text-sm lg:text-base mb-2">{feature.title}</h3>
+                      <p className="text-xs lg:text-sm text-gray-600">{feature.desc}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side - Stats and Additional Info */}
+            <div
+              className={`transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+            >
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-4 lg:gap-6 mb-8 lg:mb-12">
+                {stats.map((stat, index) => (
+                  <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/15 transition-all duration-300">
+                    <CardContent className="p-4 lg:p-6 text-center">
+                      <stat.icon className={`w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-2 lg:mb-3 ${stat.color}`} />
+                      <div className="text-xl lg:text-3xl font-bold text-white">{stat.value}</div>
+                      <div className="text-xs lg:text-sm text-white/70">{stat.label}</div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Why Choose Us Section */}
+              <Card className="bg-white/10 backdrop-blur-sm border-white/20 mb-6 lg:mb-8">
+                <CardContent className="p-6 lg:p-8">
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Mengapa Pilih Kami?</h3>
+                  <div className="space-y-4 lg:space-y-6">
+                    {[
+                      { icon: Gamepad2, title: "PS5 Terbaru", desc: "Grafis 4K Ray Tracing" },
+                      { icon: Zap, title: "Internet 1Gbps", desc: "Zero Lag Gaming" },
+                      { icon: Shield, title: "Keamanan 24/7", desc: "CCTV & Security" },
+                      { icon: Clock, title: "Buka 24 Jam", desc: "Gaming Tanpa Batas" },
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-center space-x-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                          <item.icon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white text-sm lg:text-base">{item.title}</h4>
+                          <p className="text-white/70 text-xs lg:text-sm">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Promo Banner */}
+              <Card className="bg-gradient-to-r from-orange-500 to-red-500 border-0 overflow-hidden">
+                <CardContent className="p-6 lg:p-8 relative">
+                  <div className="absolute inset-0 bg-[url('/imgVIP4.jpg')] bg-cover bg-center opacity-20" />
+                  <div className="relative z-10 text-center lg:text-left">
+                    <h3 className="text-lg lg:text-xl font-bold text-white mb-2">Flash Sale Hari Ini!</h3>
+                    <p className="text-white/90 text-sm lg:text-base mb-4">Diskon hingga 50% untuk semua paket gaming</p>
+                    <Button size="sm" className="bg-white text-orange-600 hover:bg-gray-100">
+                      Ambil Promo
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
