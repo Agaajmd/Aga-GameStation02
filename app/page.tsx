@@ -21,39 +21,73 @@ export default function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-900 dark:to-slate-800">
         {/* Hero Skeleton */}
         <div className="relative h-screen flex items-center justify-center">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Skeleton className="h-12 sm:h-16 lg:h-20 w-3/4 mx-auto mb-4 sm:mb-6" />
-            <Skeleton className="h-4 sm:h-6 w-1/2 mx-auto mb-6 sm:mb-8" />
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Skeleton className="h-10 sm:h-12 w-32 sm:w-40" />
-              <Skeleton className="h-10 sm:h-12 w-32 sm:w-40" />
+            <div className="space-y-6">
+              <Skeleton className="h-12 sm:h-16 lg:h-20 w-3/4 mx-auto bg-gray-200 dark:bg-gray-700 rounded-xl" />
+              <Skeleton className="h-4 sm:h-6 w-1/2 mx-auto bg-gray-200 dark:bg-gray-700 rounded-lg" />
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-8">
+                <Skeleton className="h-12 w-36 bg-blue-200 dark:bg-blue-800 rounded-lg" />
+                <Skeleton className="h-12 w-36 bg-purple-200 dark:bg-purple-800 rounded-lg" />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Category Skeleton */}
-        <div className="py-12 sm:py-16 lg:py-20">
+        <div className="py-16 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Skeleton className="h-6 sm:h-8 w-48 sm:w-64 mx-auto mb-8 sm:mb-12" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <Skeleton className="h-8 w-64 mx-auto mb-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-48 sm:h-64 lg:h-72 rounded-lg" />
+                <div key={i} className="space-y-4">
+                  <Skeleton className="h-48 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+                  <Skeleton className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                  <Skeleton className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Promo Skeleton */}
-        <div className="py-12 sm:py-16 lg:py-20 bg-muted/50">
+        {/* Announcement Skeleton */}
+        <div className="py-16 bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Skeleton className="h-6 sm:h-8 w-40 sm:w-48 mx-auto mb-8 sm:mb-12" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <Skeleton className="h-8 w-48 mx-auto mb-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-64 sm:h-80 lg:h-96 rounded-lg" />
+                <div key={i} className="space-y-4">
+                  <Skeleton className="h-56 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+                  <Skeleton className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                  <Skeleton className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                </div>
               ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Testimonial Skeleton */}
+        <div className="py-16 bg-white dark:bg-gray-900">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <Skeleton className="h-8 w-56 mx-auto mb-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+            <div className="max-w-4xl mx-auto">
+              <Skeleton className="h-48 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Skeleton */}
+        <div className="py-16 bg-gray-50 dark:bg-gray-800">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <Skeleton className="h-8 w-40 mx-auto mb-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+            <div className="max-w-2xl mx-auto space-y-6">
+              <Skeleton className="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Skeleton className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                <Skeleton className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+              </div>
             </div>
           </div>
         </div>
@@ -62,12 +96,26 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <HeroSection />
-      <CategorySlider />
-      <AnnouncementSection />
-      <TestimonialCarousel />
-      <ContactSection />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-900 dark:to-slate-800">
+      <div className="bg-slate-900 dark:bg-slate-900">
+        <HeroSection />
+      </div>
+      
+      <div className="bg-white dark:bg-gray-900 transition-colors duration-500">
+        <CategorySlider />
+      </div>
+      
+      <div className="bg-gray-50 dark:bg-gray-800 transition-colors duration-500">
+        <AnnouncementSection />
+      </div>
+      
+      <div className="bg-white dark:bg-gray-900 transition-colors duration-500">
+        <TestimonialCarousel />
+      </div>
+      
+      <div className="bg-gray-50 dark:bg-gray-800 transition-colors duration-500">
+        <ContactSection />
+      </div>
     </div>
   )
 }

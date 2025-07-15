@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Users } from "lucide-react"
+import { Clock } from "lucide-react"
 
 interface TimeSlotSelectorProps {
   selected: string | null
@@ -10,21 +10,21 @@ interface TimeSlotSelectorProps {
 }
 
 const timeSlots = [
-  { time: "09:00", available: true, occupied: 2 },
-  { time: "10:00", available: true, occupied: 1 },
-  { time: "11:00", available: true, occupied: 0 },
-  { time: "12:00", available: false, occupied: 4 },
-  { time: "13:00", available: true, occupied: 3 },
-  { time: "14:00", available: true, occupied: 1 },
-  { time: "15:00", available: true, occupied: 2 },
-  { time: "16:00", available: false, occupied: 4 },
-  { time: "17:00", available: true, occupied: 1 },
-  { time: "18:00", available: true, occupied: 3 },
-  { time: "19:00", available: true, occupied: 2 },
-  { time: "20:00", available: true, occupied: 1 },
-  { time: "21:00", available: false, occupied: 4 },
-  { time: "22:00", available: true, occupied: 2 },
-  { time: "23:00", available: true, occupied: 1 },
+  { time: "09:00", available: true },
+  { time: "10:00", available: true },
+  { time: "11:00", available: true },
+  { time: "12:00", available: false },
+  { time: "13:00", available: true },
+  { time: "14:00", available: true },
+  { time: "15:00", available: true },
+  { time: "16:00", available: false },
+  { time: "17:00", available: true },
+  { time: "18:00", available: true },
+  { time: "19:00", available: true },
+  { time: "20:00", available: true },
+  { time: "21:00", available: false },
+  { time: "22:00", available: true },
+  { time: "23:00", available: true },
 ]
 
 export function TimeSlotSelector({ selected, onSelect }: TimeSlotSelectorProps) {
@@ -49,22 +49,18 @@ export function TimeSlotSelector({ selected, onSelect }: TimeSlotSelectorProps) 
             onClick={() => slot.available && onSelect(slot.time)}
           >
             <CardContent className="p-3 text-center">
-              <div className="font-semibold text-foreground mb-1">{slot.time}</div>
-              <div className="flex items-center justify-center space-x-1">
-                <Users className="w-3 h-3 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">{slot.occupied}/4</span>
-              </div>
+              <div className="font-semibold text-foreground mb-2">{slot.time}</div>
               {!slot.available && (
-                <Badge variant="destructive" className="text-xs mt-1">
+                <Badge variant="destructive" className="text-xs">
                   Penuh
                 </Badge>
               )}
-              {slot.available && slot.occupied === 0 && (
+              {slot.available && (
                 <Badge
                   variant="secondary"
-                  className="text-xs mt-1 bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300"
+                  className="text-xs bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300"
                 >
-                  Kosong
+                  Tersedia
                 </Badge>
               )}
             </CardContent>
@@ -77,15 +73,11 @@ export function TimeSlotSelector({ selected, onSelect }: TimeSlotSelectorProps) 
         <div className="space-y-1 text-sm text-blue-800 dark:text-blue-200">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span>Tersedia - Masih ada slot kosong</span>
+            <span>Tersedia - Slot masih bisa dipilih</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span>Penuh - Semua slot terisi</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Users className="w-3 h-3" />
-            <span>Angka menunjukkan jumlah pemain yang sedang bermain</span>
+            <span>Penuh - Slot sudah terisi</span>
           </div>
         </div>
       </div>

@@ -301,30 +301,32 @@ export function AnnouncementList() {
 
         {/* Filters */}
         <div className="mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <div className="relative flex-1 max-w-md mx-auto lg:mx-0">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 placeholder="Cari pengumuman..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-12 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* Category Filter and Sort */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-56 h-12">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="w-full sm:w-64 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center">
+                    <Filter className="w-4 h-4 mr-2 text-blue-600" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
                   {categories.map((category) => (
-                    <SelectItem key={category.value} value={category.value}>
+                    <SelectItem key={category.value} value={category.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       <div className="flex items-center">
-                        <category.icon className="w-4 h-4 mr-2" />
+                        <category.icon className="w-4 h-4 mr-2 text-blue-600" />
                         {category.label}
                       </div>
                     </SelectItem>
@@ -334,12 +336,15 @@ export function AnnouncementList() {
 
               {/* Sort */}
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48 h-12">
-                  <SelectValue />
+                <SelectTrigger className="w-full sm:w-48 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center">
+                    <TrendingUp className="w-4 h-4 mr-2 text-purple-600" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
                   {sortOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -350,10 +355,29 @@ export function AnnouncementList() {
         </div>
 
         {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-gray-600 dark:text-gray-300">
-            Menampilkan {filteredAndSortedAnnouncements.length} dari {announcements.length} pengumuman
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Menampilkan <span className="font-medium text-blue-600">{filteredAndSortedAnnouncements.length}</span> dari <span className="font-medium">{announcements.length}</span> pengumuman
+            </p>
+          </div>
+          
+          {/* Clear Filters Button */}
+          {(searchTerm || selectedCategory !== "all" || sortBy !== "newest") && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setSearchTerm("")
+                setSelectedCategory("all")
+                setSortBy("newest")
+              }}
+              className="text-xs h-8 px-3 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              Reset Filter
+            </Button>
+          )}
         </div>
 
         {/* Announcements Grid - Mobile Optimized */}
@@ -404,11 +428,11 @@ export function AnnouncementList() {
                         )}
 
                         {/* Quick Actions - Mobile positioned on image */}
-                        <div className="absolute top-2 right-2 flex gap-1">
+                        <div className="absolute top-2 right-2 flex gap-2">
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 bg-white/90 hover:bg-white backdrop-blur-sm"
+                            className="h-8 w-8 p-0 bg-white/95 hover:bg-white text-gray-700 hover:text-gray-900 dark:bg-gray-800/95 dark:hover:bg-gray-800 dark:text-gray-300 dark:hover:text-white backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-sm"
                             onClick={() => handleBookmarkAnnouncement(announcement.id)}
                           >
                             <BookmarkPlus className="w-3 h-3" />
@@ -416,7 +440,7 @@ export function AnnouncementList() {
                           <Button
                             size="sm"
                             variant="secondary" 
-                            className="h-8 w-8 p-0 bg-white/90 hover:bg-white backdrop-blur-sm"
+                            className="h-8 w-8 p-0 bg-white/95 hover:bg-white text-gray-700 hover:text-gray-900 dark:bg-gray-800/95 dark:hover:bg-gray-800 dark:text-gray-300 dark:hover:text-white backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-sm"
                             onClick={() => handleShareAnnouncement(announcement)}
                           >
                             <Share2 className="w-3 h-3" />
@@ -686,22 +710,27 @@ export function AnnouncementList() {
             })}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <Megaphone className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Tidak ada pengumuman ditemukan</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Coba ubah filter pencarian atau kata kunci untuk menemukan pengumuman yang sesuai
-            </p>
-            <Button
-              onClick={() => {
-                setSearchTerm("")
-                setSelectedCategory("all")
-                setSortBy("newest")
-              }}
-            >
-              Reset Filter
-            </Button>
-          </div>
+            <div className="text-center py-12">
+              <div className="max-w-md mx-auto">
+                <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Megaphone className="w-10 h-10 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Tidak ada pengumuman ditemukan</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm">
+                  Coba ubah filter pencarian atau kata kunci untuk menemukan pengumuman yang sesuai
+                </p>
+                <Button
+                  onClick={() => {
+                    setSearchTerm("")
+                    setSelectedCategory("all")
+                    setSortBy("newest")
+                  }}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg"
+                >
+                  Reset Filter
+                </Button>
+              </div>
+            </div>
         )}
 
         {/* CTA Section */}
@@ -716,9 +745,12 @@ export function AnnouncementList() {
               <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <Input
                   placeholder="Email address"
-                  className="bg-white/20 border-white/30 text-white placeholder:text-white/70"
+                  className="bg-white/20 border-white/30 text-white placeholder:text-white/70 rounded-xl h-12"
                 />
-                <Button variant="secondary" className="bg-white text-blue-600 hover:bg-gray-100">
+                <Button 
+                  variant="secondary" 
+                  className="bg-white text-blue-600 hover:bg-gray-100 border-0 rounded-xl h-12 px-6 font-medium shadow-lg"
+                >
                   Subscribe
                 </Button>
               </div>

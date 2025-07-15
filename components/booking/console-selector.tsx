@@ -118,8 +118,8 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         !option.available
           ? "opacity-60 cursor-not-allowed border-gray-300 dark:border-gray-600"
           : isSelected
-            ? `ring-2 ring-primary shadow-xl bg-gradient-to-${isMobile ? 'r' : 'b'} from-primary/5 to-blue-50 dark:to-blue-950 border-primary scale-[${isMobile ? '1.02' : '1.05'}]`
-            : "hover:shadow-lg hover:scale-[1.01] border-gray-200 dark:border-gray-700"
+            ? `ring-2 ring-primary shadow-xl bg-gradient-to-${isMobile ? 'r' : 'b'} from-primary/5 to-blue-50 dark:from-primary/20 dark:to-blue-900/30 border-primary scale-[1.02]`
+            : "hover:shadow-lg hover:scale-[1.01] border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800"
       }`}
     >
       <CardContent className="p-0 relative h-full">
@@ -136,22 +136,20 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         )}
 
         {/* Game List Button */}
-        <div className={`absolute ${isMobile ? 'bottom-0 left-0 right-0' : 'top-5'} ${!isMobile && isSelected ? 'left-2' : !isMobile ? 'left-5' : ''} z-10`}>
+        <div className="absolute bottom-0 left-0 right-0 z-10">
           <Button
             variant="default"
-            size={isMobile ? "default" : "default"}
-            className={`bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-medium transition-all duration-300 ${
-              isMobile ? 'w-full h-8 rounded-none rounded-b-lg text-xs px-3 animate-none' : 'px-2 py-1 text-[9px] h-4 min-w-0 rounded-sm animate-pulse hover:animate-none'
-            }`}
+            size="default"
+            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-medium transition-all duration-300 w-full h-8 rounded-none rounded-b-lg text-xs px-3"
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <Joystick className={`${isMobile ? 'w-3 h-3 mr-1.5' : 'w-4 h-4 mr-1'}`} />
-            {isMobile ? 'Lihat Games' : '🎮 Games'}
+            <Joystick className="w-3 h-3 mr-1.5" />
+            Lihat Games
           </Button>
         </div>
 
         {/* Availability Badge */}
-        <div className={`absolute top-${isMobile ? '9' : '20'} right-${isMobile ? '2' : '5'} z-10`}>
+        <div className={`absolute top-${isMobile ? '9' : '5'} right-${isMobile ? '2' : '5'} z-10`}>
           <Badge
             variant="secondary"
             className={`text-xs font-semibold ${
@@ -167,7 +165,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           </Badge>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '6' : '16'} ${isMobile ? 'pb-10' : ''} h-full flex flex-col justify-center`}>
+        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '6' : '8'} pb-12 h-full flex flex-col justify-center`}>
           <div className={`text-center ${isMobile ? 'mb-2' : 'mb-6'} flex-grow flex flex-col justify-center`}>
             <div className={`inline-flex items-center justify-center w-${isMobile ? '12' : '16'} h-${isMobile ? '12' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '3' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''} mx-auto`}>
               <CategoryIcon className={`w-${isMobile ? '6' : '8'} h-${isMobile ? '6' : '8'}`} />
@@ -185,7 +183,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
               <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold text-foreground ${isMobile ? 'text-center' : 'text-center'}`}>Fasilitas:</p>
               <div className={`space-y-${isMobile ? '1' : '2'}`}>
                 {(isMobile ? option.features.slice(0, 2) : option.features).map((feature: string, idx: number) => (
-                  <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-800 rounded-${isMobile ? 'md' : 'lg'} p-${isMobile ? '2' : '3'}`}>
+                  <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-700 rounded-${isMobile ? 'md' : 'lg'} p-${isMobile ? '2' : '3'}`}>
                     <div className={`w-${isMobile ? '1' : '2'} h-${isMobile ? '1' : '2'} bg-primary rounded-full flex-shrink-0`}></div>
                     <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
                   </div>
@@ -197,54 +195,50 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
             </div>
           )}
 
-          {/* Selection Status */}
-          {!isMobile && (
-            <div className="mt-auto">
-              {!isSelected && option.available && (
-                <div className={`pt-${isMobile ? '2' : '4'} border-t border-gray-200 dark:border-gray-700`}>
-                  <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
-                    👆 {isMobile ? 'Pilih' : 'Klik untuk memilih'}
-                  </p>
-                </div>
-              )}
+          {/* Selection Status - Above Games Button */}
+          <div className="mt-auto mb-2">
+            {!isSelected && option.available && (
+              <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
+                <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
+                  👆 Klik untuk memilih
+                </p>
+              </div>
+            )}
 
-              {isSelected && (
-                <div className={`pt-${isMobile ? '2' : '4'} border-t border-primary/20`}>
-                  <div className={`flex items-center justify-center space-x-${isMobile ? '1' : '2'} text-primary`}>
-                    <Check className={`w-${isMobile ? '3' : '4'} h-${isMobile ? '3' : '4'}`} />
-                    <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold`}>Terpilih</p>
-                  </div>
+            {isSelected && (
+              <div className="pt-2 border-t border-primary/20">
+                <div className="flex items-center justify-center space-x-2 text-primary">
+                  <Check className="w-3 h-3" />
+                  <p className="text-xs font-semibold">Terpilih</p>
                 </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
   )
 
   const renderBackCard = (option: ConsoleOption, isMobile: boolean = false) => (
-    <Card className="group cursor-pointer transition-all duration-300 overflow-hidden h-full bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 border-indigo-200 dark:border-indigo-700">
+    <Card className="group cursor-pointer transition-all duration-300 overflow-hidden h-full bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 border-indigo-200 dark:border-indigo-600">
       <CardContent className="p-0 relative h-full">
         {/* Header with game-themed gradient */}
         <div className={`h-${isMobile ? '2' : '3'} w-full bg-gradient-to-r from-indigo-500 to-purple-600`} />
 
         {/* Back Button */}
-        <div className={`absolute ${isMobile ? 'bottom-0 left-0 right-0' : 'top-5 left-5'} z-10`}>
+        <div className="absolute bottom-0 left-0 right-0 z-10">
           <Button
             variant="default"
-            size={isMobile ? "default" : "default"}
-            className={`bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-medium transition-all duration-300 ${
-              isMobile ? 'w-full h-8 rounded-none rounded-b-lg text-xs px-3' : 'px-2 py-1 text-[9px] h-4 min-w-0 rounded-sm'
-            }`}
+            size="default"
+            className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-medium transition-all duration-300 w-full h-8 rounded-none rounded-b-lg text-xs px-3"
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <RotateCcw className={`${isMobile ? 'w-3 h-3 mr-1.5' : 'w-4 h-4 mr-1'}`} />
-            {isMobile ? 'Kembali' : '⬅️ Back'}
+            <RotateCcw className="w-3 h-3 mr-1.5" />
+            Kembali
           </Button>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '8' : '16'} ${isMobile ? 'pb-12' : ''} h-full flex flex-col`}>
+        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '8' : '8'} pb-12 h-full flex flex-col`}>
           <div className="text-center mb-4">
             <div className={`inline-flex items-center justify-center w-${isMobile ? '8' : '12'} h-${isMobile ? '8' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
               <Joystick className={`w-${isMobile ? '4' : '6'} h-${isMobile ? '4' : '6'}`} />
@@ -259,7 +253,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <div className="flex-grow overflow-hidden">
             <div className={`grid grid-cols-1 gap-${isMobile ? '1' : '2'} max-h-full overflow-y-auto scrollbar-hide`}>
               {option.games?.map((game, idx) => (
-                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-800/50 rounded-md p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors`}>
+                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-700/50 rounded-md p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-600/50 transition-colors`}>
                   <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
                   <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{game}</span>
                 </div>
@@ -268,7 +262,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           </div>
 
           {!isMobile && (
-            <div className={`mt-${isMobile ? '2' : '4'} pt-${isMobile ? '2' : '4'} border-t border-indigo-200 dark:border-indigo-700 text-center`}>
+            <div className={`mt-${isMobile ? '2' : '4'} pt-${isMobile ? '2' : '4'} border-t border-indigo-200 dark:border-indigo-600 text-center`}>
               <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground`}>
                 Total: {option.games?.length || 0} games
               </p>

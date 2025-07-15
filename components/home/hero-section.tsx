@@ -53,25 +53,14 @@ export function HeroSection() {
   }, [slides.length])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-      {/* Animated Background */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-900 to-gray-900">
+      {/* Clean Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/Ps1.jpg')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/80 to-indigo-900/80" />
-
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`,
-            }}
-          />
-        ))}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-gray-900/98 to-slate-900/95" />
+        
+        {/* Subtle Pattern Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.8)_1px,transparent_0)]" 
+             style={{ backgroundSize: '50px 50px' }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 lg:py-12">
@@ -202,29 +191,8 @@ export function HeroSection() {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Promo Banner */}
-              <Card className="bg-gradient-to-r from-orange-500 to-red-500 border-0 overflow-hidden">
-                <CardContent className="p-6 lg:p-8 relative">
-                  <div className="absolute inset-0 bg-[url('/imgVIP4.jpg')] bg-cover bg-center opacity-20" />
-                  <div className="relative z-10 text-center lg:text-left">
-                    <h3 className="text-lg lg:text-xl font-bold text-white mb-2">Flash Sale Hari Ini!</h3>
-                    <p className="text-white/90 text-sm lg:text-base mb-4">Diskon hingga 50% untuk semua paket gaming</p>
-                    <Button size="sm" className="bg-white text-orange-600 hover:bg-gray-100">
-                      Ambil Promo
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-2 sm:h-3 bg-white/70 rounded-full mt-1 sm:mt-2 animate-pulse" />
         </div>
       </div>
     </section>

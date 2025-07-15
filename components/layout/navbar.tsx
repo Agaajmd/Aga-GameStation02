@@ -97,7 +97,7 @@ export function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center space-x-2">
-            {!isMobile && <ThemeToggle />}
+            <ThemeToggle />
 
             {user?.role === "customer" && (
               <Link href="/checkout" className="relative">
@@ -120,7 +120,7 @@ export function Navbar() {
                     {user.name}
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" onClick={handleLogout}>
+                <Button variant="outline" size="sm" onClick={handleLogout} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 border-red-200 dark:border-red-800">
                   <LogOut className="w-4 h-4" />
                 </Button>
               </div>
@@ -165,10 +165,6 @@ export function Navbar() {
                 </Link>
               ))}
 
-              <div className="border-t border-border pt-2 mt-2">
-                <ThemeToggle />
-              </div>
-
               {user ? (
                 <div className="border-t border-border pt-2 space-y-2">
                   <Link
@@ -181,7 +177,7 @@ export function Navbar() {
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full text-left px-3 py-2 text-muted-foreground hover:text-primary transition-colors duration-200 rounded-md"
+                    className="flex items-center w-full text-left px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 transition-colors duration-200 rounded-md"
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Keluar

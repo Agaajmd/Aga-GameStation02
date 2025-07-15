@@ -55,7 +55,12 @@ export function RegisterForm() {
 
     setIsLoading(true)
     try {
-      const success = await register(formData.name, formData.email, formData.phone, formData.password)
+      const success = await register({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
+      })
       if (success) {
         showSuccess("Registrasi berhasil!", "Akun Anda telah dibuat")
         router.push("/")

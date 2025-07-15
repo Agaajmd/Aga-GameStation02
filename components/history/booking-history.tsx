@@ -104,41 +104,6 @@ export function BookingHistory() {
     },
   ]
 
-  const stats = [
-    {
-      title: "Total Booking",
-      value: bookings.length.toString(),
-      icon: Calendar,
-      color: "text-blue-500",
-    },
-    {
-      title: "Jam Gaming",
-      value: bookings.reduce((total, booking) => total + booking.duration, 0).toString() + "h",
-      icon: Clock,
-      color: "text-green-500",
-    },
-    {
-      title: "Total Pengeluaran",
-      value:
-        "Rp " +
-        bookings
-          .filter((b) => b.status === "completed")
-          .reduce((total, booking) => total + Number.parseInt(booking.totalPrice.replace(/\D/g, "")), 0)
-          .toLocaleString(),
-      icon: Receipt,
-      color: "text-purple-500",
-    },
-    {
-      title: "Rating Rata-rata",
-      value: (
-        bookings.filter((b) => b.rating).reduce((total, booking) => total + (booking.rating || 0), 0) /
-          bookings.filter((b) => b.rating).length || 0
-      ).toFixed(1),
-      icon: Star,
-      color: "text-yellow-500",
-    },
-  ]
-
   const statusOptions = [
     { value: "all", label: "Semua Status" },
     { value: "completed", label: "Selesai" },
@@ -195,47 +160,36 @@ export function BookingHistory() {
             Riwayat Booking
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Lihat semua riwayat booking gaming Anda dan kelola pengalaman gaming masa depan
+            Lihat semua riwayat booking gaming Anda
           </p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <stat.icon className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
-                <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">{stat.title}</div>
-              </CardContent>
-            </Card>
-          ))}
         </div>
 
         {/* Filters */}
         <div className="mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <div className="relative flex-1 max-w-md mx-auto lg:mx-0">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 placeholder="Cari booking ID, konsol, atau cabang..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-12 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-48 h-12">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="w-full sm:w-48 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center">
+                    <Filter className="w-4 h-4 mr-2 text-blue-600" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
                   {statusOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -243,13 +197,15 @@ export function BookingHistory() {
               </Select>
 
               <Select value={dateFilter} onValueChange={setDateFilter}>
-                <SelectTrigger className="w-48 h-12">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="w-full sm:w-48 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-2 text-purple-600" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
                   {dateOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -260,10 +216,29 @@ export function BookingHistory() {
         </div>
 
         {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-gray-600 dark:text-gray-300">
-            Menampilkan {filteredBookings.length} dari {bookings.length} booking
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Menampilkan <span className="font-medium text-blue-600">{filteredBookings.length}</span> dari <span className="font-medium">{bookings.length}</span> booking
+            </p>
+          </div>
+          
+          {/* Clear Filters Button */}
+          {(searchTerm || statusFilter !== "all" || dateFilter !== "all") && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setSearchTerm("")
+                setStatusFilter("all")
+                setDateFilter("all")
+              }}
+              className="text-xs h-8 px-3 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              Reset Filter
+            </Button>
+          )}
         </div>
 
         {/* Booking List */}
@@ -355,17 +330,22 @@ export function BookingHistory() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="outline" size="sm" onClick={() => setSelectedBooking(booking)}>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => setSelectedBooking(booking)}
+                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg shadow-sm"
+                          >
                             <Eye className="w-4 h-4 mr-2" />
                             Detail
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
                           <DialogHeader>
-                            <DialogTitle>Detail Booking {selectedBooking?.id}</DialogTitle>
+                            <DialogTitle className="text-gray-900 dark:text-white">Detail Booking {selectedBooking?.id}</DialogTitle>
                           </DialogHeader>
                           {selectedBooking && (
                             <div className="space-y-6">
@@ -456,11 +436,21 @@ export function BookingHistory() {
 
                       {booking.status === "completed" && (
                         <>
-                          <Button variant="outline" size="sm" onClick={() => handleRebook(booking)}>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => handleRebook(booking)}
+                            className="h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-lg shadow-sm"
+                          >
                             <RotateCcw className="w-4 h-4 mr-2" />
                             Booking Lagi
                           </Button>
-                          <Button variant="outline" size="sm" onClick={() => handleDownloadReceipt(booking)}>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => handleDownloadReceipt(booking)}
+                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg shadow-sm"
+                          >
                             <Download className="w-4 h-4 mr-2" />
                             Unduh Struk
                           </Button>
@@ -468,7 +458,11 @@ export function BookingHistory() {
                       )}
 
                       {booking.status === "upcoming" && (
-                        <Button variant="destructive" size="sm">
+                        <Button 
+                          variant="destructive" 
+                          size="sm"
+                          className="h-10 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-lg shadow-sm"
+                        >
                           Batalkan
                         </Button>
                       )}
@@ -480,20 +474,25 @@ export function BookingHistory() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <Calendar className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Tidak ada booking ditemukan</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Coba ubah filter pencarian atau mulai booking gaming pertama Anda
-            </p>
-            <Button
-              onClick={() => {
-                setSearchTerm("")
-                setStatusFilter("all")
-                setDateFilter("all")
-              }}
-            >
-              Reset Filter
-            </Button>
+            <div className="max-w-md mx-auto">
+              <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Calendar className="w-10 h-10 text-gray-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Tidak ada booking ditemukan</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm">
+                Coba ubah filter pencarian atau mulai booking gaming pertama Anda
+              </p>
+              <Button
+                onClick={() => {
+                  setSearchTerm("")
+                  setStatusFilter("all")
+                  setDateFilter("all")
+                }}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg rounded-lg"
+              >
+                Reset Filter
+              </Button>
+            </div>
           </div>
         )}
       </div>
