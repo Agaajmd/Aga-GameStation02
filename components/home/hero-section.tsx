@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Play, Star, Users, Calendar, Trophy, Gamepad2, Zap, Shield, Clock } from "lucide-react"
+import { ArrowRight, Play, Star, Gamepad2 } from "lucide-react"
 import Link from "next/link"
 
 export function HeroSection() {

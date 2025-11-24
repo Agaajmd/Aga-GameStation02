@@ -22,6 +22,7 @@ import {
   MapPin,
   Trophy,
   Play,
+  Clock,
 } from "lucide-react"
 
 const mockCustomers = [
@@ -205,7 +206,7 @@ export function CustomerManagement() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-700 dark:text-gray-300">Tidak Aktif</p>
-                  <p className="text-3xl font-bold text-gray-800 dark:text-gray-200">{queuedCustomers}</p>
+                  <p className="text-3xl font-bold text-gray-800 dark:text-gray-200">{inactiveCustomers}</p>
                 </div>
                 <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
                   <Clock className="h-6 w-6 text-gray-600 dark:text-gray-200" />

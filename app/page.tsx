@@ -96,24 +96,22 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-900 dark:to-slate-800">
-      <div className="bg-slate-900 dark:bg-slate-900">
-        <HeroSection />
-      </div>
+    <div className="min-h-screen">
+      <HeroSection />
       
-      <div className="bg-white dark:bg-gray-900 transition-colors duration-500">
+      <div className="bg-background dark:bg-gray-900 transition-colors duration-500">
         <CategorySlider />
       </div>
       
-      <div className="bg-gray-50 dark:bg-gray-800 transition-colors duration-500">
+      <div className="bg-muted/30 dark:bg-gray-800 transition-colors duration-500">
         <AnnouncementSection />
       </div>
       
-      <div className="bg-white dark:bg-gray-900 transition-colors duration-500">
+      <div className="bg-background dark:bg-gray-900 transition-colors duration-500">
         <TestimonialCarousel />
       </div>
       
-      <div className="bg-gray-50 dark:bg-gray-800 transition-colors duration-500">
+      <div className="bg-muted/30 dark:bg-gray-800 transition-colors duration-500">
         <ContactSection />
       </div>
     </div>
