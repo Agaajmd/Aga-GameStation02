@@ -403,8 +403,8 @@ export function PSUnitsManagement() {
 
         {/* Add Branch Modal */}
         {showAddModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Tambah Cabang Rental PS Baru</CardTitle>
                 <CardDescription>Masukkan informasi cabang dan jumlah unit PS yang tersedia</CardDescription>
@@ -552,8 +552,8 @@ export function PSUnitsManagement() {
 
         {/* Edit Branch Modal */}
         {showEditModal && editingBranch && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Edit Cabang - {editingBranch.name}</CardTitle>
               </CardHeader>
@@ -695,8 +695,8 @@ export function PSUnitsManagement() {
 
         {/* Branch Detail Modal */}
         {selectedBranch && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Detail Cabang - {selectedBranch.name}</CardTitle>
               </CardHeader>

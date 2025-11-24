@@ -10,8 +10,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useAuth } from "@/components/providers/auth-provider"
 import { useToast } from "@/components/providers/toast-provider"
-import { StatCard, FilterBar, EmptyState } from "@/components/super-admin/shared"
-import { getStatusColor, getCategoryColor, getStatusLabel, getConditionLabel, generateUnitId } from "@/lib/utils/super-admin"
+import { StatCard, EmptyState } from "@/components/super-admin/shared"
+import { getStatusColor, getCategoryColor, getStatusLabel, getConditionLabel, generateUnitId, formatCurrency } from "@/lib/utils/super-admin"
 import type { PSUnit, PSUnitFormData } from "@/lib/types/super-admin"
 import {
   Gamepad2,
@@ -24,6 +24,7 @@ import {
   CheckCircle,
   ArrowLeft,
   Building2,
+  Search,
 } from "lucide-react"
 
 const branchData: Record<string, any> = {
@@ -257,41 +258,56 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
         </div>
 
         {/* Filters */}
-        <FilterBar
-          searchQuery={searchTerm}
-          onSearchChange={setSearchTerm}
-          searchPlaceholder="Cari unit..."
-          filters={[
-            {
-              value: statusFilter,
-              onChange: setStatusFilter,
-              placeholder: "Semua Status",
-              options: [
-                { value: "all", label: "Semua Status" },
-                { value: "available", label: "Tersedia" },
-                { value: "occupied", label: "Digunakan" },
-                { value: "maintenance", label: "Maintenance" },
-                { value: "offline", label: "Offline" }
-              ]
-            },
-            {
-              value: categoryFilter,
-              onChange: setCategoryFilter,
-              placeholder: "Semua Kategori",
-              options: [
-                { value: "all", label: "Semua Kategori" },
-                { value: "reguler", label: "Reguler" },
-                { value: "vip", label: "VIP" },
-                { value: "vvip", label: "VVIP" }
-              ]
-            }
-          ]}
-          actionButton={{
-            label: "Tambah Unit PS",
-            icon: <Plus className="w-4 h-4 mr-2" />,
-            onClick: () => setShowAddModal(true)
-          }}
-        />
+        <Card className="mb-8 border-border bg-card">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Cari unit berdasarkan nama, ID, atau lokasi..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 bg-background border-border text-foreground"
+                  />
+                </div>
+              </div>
+              
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full md:w-48 bg-background border-border text-foreground">
+                  <SelectValue placeholder="Filter Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Status</SelectItem>
+                  <SelectItem value="available">Tersedia</SelectItem>
+                  <SelectItem value="occupied">Digunakan</SelectItem>
+                  <SelectItem value="maintenance">Maintenance</SelectItem>
+                  <SelectItem value="offline">Offline</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="w-full md:w-48 bg-background border-border text-foreground">
+                  <SelectValue placeholder="Filter Kategori" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Kategori</SelectItem>
+                  <SelectItem value="reguler">Reguler</SelectItem>
+                  <SelectItem value="vip">VIP</SelectItem>
+                  <SelectItem value="vvip">VVIP</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Button 
+                onClick={() => setShowAddModal(true)} 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Tambah Unit PS
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Units Grid */}
         {filteredUnits.length === 0 ? (
@@ -386,8 +402,8 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
 
         {/* Add Unit Modal */}
         {showAddModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Tambah Unit PS Baru</CardTitle>
               </CardHeader>
@@ -572,8 +588,8 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
 
         {/* Edit Unit Modal */}
         {showEditModal && editingUnit && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Edit Unit - {editingUnit.name}</CardTitle>
               </CardHeader>
@@ -778,8 +794,8 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
 
         {/* Unit Detail Modal */}
         {selectedUnit && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Detail Unit - {selectedUnit.name}</CardTitle>
               </CardHeader>

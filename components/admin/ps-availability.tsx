@@ -479,8 +479,8 @@ export function PSAvailability() {
 
         {/* Unit Detail Modal */}
         {selectedUnit && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-2xl bg-card border-border">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-card-foreground">Detail Unit {selectedUnit.id}</CardTitle>
               </CardHeader>

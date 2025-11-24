@@ -374,8 +374,8 @@ export function CustomerManagement() {
 
         {/* Customer Detail Modal */}
         {selectedCustomer && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-border shadow-2xl rounded-3xl">
               <CardHeader>
                 <CardTitle className="text-contrast">Detail Pelanggan - {selectedCustomer.name}</CardTitle>
               </CardHeader>
