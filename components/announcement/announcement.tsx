@@ -399,11 +399,9 @@ export function AnnouncementList() {
                         <img
                           src={announcement.image || "/imgVIP1.jpg"}
                           alt={announcement.title}
-                          className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
-
-                        {/* Badges - Mobile optimized */}
+                        className="w-full h-full object-cover rounded-3xl group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-3xl" />                        {/* Badges - Mobile optimized */}
                         <div className="absolute top-2 left-2 flex flex-col gap-1">
                           <Badge className={`${priorityColors[announcement.priority as keyof typeof priorityColors]} text-white text-xs px-2 py-1`}>
                             <TypeIcon className="w-3 h-3 mr-1" />
@@ -493,7 +491,7 @@ export function AnnouncementList() {
 
                         {/* Special Details for Promo */}
                         {announcement.type === 'promo' && announcement.details && (
-                          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
+                          <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-3">
                             <div className="flex items-center justify-between">
                               <div>
                                 <span className="text-base sm:text-lg font-bold text-green-600">{announcement.details.discountPrice}</span>
@@ -532,7 +530,7 @@ export function AnnouncementList() {
                                   <img
                                     src={selectedAnnouncement.image || "/imgVIP1.jpg"}
                                     alt={selectedAnnouncement.title}
-                                    className="w-full h-48 sm:h-64 object-cover rounded-lg"
+                                    className="w-full h-48 sm:h-64 object-cover rounded-3xl"
                                   />
 
                                   <div className="flex items-center gap-2 flex-wrap">
@@ -552,7 +550,7 @@ export function AnnouncementList() {
 
                                   {/* Special Content Based on Type */}
                                   {selectedAnnouncement.type === 'promo' && selectedAnnouncement.details && (
-                                    <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 sm:p-6">
+                                    <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-4 sm:p-6">
                                       <h4 className="font-semibold mb-4 flex items-center">
                                         <Gift className="w-5 h-5 mr-2 text-green-600" />
                                         Detail Promo
@@ -571,7 +569,7 @@ export function AnnouncementList() {
                                   )}
 
                                   {selectedAnnouncement.type === 'event' && selectedAnnouncement.details && (
-                                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 sm:p-6">
+                                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-4 sm:p-6">
                                       <h4 className="font-semibold mb-4 flex items-center">
                                         <Trophy className="w-5 h-5 mr-2 text-blue-600" />
                                         Detail Event

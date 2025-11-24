@@ -110,7 +110,7 @@ export function EmailVerification({ onBack }: EmailVerificationProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Current Email Status */}
-          <div className="p-4 bg-muted/50 rounded-lg border border-border">
+          <div className="p-4 bg-muted/50 rounded-2xl border border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-muted-foreground" />

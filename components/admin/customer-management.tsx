@@ -169,8 +169,8 @@ export function CustomerManagement() {
                   <p className="text-sm text-blue-700 dark:text-blue-300">Total Pelanggan</p>
                   <p className="text-3xl font-bold text-blue-800 dark:text-blue-200">{totalCustomers}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-200 dark:bg-blue-800 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-700 dark:text-blue-300" />
+              <div className="w-12 h-12 bg-blue-200 dark:bg-blue-800 rounded-2xl flex items-center justify-center">
+                <Users className="h-6 w-6 text-blue-600 dark:text-blue-200" />
                 </div>
               </div>
               <div className="mt-4 flex items-center text-sm">
@@ -188,7 +188,7 @@ export function CustomerManagement() {
                   <p className="text-sm text-green-700 dark:text-green-300">Sedang Bermain</p>
                   <p className="text-3xl font-bold text-green-800 dark:text-green-200">{playingCustomers}</p>
                 </div>
-                <div className="w-12 h-12 bg-green-200 dark:bg-green-800 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-200 dark:bg-green-800 rounded-2xl flex items-center justify-center">
                   <Play className="w-6 h-6 text-green-700 dark:text-green-300" />
                 </div>
               </div>
@@ -205,10 +205,10 @@ export function CustomerManagement() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-700 dark:text-gray-300">Tidak Aktif</p>
-                  <p className="text-3xl font-bold text-gray-800 dark:text-gray-200">{inactiveCustomers}</p>
+                  <p className="text-3xl font-bold text-gray-800 dark:text-gray-200">{queuedCustomers}</p>
                 </div>
-                <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center">
-                  <Trophy className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-gray-600 dark:text-gray-200" />
                 </div>
               </div>
               <div className="mt-4 flex items-center text-sm">
@@ -226,7 +226,7 @@ export function CustomerManagement() {
                     Rp {(totalRevenue / 1000000).toFixed(1)}M
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-yellow-200 dark:bg-yellow-800 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-yellow-200 dark:bg-yellow-800 rounded-2xl flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-yellow-700 dark:text-yellow-300" />
                 </div>
               </div>

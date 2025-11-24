@@ -55,7 +55,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block text-gray-400 hover:text-white transition-all duration-300 text-sm hover:translate-x-2 transform hover:bg-white/5 py-2 px-3 rounded-lg -mx-3"
+                  className="block text-gray-400 hover:text-white transition-all duration-300 text-sm hover:translate-x-2 transform hover:bg-white/5 py-2 px-3 rounded-2xl -mx-3"
                 >
                   {link.label}
                 </Link>
@@ -70,19 +70,19 @@ export function Footer() {
               <div className="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
             </h3>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 group hover:bg-white/5 p-3 rounded-lg -mx-3 transition-all duration-300">
+              <div className="flex items-center space-x-3 group hover:bg-white/5 p-3 rounded-2xl -mx-3 transition-all duration-300">
                 <div className="w-10 h-10 bg-blue-600/20 rounded-xl flex items-center justify-center group-hover:bg-blue-600/40 transition-all duration-300">
                   <Phone className="w-4 h-4 text-blue-400" />
                 </div>
                 <span className="text-gray-300 text-sm">+62 812-3456-7890</span>
               </div>
-              <div className="flex items-center space-x-3 group hover:bg-white/5 p-3 rounded-lg -mx-3 transition-all duration-300">
+              <div className="flex items-center space-x-3 group hover:bg-white/5 p-3 rounded-2xl -mx-3 transition-all duration-300">
                 <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center group-hover:bg-purple-600/40 transition-all duration-300">
                   <Mail className="w-4 h-4 text-purple-400" />
                 </div>
                 <span className="text-gray-300 text-sm">info@agagame.com</span>
               </div>
-              <div className="flex items-start space-x-3 group hover:bg-white/5 p-3 rounded-lg -mx-3 transition-all duration-300">
+              <div className="flex items-start space-x-3 group hover:bg-white/5 p-3 rounded-2xl -mx-3 transition-all duration-300">
                 <div className="w-10 h-10 bg-green-600/20 rounded-xl flex items-center justify-center group-hover:bg-green-600/40 transition-all duration-300 mt-0.5">
                   <MapPin className="w-4 h-4 text-green-400" />
                 </div>
@@ -101,7 +101,7 @@ export function Footer() {
               <div className="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
             </h3>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3 group hover:bg-white/5 p-3 rounded-lg -mx-3 transition-all duration-300">
+              <div className="flex items-start space-x-3 group hover:bg-white/5 p-3 rounded-2xl -mx-3 transition-all duration-300">
                 <div className="w-10 h-10 bg-orange-600/20 rounded-xl flex items-center justify-center group-hover:bg-orange-600/40 transition-all duration-300 mt-0.5">
                   <Clock className="w-4 h-4 text-orange-400" />
                 </div>

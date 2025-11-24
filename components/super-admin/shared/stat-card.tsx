@@ -18,7 +18,7 @@ export function StatCard({ title, value, icon, iconBgColor, valueColor, delay }:
             <p className="text-sm text-muted-foreground">{title}</p>
             <p className={`text-3xl font-bold ${valueColor || "text-foreground"}`}>{value}</p>
           </div>
-          <div className={`w-12 h-12 ${iconBgColor} rounded-lg flex items-center justify-center`}>{icon}</div>
+          <div className={`w-12 h-12 ${iconBgColor} rounded-2xl flex items-center justify-center`}>{icon}</div>
         </div>
       </CardContent>
     </Card>

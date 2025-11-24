@@ -125,7 +125,7 @@ export function DateSelector({ selected, onSelect }: DateSelectorProps) {
         </div>
 
         {selected && (
-          <div className="mt-4 p-3 bg-primary/10 rounded-lg">
+          <div className="mt-4 p-3 bg-primary/10 rounded-2xl">
             <p className="text-sm text-primary font-medium">Tanggal dipilih: {selected}</p>
           </div>
         )}

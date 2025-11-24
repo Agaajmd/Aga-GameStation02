@@ -68,7 +68,7 @@ export function TimeSlotSelector({ selected, onSelect }: TimeSlotSelectorProps) 
         ))}
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-2xl border border-blue-200 dark:border-blue-800">
         <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Keterangan:</h4>
         <div className="space-y-1 text-sm text-blue-800 dark:text-blue-200">
           <div className="flex items-center space-x-2">

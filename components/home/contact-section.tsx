@@ -124,7 +124,7 @@ export function ContactSection() {
                     <span className="text-muted-foreground lg:text-lg">Hari Libur Nasional</span>
                     <span className="font-medium text-foreground lg:text-lg">Tetap Buka</span>
                   </div>
-                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-green-50 dark:bg-green-950 rounded-2xl">
                     <p className="text-sm lg:text-base text-green-700 dark:text-green-300 text-center">
                       🎮 Siap melayani gamer 24/7 tanpa henti!
                     </p>

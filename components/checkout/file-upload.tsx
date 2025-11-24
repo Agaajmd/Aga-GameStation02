@@ -100,7 +100,7 @@ export function FileUpload({ file, onFileSelect }: FileUploadProps) {
               {/* Preview */}
               <div className="flex-shrink-0">
                 {preview ? (
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-border">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-border">
                     <img
                       src={preview || "/placeholder.svg"}
                       alt="Preview bukti pembayaran"
@@ -108,7 +108,7 @@ export function FileUpload({ file, onFileSelect }: FileUploadProps) {
                     />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-muted flex items-center justify-center border border-border">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-muted flex items-center justify-center border border-border">
                     <ImageIcon className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
                   </div>
                 )}
@@ -149,13 +149,13 @@ export function FileUpload({ file, onFileSelect }: FileUploadProps) {
 
             {/* Full Preview */}
             {preview && (
-              <div className="mt-4 p-4 bg-muted rounded-lg">
+              <div className="mt-4 p-4 bg-muted rounded-2xl">
                 <p className="text-sm font-medium text-foreground mb-2">Preview Bukti Pembayaran:</p>
                 <div className="max-w-sm mx-auto">
                   <img
                     src={preview || "/placeholder.svg"}
                     alt="Preview bukti pembayaran"
-                    className="w-full rounded-lg border border-border shadow-sm"
+                    className="w-full rounded-2xl border border-border shadow-sm"
                   />
                 </div>
               </div>

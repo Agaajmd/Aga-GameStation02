@@ -181,15 +181,15 @@ export function AnnouncementSection() {
                 <div className="text-center lg:text-right">
                   <div className="text-sm lg:text-base font-medium mb-3 lg:mb-4">Berakhir dalam:</div>
                   <div className="flex gap-2 lg:gap-3 justify-center lg:justify-end">
-                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                    <div className="bg-white/20 rounded-2xl p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
                       <div className="text-2xl lg:text-3xl font-bold">{timeLeft.hours.toString().padStart(2, "0")}</div>
                       <div className="text-xs lg:text-sm">Jam</div>
                     </div>
-                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                    <div className="bg-white/20 rounded-2xl p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
                       <div className="text-2xl lg:text-3xl font-bold">{timeLeft.minutes.toString().padStart(2, "0")}</div>
                       <div className="text-xs lg:text-sm">Menit</div>
                     </div>
-                    <div className="bg-white/20 rounded-lg p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
+                    <div className="bg-white/20 rounded-2xl p-3 lg:p-4 min-w-[60px] lg:min-w-[80px]">
                       <div className="text-2xl lg:text-3xl font-bold">{timeLeft.seconds.toString().padStart(2, "0")}</div>
                       <div className="text-xs lg:text-sm">Detik</div>
                     </div>

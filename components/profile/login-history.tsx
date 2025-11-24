@@ -120,7 +120,7 @@ export function LoginHistory({ onBack }: LoginHistoryProps) {
             {loginHistory.map((login) => (
               <div
                 key={login.id}
-                className="p-4 bg-muted/50 rounded-lg border border-border hover:bg-muted/70 transition-colors"
+                className="p-4 bg-muted/50 rounded-2xl border border-border hover:bg-muted/70 transition-colors"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1 space-y-2">
@@ -158,7 +158,7 @@ export function LoginHistory({ onBack }: LoginHistoryProps) {
             ))}
           </div>
 
-          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-200 dark:border-blue-800">
             <div className="flex items-start space-x-3">
               <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
               <div className="space-y-1">

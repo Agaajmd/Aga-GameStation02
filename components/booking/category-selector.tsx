@@ -59,7 +59,7 @@ export function CategorySelector({ selected, onSelect }: CategorySelectorProps) 
 
       {/* Mobile: Horizontal scroll */}
       <div className="lg:hidden">
-        <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide pt-8 mt-6">
           {categories.map((category) => {
             const Icon = category.icon
             const isSelected = selected === category.id
@@ -75,9 +75,6 @@ export function CategorySelector({ selected, onSelect }: CategorySelectorProps) 
                 onClick={() => onSelect(category.id)}
               >
                 <CardContent className="p-0 relative h-full">
-                  {/* Header with gradient accent */}
-                  <div className={`h-2 w-full bg-gradient-to-r ${category.color}`} />
-                  
                   {/* Popular Badge */}
                   {category.popular && (
                     <div className="absolute top-3 left-3 z-10">
@@ -112,21 +109,18 @@ export function CategorySelector({ selected, onSelect }: CategorySelectorProps) 
                       <p className="text-xs text-muted-foreground line-clamp-2">{category.description}</p>
                     </div>
 
-                    {/* Features - Compact */}
-                    <div className="flex-1">
+                    {/* Features - Scrollable like Game Library */}
+                    <div className="flex-1 overflow-hidden">
                       <p className="text-xs font-semibold text-foreground mb-2 text-center">Fasilitas:</p>
-                      <div className="space-y-1">
-                        {category.features.slice(0, 4).map((feature, idx) => (
-                          <div key={idx} className="flex items-center space-x-2 text-xs">
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
-                            <span className="text-foreground truncate">{feature}</span>
-                          </div>
-                        ))}
-                        {category.features.length > 4 && (
-                          <div className="text-xs text-muted-foreground text-center pt-1">
-                            +{category.features.length - 4} lainnya
-                          </div>
-                        )}
+                      <div className="max-h-28 overflow-y-auto scrollbar-hide">
+                        <div className="space-y-1">
+                          {category.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center space-x-2 bg-white/50 dark:bg-gray-700/50 rounded-2xl p-2 hover:bg-white/70 dark:hover:bg-gray-600/50 transition-colors">
+                              <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
+                              <span className="text-xs text-foreground font-medium leading-tight">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -180,9 +174,6 @@ export function CategorySelector({ selected, onSelect }: CategorySelectorProps) 
               onClick={() => onSelect(category.id)}
             >
               <CardContent className="p-0 relative">
-                {/* Header with gradient accent */}
-                <div className={`h-3 w-full bg-gradient-to-r ${category.color}`} />
-                
                 {/* Popular Badge */}
                 {category.popular && (
                   <div className="absolute top-5 left-5 z-10">
@@ -214,16 +205,18 @@ export function CategorySelector({ selected, onSelect }: CategorySelectorProps) 
                     <p className="text-sm text-muted-foreground">{category.description}</p>
                   </div>
 
-                  {/* Features */}
+                  {/* Features - Scrollable like Game Library */}
                   <div className="space-y-3">
                     <p className="text-sm font-semibold text-foreground text-center">Fasilitas Lengkap:</p>
-                    <div className="space-y-2">
-                      {category.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                          <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                          <span className="text-sm text-foreground">{feature}</span>
-                        </div>
-                      ))}
+                    <div className="max-h-40 overflow-y-auto scrollbar-hide">
+                      <div className="space-y-2">
+                        {category.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 rounded-2xl p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                            <span className="text-sm text-foreground font-medium">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
 

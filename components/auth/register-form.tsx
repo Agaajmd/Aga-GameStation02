@@ -79,7 +79,7 @@ export function RegisterForm() {
       <div className="max-w-md w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 gradient-primary rounded-2xl flex items-center justify-center">
               <Gamepad2 className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">

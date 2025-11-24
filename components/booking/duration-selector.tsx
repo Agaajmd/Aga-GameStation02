@@ -56,7 +56,7 @@ export function DurationSelector({ selected, onSelect }: DurationSelectorProps) 
         ))}
       </div>
 
-      <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
+      <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-2xl border border-yellow-200 dark:border-yellow-800">
         <h4 className="font-medium text-yellow-900 dark:text-yellow-100 mb-2">💡 Tips Hemat:</h4>
         <div className="space-y-1 text-sm text-yellow-800 dark:text-yellow-200">
           <p>• Semakin lama bermain, semakin hemat per jamnya</p>

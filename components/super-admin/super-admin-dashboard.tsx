@@ -68,7 +68,7 @@ export function SuperAdminDashboard() {
                     Rp {businessMetrics.totalRevenue.toLocaleString()}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
               </div>
@@ -89,7 +89,7 @@ export function SuperAdminDashboard() {
                     {businessMetrics.totalCustomers.toLocaleString()}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
               </div>
@@ -108,7 +108,7 @@ export function SuperAdminDashboard() {
                   <p className="text-sm text-muted-foreground">Total Booking</p>
                   <p className="text-2xl font-bold text-foreground">{businessMetrics.totalBookings.toLocaleString()}</p>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center">
                   <Gamepad2 className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
               </div>
@@ -125,7 +125,7 @@ export function SuperAdminDashboard() {
                   <p className="text-sm text-muted-foreground">Profit Margin</p>
                   <p className="text-2xl font-bold text-foreground">{businessMetrics.profitMargin}%</p>
                 </div>
-                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-2xl flex items-center justify-center">
                   <BarChart3 className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
                 </div>
               </div>
@@ -173,7 +173,7 @@ export function SuperAdminDashboard() {
                     {topPerformers.map((performer, index) => (
                       <div
                         key={performer.category}
-                        className="flex items-center justify-between p-3 bg-muted rounded-lg"
+                        className="flex items-center justify-between p-3 bg-muted rounded-2xl"
                       >
                         <div className="flex items-center space-x-3">
                           <div

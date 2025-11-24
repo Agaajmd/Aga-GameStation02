@@ -468,7 +468,7 @@ export function BusinessReports() {
                     {generatedReports.map((report) => (
                       <div
                         key={report.id}
-                        className="flex items-center justify-between p-4 bg-background rounded-lg border border-border"
+                        className="flex items-center justify-between p-4 bg-background rounded-2xl border border-border"
                       >
                         <div className="flex-1">
                           <h4 className="font-medium text-foreground">
@@ -508,13 +508,13 @@ export function BusinessReports() {
                     <div className="space-y-4">
                       <h4 className="font-semibold text-foreground">Metrik Keuangan</h4>
                       <div className="space-y-3">
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Total Pendapatan</span>
                           <span className="font-semibold text-foreground">
                             {formatCurrency(selectedBranchData.totalRevenue)}
                           </span>
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Pertumbuhan Bulanan</span>
                           <div className="flex items-center space-x-1">
                             <TrendingUp className="w-4 h-4 text-green-500" />
@@ -523,7 +523,7 @@ export function BusinessReports() {
                             </span>
                           </div>
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Rata-rata per Hari</span>
                           <span className="font-semibold text-foreground">
                             {formatCurrency(Math.round(selectedBranchData.totalRevenue / 30))}
@@ -536,20 +536,20 @@ export function BusinessReports() {
                     <div className="space-y-4">
                       <h4 className="font-semibold text-foreground">Metrik Operasional</h4>
                       <div className="space-y-3">
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Total Pelanggan</span>
                           <span className="font-semibold text-foreground">
                             {selectedBranchData.totalCustomers.toLocaleString()}
                           </span>
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Rating Pelayanan</span>
                           <div className="flex items-center space-x-1">
                             <Star className="w-4 h-4 text-yellow-500 fill-current" />
                             <span className="font-semibold text-foreground">{selectedBranchData.rating}/5.0</span>
                           </div>
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-background rounded-lg border border-border">
+                        <div className="flex justify-between items-center p-3 bg-background rounded-2xl border border-border">
                           <span className="text-sm text-muted-foreground">Utilitas PS</span>
                           <span className="font-semibold text-foreground">
                             {Math.round(
@@ -575,7 +575,7 @@ export function BusinessReports() {
                 <CardTitle className="text-card-foreground">Ringkasan Bisnis</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-center p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg border border-primary/20">
+                <div className="text-center p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl border border-primary/20">
                   <DollarSign className="w-8 h-8 text-primary mx-auto mb-2" />
                   <p className="text-2xl font-bold text-foreground">
                     {formatCurrency(branches.reduce((sum, branch) => sum + branch.totalRevenue, 0))}
@@ -583,7 +583,7 @@ export function BusinessReports() {
                   <p className="text-sm text-muted-foreground">Total Pendapatan</p>
                 </div>
 
-                <div className="text-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                <div className="text-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl border border-green-200 dark:border-green-800">
                   <Users className="w-8 h-8 text-green-600 mx-auto mb-2" />
                   <p className="text-2xl font-bold text-foreground">
                     {branches.reduce((sum, branch) => sum + branch.totalCustomers, 0).toLocaleString()}
@@ -591,7 +591,7 @@ export function BusinessReports() {
                   <p className="text-sm text-muted-foreground">Total Pelanggan</p>
                 </div>
 
-                <div className="text-center p-4 bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                <div className="text-center p-4 bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-2xl border border-purple-200 dark:border-purple-800">
                   <Gamepad2 className="w-8 h-8 text-purple-600 mx-auto mb-2" />
                   <p className="text-2xl font-bold text-foreground">
                     {branches.reduce((sum, branch) => sum + branch.activeUnits, 0)}
@@ -599,7 +599,7 @@ export function BusinessReports() {
                   <p className="text-sm text-muted-foreground">Total PS Units</p>
                 </div>
 
-                <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl border border-yellow-200 dark:border-yellow-800">
                   <Star className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                   <p className="text-2xl font-bold text-foreground">
                     {(branches.reduce((sum, branch) => sum + branch.rating, 0) / branches.length).toFixed(1)}
@@ -619,7 +619,7 @@ export function BusinessReports() {
                   .map((branch, index) => (
                     <div
                       key={branch.id}
-                      className="flex items-center justify-between p-3 bg-background rounded-lg border border-border"
+                      className="flex items-center justify-between p-3 bg-background rounded-2xl border border-border"
                     >
                       <div className="flex items-center space-x-3">
                         <div

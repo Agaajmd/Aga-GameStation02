@@ -103,8 +103,8 @@ export function AdminDashboard() {
                   <p className="text-sm text-blue-700 dark:text-blue-300">Booking Hari Ini</p>
                   <p className="text-3xl font-bold text-blue-800 dark:text-blue-200">{todayStats.totalBookings}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-200 dark:bg-blue-800 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-blue-700 dark:text-blue-300" />
+              <div className="w-12 h-12 bg-blue-200 dark:bg-blue-800 rounded-2xl flex items-center justify-center">
+                <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-200" />
                 </div>
               </div>
               <div className="mt-4 flex items-center text-sm">
@@ -127,7 +127,7 @@ export function AdminDashboard() {
                     Rp {todayStats.revenue.toLocaleString()}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-200 dark:bg-green-800 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-200 dark:bg-green-800 rounded-2xl flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-green-700 dark:text-green-300" />
                 </div>
               </div>
@@ -151,7 +151,7 @@ export function AdminDashboard() {
                     {todayStats.activePS}/{todayStats.activePS + todayStats.availablePS}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-purple-200 dark:bg-purple-800 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-purple-200 dark:bg-purple-800 rounded-2xl flex items-center justify-center">
                   <Gamepad2 className="w-6 h-6 text-purple-700 dark:text-purple-300" />
                 </div>
               </div>
@@ -172,7 +172,7 @@ export function AdminDashboard() {
                   <p className="text-sm text-red-700 dark:text-red-300">Pembayaran Pending</p>
                   <p className="text-3xl font-bold text-red-800 dark:text-red-200">{todayStats.pendingPayments}</p>
                 </div>
-                <div className="w-12 h-12 bg-red-200 dark:bg-red-800 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-red-200 dark:bg-red-800 rounded-2xl flex items-center justify-center">
                   <AlertCircle className="w-6 h-6 text-red-700 dark:text-red-300" />
                 </div>
               </div>
@@ -205,7 +205,7 @@ export function AdminDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentBookings.map((booking) => (
-                    <div key={booking.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div key={booking.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-2xl">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
                           <h4 className="font-medium text-contrast">#{booking.id}</h4>
@@ -260,7 +260,7 @@ export function AdminDashboard() {
                   {notifications.map((notif) => (
                     <div
                       key={notif.id}
-                      className={`p-3 rounded-lg ${
+                      className={`p-3 rounded-2xl ${
                         notif.urgent
                           ? "bg-red-50 border border-red-200 dark:bg-red-950/30 dark:border-red-800"
                           : "bg-muted/50"

@@ -311,7 +311,7 @@ export function ProfileContent() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-800 dark:to-gray-700 rounded-xl">
                   <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">ID Pengguna</span>
-                  <span className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md">{user.id || "USR001"}</span>
+                  <span className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">{user.id || "USR001"}</span>
                 </div>
               </CardContent>
             </Card>

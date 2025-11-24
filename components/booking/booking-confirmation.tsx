@@ -182,7 +182,7 @@ export function BookingConfirmation({ data }: BookingConfirmationProps) {
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+                <div className="mt-4 p-3 bg-muted/50 rounded-2xl">
                   <p className="text-sm text-muted-foreground">Metode Pembayaran</p>
                   <p className="font-medium text-foreground capitalize">{data.paymentMethod}</p>
                 </div>
@@ -201,7 +201,7 @@ export function BookingConfirmation({ data }: BookingConfirmationProps) {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <p className="text-sm text-orange-700 dark:text-orange-300 mb-2">Tunjukkan kode ini ke kasir</p>
-                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700">
+                    <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl border-2 border-dashed border-orange-300 dark:border-orange-700">
                       <p className="text-2xl font-mono font-bold text-orange-800 dark:text-orange-200">
                         {data.paymentCode}
                       </p>

@@ -133,7 +133,7 @@ export function QRScanner() {
         <CardContent className="space-y-4">
           {/* Camera View */}
           <div className="relative">
-            <div className="w-full h-64 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="w-full h-64 bg-muted rounded-3xl flex items-center justify-center overflow-hidden">
               {isScanning ? (
                 <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
               ) : (
@@ -147,8 +147,8 @@ export function QRScanner() {
             {/* Scanning Overlay */}
             {isScanning && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-48 h-48 border-2 border-primary rounded-lg">
-                  <div className="w-full h-full border border-primary/30 rounded-lg animate-pulse" />
+              <div className="w-48 h-48 border-2 border-primary rounded-2xl">
+                <div className="w-full h-full border border-primary/30 rounded-2xl animate-pulse" />
                 </div>
               </div>
             )}
@@ -178,7 +178,7 @@ export function QRScanner() {
                 placeholder="Masukkan kode booking (contoh: BK025)"
                 value={scannedCode}
                 onChange={(e) => setScannedCode(e.target.value)}
-                className="flex-1 px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                className="flex-1 px-3 py-2 border border-border rounded-full bg-background text-foreground"
               />
               <Button onClick={handleManualInput} variant="outline">
                 Cari

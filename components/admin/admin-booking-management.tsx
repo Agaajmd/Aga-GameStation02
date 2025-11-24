@@ -378,7 +378,7 @@ export function AdminBookingManagement() {
                     <img
                       src={selectedBooking.paymentProof || "/placeholder.svg"}
                       alt="Bukti Pembayaran"
-                      className="w-full max-w-md border rounded-lg"
+                      className="w-full max-w-md border rounded-3xl"
                     />
                   </div>
                 )}

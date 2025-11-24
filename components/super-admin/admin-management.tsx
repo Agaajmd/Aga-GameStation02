@@ -277,8 +277,8 @@ export function AdminManagement() {
                   <p className="text-sm text-muted-foreground">Total Admin</p>
                   <p className="text-3xl font-bold text-foreground">{totalAdmins}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center">
+                <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
               </div>
             </CardContent>
@@ -291,7 +291,7 @@ export function AdminManagement() {
                   <p className="text-sm text-muted-foreground">Admin Aktif</p>
                   <p className="text-3xl font-bold text-green-600 dark:text-green-400">{activeAdmins}</p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center">
                   <UserCheck className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
               </div>
@@ -305,7 +305,7 @@ export function AdminManagement() {
                   <p className="text-sm text-muted-foreground">Admin Tidak Aktif</p>
                   <p className="text-3xl font-bold text-red-600 dark:text-red-400">{inactiveAdmins}</p>
                 </div>
-                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center">
                   <UserX className="w-6 h-6 text-red-600 dark:text-red-400" />
                 </div>
               </div>
@@ -829,7 +829,7 @@ export function AdminManagement() {
                   />
                 </div>
 
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-2xl border border-yellow-200 dark:border-yellow-800">
                   <p className="text-sm text-yellow-800 dark:text-yellow-200">
                     <strong>Password saat ini:</strong> {passwordResetAdmin.password}
                   </p>

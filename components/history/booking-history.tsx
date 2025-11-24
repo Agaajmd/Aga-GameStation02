@@ -337,7 +337,7 @@ export function BookingHistory() {
                             variant="outline" 
                             size="sm" 
                             onClick={() => setSelectedBooking(booking)}
-                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg shadow-sm"
+                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl shadow-sm"
                           >
                             <Eye className="w-4 h-4 mr-2" />
                             Detail
@@ -440,7 +440,7 @@ export function BookingHistory() {
                             variant="outline" 
                             size="sm" 
                             onClick={() => handleRebook(booking)}
-                            className="h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-lg shadow-sm"
+                            className="h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-full shadow-sm"
                           >
                             <RotateCcw className="w-4 h-4 mr-2" />
                             Booking Lagi
@@ -449,7 +449,7 @@ export function BookingHistory() {
                             variant="outline" 
                             size="sm" 
                             onClick={() => handleDownloadReceipt(booking)}
-                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg shadow-sm"
+                            className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl shadow-sm"
                           >
                             <Download className="w-4 h-4 mr-2" />
                             Unduh Struk
@@ -461,7 +461,7 @@ export function BookingHistory() {
                         <Button 
                           variant="destructive" 
                           size="sm"
-                          className="h-10 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-lg shadow-sm"
+                          className="h-10 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-full shadow-sm"
                         >
                           Batalkan
                         </Button>
@@ -488,7 +488,7 @@ export function BookingHistory() {
                   setStatusFilter("all")
                   setDateFilter("all")
                 }}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg rounded-lg"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg rounded-full"
               >
                 Reset Filter
               </Button>

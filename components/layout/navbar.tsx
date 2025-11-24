@@ -66,139 +66,154 @@ export function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 glass-effect border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">A</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold text-foreground leading-none">Aga GAME</span>
-              <span className="text-xs text-muted-foreground leading-none">Station</span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {getLinks().map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-muted-foreground hover:text-primary transition-colors duration-200 pb-1 ${
-                  isActiveLink(link.href) ? "nav-link-active" : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right Side */}
-          <div className="flex items-center space-x-2">
-            <ThemeToggle />
-
-            {user?.role === "customer" && (
-              <Link href="/checkout" className="relative">
-                <Button variant="outline" size="sm" className="relative">
-                  <ShoppingCart className="w-4 h-4" />
-                  {cart.length > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
-                      {cart.length}
-                    </span>
-                  )}
-                </Button>
-              </Link>
-            )}
-
-            {user && !isMobile ? (
-              <div className="flex items-center space-x-2">
-                <Link href="/profil">
-                  <Button variant="outline" size="sm">
-                    <User className="w-4 h-4 mr-2" />
-                    {user.name}
-                  </Button>
-                </Link>
-                <Button variant="outline" size="sm" onClick={handleLogout} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 border-red-200 dark:border-red-800">
-                  <LogOut className="w-4 h-4" />
-                </Button>
+    <>
+      <nav className="fixed top-0 w-full z-50 glass-effect border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 gradient-primary rounded-2xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">A</span>
               </div>
-            ) : !user && !isMobile ? (
-              <div className="flex items-center space-x-2">
-                <Link href="/login">
-                  <Button variant="outline" size="sm">
-                    Masuk
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button size="sm" className="gradient-primary text-white">
-                    Daftar
-                  </Button>
-                </Link>
+              <div className="flex flex-col">
+                <span className="text-lg font-bold text-foreground leading-none">Aga GAME</span>
+                <span className="text-xs text-muted-foreground leading-none">Station</span>
               </div>
-            ) : null}
+            </Link>
 
-            {/* Mobile menu button */}
-            {isMobile && (
-              <Button variant="outline" size="sm" onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-              </Button>
-            )}
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && isMobile && (
-          <div className="md:hidden animate-slide-up">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card rounded-lg mt-2 shadow-lg border border-border">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
               {getLinks().map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`block px-3 py-2 text-muted-foreground hover:text-primary transition-colors duration-200 rounded-md ${
-                    isActiveLink(link.href) ? "bg-primary/10 text-primary font-medium" : ""
+                  className={`text-muted-foreground hover:text-primary transition-colors duration-200 pb-1 ${
+                    isActiveLink(link.href) ? "nav-link-active" : ""
                   }`}
-                  onClick={() => setIsOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
+            </div>
 
-              {user ? (
-                <div className="border-t border-border pt-2 space-y-2">
+            {/* Right Side */}
+            <div className="flex items-center space-x-2">
+              <ThemeToggle />
+
+              {user?.role === "customer" && (
+                <Link href="/checkout" className="relative">
+                  <Button variant="outline" size="sm" className="relative">
+                    <ShoppingCart className="w-4 h-4" />
+                    {cart.length > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                        {cart.length}
+                      </span>
+                    )}
+                  </Button>
+                </Link>
+              )}
+
+              {user && !isMobile ? (
+                <div className="flex items-center space-x-2">
+                  <Link href="/profil">
+                    <Button variant="outline" size="sm">
+                      <User className="w-4 h-4 mr-2" />
+                      {user.name}
+                    </Button>
+                  </Link>
+                  <Button variant="outline" size="sm" onClick={handleLogout} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 border-red-200 dark:border-red-800">
+                    <LogOut className="w-4 h-4" />
+                  </Button>
+                </div>
+              ) : !user && !isMobile ? (
+                <div className="flex items-center space-x-2">
+                  <Link href="/login">
+                    <Button variant="outline" size="sm">
+                      Masuk
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button size="sm" className="gradient-primary text-white">
+                      Daftar
+                    </Button>
+                  </Link>
+                </div>
+              ) : null}
+
+              {/* Mobile menu button */}
+              {isMobile && (
+                <Button variant="outline" size="sm" onClick={() => setIsOpen(!isOpen)}>
+                  {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Navigation Drawer - Outside nav element */}
+      {isOpen && isMobile && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] animate-fade-in"
+            onClick={() => setIsOpen(false)}
+          />
+          
+          {/* Drawer - slides up from bottom */}
+          <div className="fixed bottom-0 left-0 right-0 z-[70] animate-slide-up-drawer">
+            <div className="px-4 pt-6 pb-8 space-y-2 bg-card/95 backdrop-blur-xl rounded-t-3xl shadow-2xl border-t border-x border-border max-h-[70vh] overflow-y-auto">
+              {/* Navigation Links */}
+              <div className="space-y-1">
+                {getLinks().map((link) => (
                   <Link
-                    href="/profil"
-                    className="flex items-center px-3 py-2 text-muted-foreground hover:text-primary transition-colors duration-200 rounded-md"
+                    key={link.href}
+                    href={link.href}
+                    className={`block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-200 rounded-2xl ${
+                      isActiveLink(link.href) ? "bg-primary/10 text-primary" : ""
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
-                    <User className="w-4 h-4 mr-2" />
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* User Section */}
+              {user ? (
+                <div className="border-t border-border pt-4 mt-4 space-y-2">
+                  <Link
+                    href="/profil"
+                    className="flex items-center px-4 py-3 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-200 rounded-2xl"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <User className="w-4 h-4 mr-3" />
                     {user.name}
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full text-left px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 transition-colors duration-200 rounded-md"
+                    className="flex items-center w-full text-left px-4 py-3 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20 transition-colors duration-200 rounded-2xl"
                   >
-                    <LogOut className="w-4 h-4 mr-2" />
+                    <LogOut className="w-4 h-4 mr-3" />
                     Keluar
                   </button>
                 </div>
               ) : (
-                <div className="border-t border-border pt-2 space-y-2">
+                <div className="border-t border-border pt-4 mt-4 space-y-2">
                   <Link href="/login" onClick={() => setIsOpen(false)}>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full rounded-2xl">
                       Masuk
                     </Button>
                   </Link>
                   <Link href="/register" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full gradient-primary text-white">Daftar</Button>
+                    <Button className="w-full gradient-primary text-white rounded-2xl">Daftar</Button>
                   </Link>
                 </div>
               )}
             </div>
           </div>
-        )}
-      </div>
-    </nav>
+        </>
+      )}
+    </>
   )
 }

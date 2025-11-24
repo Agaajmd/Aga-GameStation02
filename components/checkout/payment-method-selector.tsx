@@ -151,7 +151,7 @@ export function PaymentMethodSelector({
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-lg ${method.bgColor}`}>
+                  <div className={`p-2 rounded-2xl ${method.bgColor}`}>
                     <IconComponent className={`w-5 h-5 ${method.color}`} />
                   </div>
                   <div>
@@ -186,7 +186,7 @@ export function PaymentMethodSelector({
 
             {selectedMethod.type === "qris" ? (
               <div className="text-center space-y-4">
-                <div className="w-48 h-48 mx-auto bg-white rounded-lg p-4 border">
+                <div className="w-48 h-48 mx-auto bg-white rounded-2xl p-4 border">
                   <img
                     src="/placeholder.svg?height=200&width=200"
                     alt="QR Code"
@@ -208,7 +208,7 @@ export function PaymentMethodSelector({
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-background rounded-lg border">
+                <div className="flex justify-between items-center p-3 bg-background rounded-2xl border">
                   <div>
                     <p className="text-sm text-muted-foreground">
                       {selectedMethod.type === "ewallet" ? "Nomor E-Wallet" : "Nomor Rekening"}
@@ -229,7 +229,7 @@ export function PaymentMethodSelector({
                   </Button>
                 </div>
 
-                <div className="flex justify-between items-center p-3 bg-background rounded-lg border">
+                <div className="flex justify-between items-center p-3 bg-background rounded-2xl border">
                   <div>
                     <p className="text-sm text-muted-foreground">Atas Nama</p>
                     <p className="font-semibold text-foreground">{selectedMethod.accountName}</p>
@@ -248,7 +248,7 @@ export function PaymentMethodSelector({
                   </Button>
                 </div>
 
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-2xl border border-yellow-200 dark:border-yellow-800">
                   <p className="text-sm text-yellow-800 dark:text-yellow-200">
                     <strong>Penting:</strong> Pastikan nominal transfer sesuai dengan total pembayaran dan simpan bukti
                     transfer untuk diupload.

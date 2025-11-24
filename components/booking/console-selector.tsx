@@ -123,9 +123,6 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
       }`}
     >
       <CardContent className="p-0 relative h-full">
-        {/* Header with gradient accent */}
-        <div className={`h-${isMobile ? '2' : '3'} w-full ${option.available ? `bg-gradient-to-r ${categoryColor}` : 'bg-gray-300 dark:bg-gray-600'}`} />
-
         {/* Selection Indicator */}
         {isSelected && (
           <div className={`absolute top-${isMobile ? '2' : '5'} right-${isMobile ? '2' : '5'} z-10`}>
@@ -165,50 +162,49 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           </Badge>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '6' : '8'} pb-12 h-full flex flex-col justify-center`}>
-          <div className={`text-center ${isMobile ? 'mb-2' : 'mb-6'} flex-grow flex flex-col justify-center`}>
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '12' : '16'} h-${isMobile ? '12' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '3' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''} mx-auto`}>
+        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '10' : '8'} pb-10 h-full flex flex-col justify-between`}>
+          <div className={`text-center ${isMobile ? 'mb-2' : 'mb-6'}`}>
+            <div className={`inline-flex items-center justify-center w-${isMobile ? '12' : '16'} h-${isMobile ? '12' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '2' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''} mx-auto`}>
               <CategoryIcon className={`w-${isMobile ? '6' : '8'} h-${isMobile ? '6' : '8'}`} />
             </div>
-            <h4 className={`font-bold text-foreground text-${isMobile ? 'base' : 'lg'} mb-${isMobile ? '1.5' : '2'} group-hover:text-primary transition-colors ${isMobile ? 'leading-tight' : ''}`}>
+            <h4 className={`font-bold text-foreground text-${isMobile ? 'xs' : 'lg'} mb-${isMobile ? '0.5' : '2'} group-hover:text-primary transition-colors ${isMobile ? 'leading-tight line-clamp-1' : ''}`}>
               {option.name}
             </h4>
-            <p className={`text-${isMobile ? 'sm' : 'sm'} text-primary font-semibold mb-1`}>{option.number}</p>
-            <p className={`text-${isMobile ? 'sm' : 'sm'} text-muted-foreground ${isMobile ? 'leading-tight' : ''}`}>{option.console}</p>
+            <p className={`text-${isMobile ? 'xs' : 'sm'} text-primary font-semibold ${isMobile ? 'mb-0' : 'mb-1'}`}>{option.number}</p>
+            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground ${isMobile ? 'leading-tight line-clamp-1' : ''}`}>{option.console}</p>
           </div>
 
-          {/* Features for VIP/VVIP */}
+          {/* Features for VIP/VVIP - Scrollable like Game Library */}
           {(category === "vip" || category === "vvip") && option.features && (
-            <div className={`space-y-${isMobile ? '1' : '3'} mb-${isMobile ? '2' : '6'}`}>
-              <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold text-foreground ${isMobile ? 'text-center' : 'text-center'}`}>Fasilitas:</p>
-              <div className={`space-y-${isMobile ? '1' : '2'}`}>
-                {(isMobile ? option.features.slice(0, 2) : option.features).map((feature: string, idx: number) => (
-                  <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-700 rounded-${isMobile ? 'md' : 'lg'} p-${isMobile ? '2' : '3'}`}>
-                    <div className={`w-${isMobile ? '1' : '2'} h-${isMobile ? '1' : '2'} bg-primary rounded-full flex-shrink-0`}></div>
-                    <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
-                  </div>
-                ))}
-                {isMobile && option.features.length > 2 && (
-                  <p className="text-xs text-muted-foreground text-center">+{option.features.length - 2} lainnya</p>
-                )}
+            <div className={`${isMobile ? 'my-2' : 'mb-6'}`}>
+              <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold text-foreground text-center mb-2`}>Fasilitas:</p>
+              <div className={`${isMobile ? 'max-h-20' : 'max-h-32'} overflow-y-auto scrollbar-hide`}>
+                <div className={`space-y-${isMobile ? '1' : '2'}`}>
+                  {option.features.map((feature: string, idx: number) => (
+                    <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-700 rounded-2xl p-${isMobile ? '2' : '3'} hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors`}>
+                      <div className={`w-${isMobile ? '1.5' : '2'} h-${isMobile ? '1.5' : '2'} bg-primary rounded-full flex-shrink-0`}></div>
+                      <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           {/* Selection Status - Above Games Button */}
-          <div className="mt-auto mb-2">
+          <div className="mt-auto">
             {!isSelected && option.available && (
-              <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
+              <div className={`pt-${isMobile ? '1.5' : '2'} border-t border-gray-200 dark:border-gray-600`}>
                 <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
-                  👆 Klik untuk memilih
+                  {isMobile ? '👆 Pilih' : '👆 Klik untuk memilih'}
                 </p>
               </div>
             )}
 
             {isSelected && (
-              <div className="pt-2 border-t border-primary/20">
-                <div className="flex items-center justify-center space-x-2 text-primary">
-                  <Check className="w-3 h-3" />
+              <div className={`pt-${isMobile ? '1.5' : '2'} border-t border-primary/20`}>
+                <div className="flex items-center justify-center space-x-1 text-primary">
+                  <Check className={`w-${isMobile ? '2.5' : '3'} h-${isMobile ? '2.5' : '3'}`} />
                   <p className="text-xs font-semibold">Terpilih</p>
                 </div>
               </div>
@@ -222,9 +218,6 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
   const renderBackCard = (option: ConsoleOption, isMobile: boolean = false) => (
     <Card className="group cursor-pointer transition-all duration-300 overflow-hidden h-full bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 border-indigo-200 dark:border-indigo-600">
       <CardContent className="p-0 relative h-full">
-        {/* Header with game-themed gradient */}
-        <div className={`h-${isMobile ? '2' : '3'} w-full bg-gradient-to-r from-indigo-500 to-purple-600`} />
-
         {/* Back Button */}
         <div className="absolute bottom-0 left-0 right-0 z-10">
           <Button
@@ -238,9 +231,9 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           </Button>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '8' : '8'} pb-12 h-full flex flex-col`}>
+        <div className={`p-${isMobile ? '4' : '6'} pt-${isMobile ? '8' : '8'} pb-12 h-full flex flex-col`}>
           <div className="text-center mb-4">
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '8' : '12'} h-${isMobile ? '8' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
+            <div className={`inline-flex items-center justify-center w-${isMobile ? '10' : '12'} h-${isMobile ? '10' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
               <Joystick className={`w-${isMobile ? '4' : '6'} h-${isMobile ? '4' : '6'}`} />
             </div>
             <h4 className={`font-bold text-foreground text-${isMobile ? 'sm' : 'lg'} mb-1`}>
@@ -253,7 +246,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <div className="flex-grow overflow-hidden">
             <div className={`grid grid-cols-1 gap-${isMobile ? '1' : '2'} max-h-full overflow-y-auto scrollbar-hide`}>
               {option.games?.map((game, idx) => (
-                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-700/50 rounded-md p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-600/50 transition-colors`}>
+                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-700/50 rounded-2xl p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-600/50 transition-colors`}>
                   <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
                   <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{game}</span>
                 </div>
@@ -305,7 +298,7 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
       <div className="text-center sm:text-left">
         <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">{getTitle()}</h3>
         <p className="text-sm text-muted-foreground mb-3">{getSubtitle()}</p>
-        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-4 mb-4">
           <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
             {getGameInstruction()}
           </p>
@@ -313,13 +306,13 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
       </div>
 
       {/* Mobile & Tablet: 2 columns grid with rows of 2 */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:hidden">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:hidden">
         {options.map((option) => {
           const isSelected = selected === option.id
           const isFlipped = flippedCards[option.id] || false
 
           return (
-            <div key={option.id} className="h-[280px] sm:h-[320px]">
+            <div key={option.id} className="h-[320px] sm:h-[360px]">
               <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" containerStyle={{ height: '100%' }}>
                 <div onClick={() => option.available && onSelect(option.id)} className="h-full">
                   {renderFrontCard(option, isSelected, true)}
@@ -333,14 +326,14 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
         })}
       </div>
 
-      {/* Desktop: 3-4 columns grid */}
-      <div className="hidden lg:grid lg:grid-cols-4 lg:gap-6">
+      {/* Desktop: 3 columns grid */}
+      <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-4 lg:gap-6">
         {options.map((option) => {
           const isSelected = selected === option.id
           const isFlipped = flippedCards[option.id] || false
 
           return (
-            <div key={option.id} className="h-[400px]">
+            <div key={option.id} className="h-[440px]">
               <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" containerStyle={{ height: '100%' }}>
                 <div onClick={() => option.available && onSelect(option.id)} className="h-full">
                   {renderFrontCard(option, isSelected, false)}
