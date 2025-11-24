@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useAuth } from "@/components/providers/auth-provider"
 import { useToast } from "@/components/providers/toast-provider"
+import { StatCard, FilterBar, EmptyState } from "@/components/super-admin/shared"
+import { getStatusColor, getStatusLabel, formatCurrency, generateBranchId } from "@/lib/utils/super-admin/helpers"
+import type { Branch } from "@/lib/types/super-admin"
 import {
   MapPin,
   Search,
@@ -104,6 +108,7 @@ const mockBranches = [
 ]
 
 export function BranchManagement() {
+  const router = useRouter()
   const { user } = useAuth()
   const { showSuccess, showError } = useToast()
   const [branches, setBranches] = useState(mockBranches)
@@ -139,18 +144,7 @@ export function BranchManagement() {
   const maintenanceBranches = branches.filter((b) => b.status === "maintenance").length
   const totalRevenue = branches.reduce((sum, branch) => sum + branch.monthlyRevenue, 0)
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-      case "maintenance":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300"
-      case "closed":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300"
-    }
-  }
+
 
   const handleStatusChange = (branchId: string, newStatus: string) => {
     setBranches((prev) => prev.map((branch) => (branch.id === branchId ? { ...branch, status: newStatus } : branch)))
@@ -170,13 +164,15 @@ export function BranchManagement() {
       return
     }
 
-    const branchId = `BR${String(branches.length + 1).padStart(3, "0")}`
     const branch = {
-      id: branchId,
+      id: generateBranchId(branches.length + 1),
       ...newBranch,
       status: "active" as const,
       activeUnits: newBranch.totalUnits,
       maintenanceUnits: 0,
+      regularUnits: 0,
+      vipUnits: 0,
+      vvipUnits: 0,
       totalCustomers: 0,
       monthlyRevenue: 0,
       rating: 0,
@@ -236,13 +232,7 @@ export function BranchManagement() {
     showSuccess("Cabang berhasil diperbarui", `Data ${newBranch.name} telah diperbarui`)
   }
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(amount)
-  }
+
 
   if (!user || user.role !== "super-admin") {
     return <div className="text-center py-20 text-foreground">Akses ditolak</div>
@@ -258,61 +248,32 @@ export function BranchManagement() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="animate-slide-up border-border bg-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Cabang</p>
-                  <p className="text-3xl font-bold text-foreground">{totalBranches}</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.1s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Cabang Aktif</p>
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">{activeBranches}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-green-600 dark:text-green-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.2s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Maintenance</p>
-                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{maintenanceBranches}</p>
-                </div>
-                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
-                  <AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.3s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Pendapatan</p>
-                  <p className="text-2xl font-bold text-foreground">{formatCurrency(totalRevenue)}</p>
-                </div>
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Total Cabang"
+            value={totalBranches}
+            icon={<Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+            iconBgColor="bg-blue-100 dark:bg-blue-900/30"
+          />
+          <StatCard
+            title="Cabang Aktif"
+            value={activeBranches}
+            icon={<Building2 className="w-6 h-6 text-green-600 dark:text-green-400" />}
+            iconBgColor="bg-green-100 dark:bg-green-900/30"
+            valueColor="text-green-600 dark:text-green-400"
+          />
+          <StatCard
+            title="Maintenance"
+            value={maintenanceBranches}
+            icon={<AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />}
+            iconBgColor="bg-yellow-100 dark:bg-yellow-900/30"
+            valueColor="text-yellow-600 dark:text-yellow-400"
+          />
+          <StatCard
+            title="Total Pendapatan"
+            value={formatCurrency(totalRevenue)}
+            icon={<TrendingUp className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
+            iconBgColor="bg-purple-100 dark:bg-purple-900/30"
+          />
         </div>
 
         {/* Filters and Add Button */}
@@ -342,7 +303,7 @@ export function BranchManagement() {
                 </SelectContent>
               </Select>
               <Button
-                onClick={() => setShowAddModal(true)}
+                onClick={() => router.push("/super-admin/cabang/tambah")}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Plus className="w-4 h-4 mr-2" />
@@ -374,11 +335,7 @@ export function BranchManagement() {
                         </p>
                       </div>
                       <Badge className={getStatusColor(branch.status)}>
-                        {branch.status === "active"
-                          ? "Aktif"
-                          : branch.status === "maintenance"
-                            ? "Maintenance"
-                            : "Tutup"}
+                        {getStatusLabel(branch.status)}
                       </Badge>
                     </div>
 

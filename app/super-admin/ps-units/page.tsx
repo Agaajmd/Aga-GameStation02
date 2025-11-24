@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
-import { PSUnitsManagement } from "@/components/super-admin/ps-units-management"
+import { PSUnitsManagement } from "@/components/super-admin/ps-units/branch-list"
 
 export default function PSUnitsPage() {
   return (

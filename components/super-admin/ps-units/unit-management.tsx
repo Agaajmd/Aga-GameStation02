@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -9,92 +10,100 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useAuth } from "@/components/providers/auth-provider"
 import { useToast } from "@/components/providers/toast-provider"
-import { Gamepad2, Search, Plus, Edit, Trash2, Eye, Power, Wrench, CheckCircle, Building, MapPin } from "lucide-react"
+import { StatCard, FilterBar, EmptyState } from "@/components/super-admin/shared"
+import { getStatusColor, getCategoryColor, getStatusLabel, getConditionLabel, generateUnitId } from "@/lib/utils/super-admin"
+import type { PSUnit, PSUnitFormData } from "@/lib/types/super-admin"
+import {
+  Gamepad2,
+  Plus,
+  Edit,
+  Trash2,
+  Eye,
+  Power,
+  Wrench,
+  CheckCircle,
+  ArrowLeft,
+  Building2,
+} from "lucide-react"
 
-const mockPSUnits = [
-  {
-    id: "PS001",
-    name: "PlayStation 4 - Unit 1",
-    type: "PS4",
-    category: "reguler",
-    location: "Lantai 1 - Area A",
-    branch: "Jakarta Pusat",
-    status: "available",
-    condition: "excellent",
-    lastMaintenance: "2024-01-15",
-    totalHours: 1250,
-    price: 5000,
-    specifications: {
-      storage: "500GB",
-      controllers: 2,
-      accessories: ["Headset", "Charging Station"],
-    },
-  },
-  {
-    id: "VIP001",
-    name: "VIP Room 1 - PS5",
-    type: "PS5",
-    category: "vip",
-    location: "VIP Room 1",
-    branch: "Jakarta Pusat",
-    status: "available",
-    condition: "excellent",
-    lastMaintenance: "2024-01-18",
-    totalHours: 650,
-    price: 8000,
-    specifications: {
-      storage: "825GB SSD",
-      controllers: 2,
-      accessories: ['4K TV 55"', "Surround Sound", "Gaming Chair"],
-    },
-  },
-  {
-    id: "VVIP001",
-    name: "VVIP Suite 1 - PS5 Pro",
-    type: "PS5 Pro",
-    category: "vvip",
-    location: "VVIP Suite 1",
-    branch: "Jakarta Selatan",
-    status: "occupied",
-    condition: "excellent",
-    lastMaintenance: "2024-01-20",
-    totalHours: 320,
-    price: 12000,
-    specifications: {
-      storage: "1TB SSD",
-      controllers: 4,
-      accessories: ['8K TV 65"', "Premium Sound System", "Luxury Gaming Setup", "Mini Fridge"],
-    },
-  },
-  {
-    id: "PS002",
-    name: "PlayStation 5 - Unit 2",
-    type: "PS5",
-    category: "reguler",
-    location: "Lantai 2 - Area B",
-    branch: "Jakarta Barat",
-    status: "maintenance",
-    condition: "needs_repair",
-    lastMaintenance: "2024-01-10",
-    totalHours: 890,
-    price: 5000,
-    specifications: {
-      storage: "825GB SSD",
-      controllers: 2,
-      accessories: ["Standard TV", "Basic Audio"],
-    },
-  },
-]
+const branchData: Record<string, any> = {
+  BR001: { name: "Jakarta Selatan", manager: "John Doe" },
+  BR002: { name: "Jakarta Utara", manager: "Jane Smith" },
+  BR003: { name: "Bandung", manager: "Mike Johnson" },
+  BR004: { name: "Surabaya", manager: "Sarah Wilson" },
+}
 
-const branches = ["Jakarta Pusat", "Jakarta Selatan", "Jakarta Barat", "Jakarta Timur", "Jakarta Utara"]
+const mockPSUnits: Record<string, any[]> = {
+  BR001: [
+    {
+      id: "PS001",
+      name: "PlayStation 4 - Unit 1",
+      type: "PS4",
+      category: "reguler",
+      location: "Lantai 1 - Area A",
+      status: "available",
+      condition: "excellent",
+      lastMaintenance: "2024-01-15",
+      totalHours: 1250,
+      price: 5000,
+      specifications: {
+        storage: "500GB",
+        controllers: 2,
+        accessories: ["Headset", "Charging Station"],
+      },
+    },
+    {
+      id: "VIP001",
+      name: "VIP Room 1 - PS5",
+      type: "PS5",
+      category: "vip",
+      location: "VIP Room 1",
+      status: "available",
+      condition: "excellent",
+      lastMaintenance: "2024-01-18",
+      totalHours: 650,
+      price: 8000,
+      specifications: {
+        storage: "825GB SSD",
+        controllers: 2,
+        accessories: ['4K TV 55"', "Surround Sound", "Gaming Chair"],
+      },
+    },
+  ],
+  BR002: [
+    {
+      id: "PS002",
+      name: "PlayStation 5 - Unit 2",
+      type: "PS5",
+      category: "reguler",
+      location: "Lantai 2 - Area B",
+      status: "maintenance",
+      condition: "needs_repair",
+      lastMaintenance: "2024-01-10",
+      totalHours: 890,
+      price: 5000,
+      specifications: {
+        storage: "825GB SSD",
+        controllers: 2,
+        accessories: ["Standard TV", "Basic Audio"],
+      },
+    },
+  ],
+  BR003: [],
+  BR004: [],
+}
 
-export function PSUnitsManagement() {
+interface BranchUnitsManagementProps {
+  branchId: string
+}
+
+export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) {
+  const router = useRouter()
   const { user } = useAuth()
   const { showSuccess, showError } = useToast()
-  const [units, setUnits] = useState(mockPSUnits)
+  const [units, setUnits] = useState(mockPSUnits[branchId] || [])
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [branchFilter, setBranchFilter] = useState("all")
   const [categoryFilter, setCategoryFilter] = useState("all")
   const [selectedUnit, setSelectedUnit] = useState<any>(null)
   const [showAddModal, setShowAddModal] = useState(false)
@@ -105,7 +114,6 @@ export function PSUnitsManagement() {
     type: "PS4",
     category: "reguler",
     location: "",
-    branch: "Jakarta Pusat",
     condition: "excellent",
     price: 5000,
     specifications: {
@@ -115,15 +123,16 @@ export function PSUnitsManagement() {
     },
   })
 
+  const branch = branchData[branchId]
+
   const filteredUnits = units.filter((unit) => {
     const matchesSearch =
       unit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       unit.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
       unit.id.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === "all" || unit.status === statusFilter
-    const matchesBranch = branchFilter === "all" || unit.branch === branchFilter
     const matchesCategory = categoryFilter === "all" || unit.category === categoryFilter
-    return matchesSearch && matchesStatus && matchesBranch && matchesCategory
+    return matchesSearch && matchesStatus && matchesCategory
   })
 
   const totalUnits = units.length
@@ -131,45 +140,17 @@ export function PSUnitsManagement() {
   const occupiedUnits = units.filter((u) => u.status === "occupied").length
   const maintenanceUnits = units.filter((u) => u.status === "maintenance").length
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "available":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-      case "occupied":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-      case "maintenance":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300"
-      case "offline":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300"
-    }
-  }
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "reguler":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-      case "vip":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
-      case "vvip":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300"
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300"
-    }
-  }
-
   const handleAddUnit = () => {
     if (!newUnit.name || !newUnit.location) {
       showError("Form tidak lengkap", "Mohon lengkapi nama unit dan lokasi")
       return
     }
 
-    const unitId = `${newUnit.type}${String(units.length + 1).padStart(3, "0")}`
-    const unit = {
+    const unitId = generateUnitId(newUnit.type, units.length)
+    const unit: PSUnit = {
       id: unitId,
       ...newUnit,
-      status: "available" as const,
+      status: "available",
       lastMaintenance: new Date().toISOString().split("T")[0],
       totalHours: 0,
     }
@@ -180,7 +161,6 @@ export function PSUnitsManagement() {
       type: "PS4",
       category: "reguler",
       location: "",
-      branch: "Jakarta Pusat",
       condition: "excellent",
       price: 5000,
       specifications: {
@@ -221,153 +201,122 @@ export function PSUnitsManagement() {
     return <div className="text-center py-20 text-foreground">Akses ditolak</div>
   }
 
+  if (!branch) {
+    return <div className="text-center py-20 text-foreground">Cabang tidak ditemukan</div>
+  }
+
   return (
     <section className="py-8 bg-background min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Manajemen PS Units & Inventaris</h1>
-          <p className="text-muted-foreground">Kelola semua unit PlayStation dan room di seluruh cabang</p>
+        <div className="mb-8">
+          <Button variant="ghost" onClick={() => router.push("/super-admin/ps-units")} className="mb-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Kembali ke Daftar Cabang
+          </Button>
+
+          <div className="flex items-center space-x-4 mb-2">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+              <Building2 className="w-8 h-8 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">{branch.name}</h1>
+              <p className="text-muted-foreground">Manager: {branch.manager} • ID: {branchId}</p>
+            </div>
+          </div>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="animate-slide-up border-border bg-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Unit</p>
-                  <p className="text-3xl font-bold text-foreground">{totalUnits}</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                  <Gamepad2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.1s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Tersedia</p>
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">{availableUnits}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                  <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.2s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Sedang Digunakan</p>
-                  <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{occupiedUnits}</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                  <Power className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="animate-slide-up border-border bg-card" style={{ animationDelay: "0.3s" }}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Maintenance</p>
-                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{maintenanceUnits}</p>
-                </div>
-                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
-                  <Wrench className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Total Unit"
+            value={totalUnits}
+            icon={<Gamepad2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+            iconBgColor="bg-blue-100 dark:bg-blue-900/30"
+          />
+          <StatCard
+            title="Tersedia"
+            value={availableUnits}
+            icon={<CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />}
+            iconBgColor="bg-green-100 dark:bg-green-900/30"
+            valueColor="text-green-600 dark:text-green-400"
+          />
+          <StatCard
+            title="Sedang Digunakan"
+            value={occupiedUnits}
+            icon={<Power className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+            iconBgColor="bg-blue-100 dark:bg-blue-900/30"
+            valueColor="text-blue-600 dark:text-blue-400"
+          />
+          <StatCard
+            title="Maintenance"
+            value={maintenanceUnits}
+            icon={<Wrench className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />}
+            iconBgColor="bg-yellow-100 dark:bg-yellow-900/30"
+            valueColor="text-yellow-600 dark:text-yellow-400"
+          />
         </div>
 
         {/* Filters */}
-        <Card className="mb-8 animate-slide-up border-border bg-card" style={{ animationDelay: "0.4s" }}>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="lg:col-span-2">
-                <div className="relative">
-                  <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Cari berdasarkan nama, ID, atau lokasi..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-background border-border text-foreground"
-                  />
-                </div>
-              </div>
-              <Select value={branchFilter} onValueChange={setBranchFilter}>
-                <SelectTrigger className="bg-background border-border text-foreground">
-                  <SelectValue placeholder="Semua Cabang" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Semua Cabang</SelectItem>
-                  {branches.map((branch) => (
-                    <SelectItem key={branch} value={branch}>
-                      {branch}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="bg-background border-border text-foreground">
-                  <SelectValue placeholder="Semua Kategori" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Semua Kategori</SelectItem>
-                  <SelectItem value="reguler">Reguler</SelectItem>
-                  <SelectItem value="vip">VIP</SelectItem>
-                  <SelectItem value="vvip">VVIP</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                onClick={() => setShowAddModal(true)}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Tambah Unit
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <FilterBar
+          searchQuery={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Cari unit..."
+          filters={[
+            {
+              value: statusFilter,
+              onChange: setStatusFilter,
+              placeholder: "Semua Status",
+              options: [
+                { value: "all", label: "Semua Status" },
+                { value: "available", label: "Tersedia" },
+                { value: "occupied", label: "Digunakan" },
+                { value: "maintenance", label: "Maintenance" },
+                { value: "offline", label: "Offline" }
+              ]
+            },
+            {
+              value: categoryFilter,
+              onChange: setCategoryFilter,
+              placeholder: "Semua Kategori",
+              options: [
+                { value: "all", label: "Semua Kategori" },
+                { value: "reguler", label: "Reguler" },
+                { value: "vip", label: "VIP" },
+                { value: "vvip", label: "VVIP" }
+              ]
+            }
+          ]}
+          actionButton={{
+            label: "Tambah Unit PS",
+            icon: <Plus className="w-4 h-4 mr-2" />,
+            onClick: () => setShowAddModal(true)
+          }}
+        />
 
         {/* Units Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredUnits.map((unit, index) => (
-            <Card
-              key={unit.id}
-              className="animate-slide-up hover:shadow-lg transition-all duration-300 border-border bg-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+        {filteredUnits.length === 0 ? (
+          <EmptyState
+            icon={<Gamepad2 className="w-12 h-12" />}
+            title="Belum Ada Unit PS"
+            description="Mulai tambahkan unit PS untuk cabang ini"
+            actionLabel="Tambah Unit PS"
+            onAction={() => setShowAddModal(true)}
+          />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredUnits.map((unit, index) => (
+            <Card key={unit.id} className="hover:shadow-lg transition-all duration-300 border-border bg-card">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg text-card-foreground">{unit.name}</CardTitle>
                   <div className="flex space-x-2">
                     <Badge className={getCategoryColor(unit.category)}>{unit.category.toUpperCase()}</Badge>
                     <Badge className={getStatusColor(unit.status)}>
-                      {unit.status === "available"
-                        ? "Tersedia"
-                        : unit.status === "occupied"
-                          ? "Digunakan"
-                          : unit.status === "maintenance"
-                            ? "Maintenance"
-                            : "Offline"}
+                      {getStatusLabel(unit.status)}
                     </Badge>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Building className="w-4 h-4" />
-                  <span>{unit.branch}</span>
-                  <MapPin className="w-4 h-4 ml-2" />
-                  <span>{unit.location}</span>
-                </div>
+                <p className="text-sm text-muted-foreground">{unit.location}</p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2 text-sm">
@@ -381,7 +330,7 @@ export function PSUnitsManagement() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Harga/Jam:</span>
-                    <span className="font-medium text-card-foreground">Rp {unit.price.toLocaleString()}</span>
+                    <span className="font-medium text-card-foreground">{formatCurrency(unit.price)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Total Jam:</span>
@@ -431,15 +380,16 @@ export function PSUnitsManagement() {
                 </div>
               </CardContent>
             </Card>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Add Unit Modal */}
         {showAddModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
               <CardHeader>
-                <CardTitle className="text-card-foreground">Tambah Unit Baru</CardTitle>
+                <CardTitle className="text-card-foreground">Tambah Unit PS Baru</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -489,23 +439,6 @@ export function PSUnitsManagement() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="branch" className="text-foreground">
-                      Cabang
-                    </Label>
-                    <Select value={newUnit.branch} onValueChange={(value) => setNewUnit({ ...newUnit, branch: value })}>
-                      <SelectTrigger className="bg-background border-border text-foreground">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {branches.map((branch) => (
-                          <SelectItem key={branch} value={branch}>
-                            {branch}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
                     <Label htmlFor="location" className="text-foreground">
                       Lokasi
                     </Label>
@@ -525,10 +458,29 @@ export function PSUnitsManagement() {
                       id="price"
                       type="number"
                       value={newUnit.price}
-                      onChange={(e) => setNewUnit({ ...newUnit, price: Number.parseInt(e.target.value) || 0 })}
+                      onChange={(e) => setNewUnit({ ...newUnit, price: parseInt(e.target.value) || 0 })}
                       placeholder="5000"
                       className="bg-background border-border text-foreground"
                     />
+                  </div>
+                  <div>
+                    <Label htmlFor="condition" className="text-foreground">
+                      Kondisi
+                    </Label>
+                    <Select
+                      value={newUnit.condition}
+                      onValueChange={(value) => setNewUnit({ ...newUnit, condition: value })}
+                    >
+                      <SelectTrigger className="bg-background border-border text-foreground">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="excellent">Sangat Baik</SelectItem>
+                        <SelectItem value="good">Baik</SelectItem>
+                        <SelectItem value="fair">Cukup</SelectItem>
+                        <SelectItem value="needs_repair">Perlu Perbaikan</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -565,7 +517,7 @@ export function PSUnitsManagement() {
                             ...newUnit,
                             specifications: {
                               ...newUnit.specifications,
-                              controllers: Number.parseInt(e.target.value) || 2,
+                              controllers: parseInt(e.target.value) || 2,
                             },
                           })
                         }
@@ -675,26 +627,6 @@ export function PSUnitsManagement() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="editBranch" className="text-foreground">
-                      Cabang
-                    </Label>
-                    <Select
-                      value={editingUnit.branch}
-                      onValueChange={(value) => setEditingUnit({ ...editingUnit, branch: value })}
-                    >
-                      <SelectTrigger className="bg-background border-border text-foreground">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {branches.map((branch) => (
-                          <SelectItem key={branch} value={branch}>
-                            {branch}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
                     <Label htmlFor="editLocation" className="text-foreground">
                       Lokasi
                     </Label>
@@ -713,9 +645,47 @@ export function PSUnitsManagement() {
                       id="editPrice"
                       type="number"
                       value={editingUnit.price}
-                      onChange={(e) => setEditingUnit({ ...editingUnit, price: Number.parseInt(e.target.value) || 0 })}
+                      onChange={(e) => setEditingUnit({ ...editingUnit, price: parseInt(e.target.value) || 0 })}
                       className="bg-background border-border text-foreground"
                     />
+                  </div>
+                  <div>
+                    <Label htmlFor="editCondition" className="text-foreground">
+                      Kondisi
+                    </Label>
+                    <Select
+                      value={editingUnit.condition}
+                      onValueChange={(value) => setEditingUnit({ ...editingUnit, condition: value })}
+                    >
+                      <SelectTrigger className="bg-background border-border text-foreground">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="excellent">Sangat Baik</SelectItem>
+                        <SelectItem value="good">Baik</SelectItem>
+                        <SelectItem value="fair">Cukup</SelectItem>
+                        <SelectItem value="needs_repair">Perlu Perbaikan</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="editStatus" className="text-foreground">
+                      Status
+                    </Label>
+                    <Select
+                      value={editingUnit.status}
+                      onValueChange={(value) => setEditingUnit({ ...editingUnit, status: value })}
+                    >
+                      <SelectTrigger className="bg-background border-border text-foreground">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="available">Tersedia</SelectItem>
+                        <SelectItem value="occupied">Digunakan</SelectItem>
+                        <SelectItem value="maintenance">Maintenance</SelectItem>
+                        <SelectItem value="offline">Offline</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -751,7 +721,7 @@ export function PSUnitsManagement() {
                             ...editingUnit,
                             specifications: {
                               ...editingUnit.specifications,
-                              controllers: Number.parseInt(e.target.value) || 2,
+                              controllers: parseInt(e.target.value) || 2,
                             },
                           })
                         }
@@ -839,18 +809,8 @@ export function PSUnitsManagement() {
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Status:</span>
                         <Badge className={getStatusColor(selectedUnit.status)}>
-                          {selectedUnit.status === "available"
-                            ? "Tersedia"
-                            : selectedUnit.status === "occupied"
-                              ? "Digunakan"
-                              : selectedUnit.status === "maintenance"
-                                ? "Maintenance"
-                                : "Offline"}
+                          {getStatusLabel(selectedUnit.status)}
                         </Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Cabang:</span>
-                        <span className="font-medium text-foreground">{selectedUnit.branch}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Lokasi:</span>
@@ -864,7 +824,7 @@ export function PSUnitsManagement() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Harga per Jam:</span>
-                        <span className="font-medium text-foreground">Rp {selectedUnit.price.toLocaleString()}</span>
+                        <span className="font-medium text-foreground">{formatCurrency(selectedUnit.price)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Total Jam Operasi:</span>
@@ -877,13 +837,7 @@ export function PSUnitsManagement() {
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Kondisi:</span>
                         <span className="font-medium text-foreground">
-                          {selectedUnit.condition === "excellent"
-                            ? "Sangat Baik"
-                            : selectedUnit.condition === "good"
-                              ? "Baik"
-                              : selectedUnit.condition === "fair"
-                                ? "Cukup"
-                                : "Perlu Perbaikan"}
+                          {getConditionLabel(selectedUnit.condition)}
                         </span>
                       </div>
                     </div>
@@ -929,6 +883,7 @@ export function PSUnitsManagement() {
                     }}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
+                    <Edit className="w-4 h-4 mr-2" />
                     Edit Unit
                   </Button>
                 </div>
