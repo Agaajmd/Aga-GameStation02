@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/components/providers/auth-provider"
-import { BarChart3, Users, FileText, DollarSign, TrendingUp, Gamepad2, Shield, AlertCircle, Crown } from "lucide-react"
+import { Users, FileText, DollarSign, TrendingUp, Gamepad2, Shield, AlertCircle, Crown, Activity } from "lucide-react"
 import Link from "next/link"
 
 const businessMetrics = {
@@ -126,7 +126,7 @@ export function SuperAdminDashboard() {
                   <p className="text-2xl font-bold text-foreground">{businessMetrics.profitMargin}%</p>
                 </div>
                 <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-2xl flex items-center justify-center">
-                  <BarChart3 className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+                  <Activity className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
                 </div>
               </div>
               <div className="mt-4 flex items-center text-sm">
@@ -142,7 +142,7 @@ export function SuperAdminDashboard() {
             <Card className="animate-slide-up bg-card border-border" style={{ animationDelay: "0.4s" }}>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-card-foreground">
-                  <BarChart3 className="w-5 h-5" />
+                  <Activity className="w-5 h-5" />
                   <span>Performa Pendapatan</span>
                 </CardTitle>
               </CardHeader>

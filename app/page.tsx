@@ -1,12 +1,27 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 import { HeroSection } from "@/components/home/hero-section"
-import { CategorySlider } from "@/components/home/category-slider"
-import { AnnouncementSection } from "@/components/home/announcement-section"
-import { ContactSection } from "@/components/home/contact-section"
-import { TestimonialCarousel } from "@/components/home/testimonial-carousel"
 import { Skeleton } from "@/components/ui/skeleton"
+
+// Lazy load below-the-fold components to reduce initial mobile bundle
+const CategorySlider = dynamic(() => import("@/components/home/category-slider").then((mod) => mod.CategorySlider), {
+  ssr: false,
+  loading: () => <Skeleton className="h-48" />,
+})
+const AnnouncementSection = dynamic(() => import("@/components/home/announcement-section").then((mod) => mod.AnnouncementSection), {
+  ssr: false,
+  loading: () => <Skeleton className="h-32" />,
+})
+const TestimonialCarousel = dynamic(() => import("@/components/home/testimonial-carousel").then((mod) => mod.TestimonialCarousel), {
+  ssr: false,
+  loading: () => <Skeleton className="h-48" />,
+})
+const ContactSection = dynamic(() => import("@/components/home/contact-section").then((mod) => mod.ContactSection), {
+  ssr: false,
+  loading: () => <Skeleton className="h-32" />,
+})
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)

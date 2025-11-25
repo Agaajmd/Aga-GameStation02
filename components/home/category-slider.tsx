@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -143,10 +144,12 @@ export function CategorySlider() {
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Image */}
                       <div className="relative aspect-[4/3] lg:aspect-[3/4] xl:aspect-[4/5]">
-                        <img
+                        <Image
                           src={category.image || "/imgVIP1.jpg"}
                           alt={category.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 

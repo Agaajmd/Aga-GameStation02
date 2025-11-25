@@ -9,7 +9,11 @@ import { useBooking } from "@/components/providers/booking-provider"
 import { useToast } from "@/components/providers/toast-provider"
 import { CategorySelector } from "./category-selector"
 import { BranchSelector } from "./branch-selector"
-import { ConsoleSelector } from "./console-selector"
+import dynamic from "next/dynamic"
+const ConsoleSelector = dynamic(() => import("./console-selector").then((mod) => mod.ConsoleSelector), {
+  ssr: false,
+  loading: () => <div className="h-24" />,
+})
 import { DateSelector } from "./date-selector"
 import { TimeSlotSelector } from "./time-slot-selector"
 import { DurationSelector } from "./duration-selector"

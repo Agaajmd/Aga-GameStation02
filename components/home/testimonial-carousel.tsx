@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star, Quote } from "lucide-react"
 
@@ -112,11 +113,15 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0
         </div>
 
         <div className="flex items-center mb-4 sm:mb-6">
-          <img
-            src={testimonial.avatar || "/placeholder.svg"}
-            alt={testimonial.name}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4 object-cover border-2 border-gray-200 dark:border-gray-600"
-          />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4 overflow-hidden relative border-2 border-gray-200 dark:border-gray-600">
+            <Image
+              src={testimonial.avatar || "/placeholder.svg"}
+              alt={testimonial.name}
+              fill
+              sizes="(max-width: 640px) 40px, (max-width: 1024px) 48px, 64px"
+              className="object-cover"
+            />
+          </div>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base truncate">{testimonial.name}</h4>
             <span className="text-xs sm:text-sm text-primary font-medium bg-primary/10 px-2 py-1 rounded-full inline-block mt-1">

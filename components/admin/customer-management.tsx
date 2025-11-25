@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useMemo } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -272,7 +273,8 @@ export function CustomerManagement() {
 
         {/* Customer List */}
         <div className="space-y-4">
-          {filteredCustomers.map((customer, index) => (
+          {useMemo(() => 
+            filteredCustomers.map((customer, index) => (
             <Card
               key={customer.id}
               className={`animate-slide-up hover:shadow-lg transition-all duration-300 ${
@@ -369,7 +371,8 @@ export function CustomerManagement() {
                 </div>
               </CardContent>
             </Card>
-          ))}
+          ))
+          , [filteredCustomers])}
         </div>
 
         {/* Customer Detail Modal */}

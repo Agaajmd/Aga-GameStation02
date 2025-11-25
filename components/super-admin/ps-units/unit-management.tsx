@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -320,8 +320,9 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredUnits.map((unit, index) => (
-            <Card key={unit.id} className="hover:shadow-lg transition-all duration-300 border-border bg-card">
+            {useMemo(() => 
+              filteredUnits.map((unit, index) => (
+              <Card key={unit.id} className="hover:shadow-lg transition-all duration-300 border-border bg-card">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg text-card-foreground">{unit.name}</CardTitle>
@@ -396,7 +397,8 @@ export function BranchUnitsManagement({ branchId }: BranchUnitsManagementProps) 
                 </div>
               </CardContent>
             </Card>
-            ))}
+            ))
+            , [filteredUnits])}
           </div>
         )}
 

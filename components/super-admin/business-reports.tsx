@@ -21,8 +21,6 @@ import {
   MapPin,
   Wrench,
   UserCheck,
-  PieChart,
-  BarChart3,
 } from "lucide-react"
 
 const branches = [
