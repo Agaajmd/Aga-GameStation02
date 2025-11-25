@@ -4,15 +4,10 @@ import { useState, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-  Search,
-  Filter,
   Star,
-  Users,
   Calendar,
   Clock,
   Gift,
@@ -33,15 +28,11 @@ import {
   CheckCircle,
   Zap,
   Settings,
-  TrendingUp,
   ExternalLink,
 } from "lucide-react"
 import Link from "next/link"
 
 export function AnnouncementList() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("all")
-  const [sortBy, setSortBy] = useState("newest")
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<any>(null)
 
   const announcements = [
@@ -193,16 +184,6 @@ export function AnnouncementList() {
     },
   ]
 
-  const categories = [
-    { value: "all", label: "Semua Pengumuman", icon: Megaphone },
-    { value: "promo", label: "Promosi & Diskon", icon: Gift },
-    { value: "update", label: "Update & Perubahan", icon: Settings },
-    { value: "event", label: "Event & Turnamen", icon: Trophy },
-    { value: "tips", label: "Tips & Tutorial", icon: Info },
-    { value: "maintenance", label: "Maintenance", icon: AlertCircle },
-    { value: "achievement", label: "Pencapaian", icon: Star },
-  ]
-
   const priorityColors = {
     urgent: "bg-red-500",
     high: "bg-orange-500", 
@@ -218,34 +199,14 @@ export function AnnouncementList() {
     maintenance: AlertCircle,
     achievement: Star
   }
-  
-  const sortOptions = [
-    { value: "newest", label: "Terbaru" },
-    { value: "priority", label: "Prioritas" },
-    { value: "popular", label: "Terpopuler" },
-    { value: "pinned", label: "Dipinkan" },
-  ]
 
   const filteredAndSortedAnnouncements = announcements
-    .filter((announcement) => {
-      const matchesSearch =
-        announcement.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        announcement.description.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === "all" || announcement.type === selectedCategory
-      return matchesSearch && matchesCategory && announcement.isActive
-    })
+    .filter((announcement) => announcement.isActive)
     .sort((a, b) => {
-      switch (sortBy) {
-        case "priority":
-          const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 }
-          return priorityOrder[b.priority as keyof typeof priorityOrder] - priorityOrder[a.priority as keyof typeof priorityOrder]
-        case "popular":
-          return b.views - a.views
-        case "pinned":
-          return (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0)
-        default:
-          return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      }
+      // Sort by pinned first, then by date
+      if (a.isPinned && !b.isPinned) return -1
+      if (!a.isPinned && b.isPinned) return 1
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     })
 
   const handleBookmarkAnnouncement = (announcementId: number) => {
@@ -298,87 +259,6 @@ export function AnnouncementList() {
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Dapatkan informasi terbaru tentang promosi, update, dan berbagai pengumuman penting dari gaming center
           </p>
-        </div>
-
-        {/* Filters */}
-        <div className="mb-8">
-          <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-            {/* Search */}
-            <div className="relative flex-1 max-w-md mx-auto lg:mx-0">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                placeholder="Cari pengumuman..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            {/* Category Filter and Sort */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-64 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-center">
-                    <Filter className="w-4 h-4 mr-2 text-blue-600" />
-                    <SelectValue />
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
-                  {categories.map((category) => (
-                    <SelectItem key={category.value} value={category.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <div className="flex items-center">
-                        <category.icon className="w-4 h-4 mr-2 text-blue-600" />
-                        {category.label}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              {/* Sort */}
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-full sm:w-48 h-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-center">
-                    <TrendingUp className="w-4 h-4 mr-2 text-purple-600" />
-                    <SelectValue />
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
-                  {sortOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        {/* Results Count */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Menampilkan <span className="font-medium text-blue-600">{filteredAndSortedAnnouncements.length}</span> dari <span className="font-medium">{announcements.length}</span> pengumuman
-            </p>
-          </div>
-          
-          {/* Clear Filters Button */}
-          {(searchTerm || selectedCategory !== "all" || sortBy !== "newest") && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setSearchTerm("")
-                setSelectedCategory("all")
-                setSortBy("newest")
-              }}
-              className="text-xs h-8 px-3 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
-            >
-              Reset Filter
-            </Button>
-          )}
         </div>
 
         {/* Announcements Grid - Mobile Optimized */}

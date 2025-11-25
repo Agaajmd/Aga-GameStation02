@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/components/providers/auth-provider"
-import { Calendar, Users, Gamepad2, DollarSign, Clock, AlertCircle, TrendingUp, Eye } from "lucide-react"
+import { Calendar, Users, Gamepad2, DollarSign, Clock, AlertCircle, TrendingUp, Eye, Megaphone } from "lucide-react"
 import Link from "next/link"
 
 const todayStats = {
@@ -296,6 +296,12 @@ export function AdminDashboard() {
                   <Button className="w-full justify-start" variant="outline">
                     <Users className="w-4 h-4 mr-2" />
                     Data Pelanggan
+                  </Button>
+                </Link>
+                <Link href="/admin/pengumuman" className="block">
+                  <Button className="w-full justify-start" variant="outline">
+                    <Megaphone className="w-4 h-4 mr-2" />
+                    Kelola Pengumuman
                   </Button>
                 </Link>
                 <Link href="/admin/booking" className="block">

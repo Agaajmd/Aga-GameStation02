@@ -39,6 +39,7 @@ export function Navbar() {
     { href: "/admin/booking", label: "Booking" },
     { href: "/admin/ketersediaan", label: "Ketersediaan" },
     { href: "/admin/pelanggan", label: "Pelanggan" },
+    { href: "/admin/pengumuman", label: "Pengumuman" },
   ]
 
   const superAdminLinks = [

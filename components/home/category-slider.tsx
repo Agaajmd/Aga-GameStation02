@@ -71,13 +71,6 @@ export function CategorySlider() {
     },
   ]
 
-  const stats = [
-    { icon: Users, label: "Total Pemain", value: "15,000+", color: "text-blue-500" },
-    { icon: Gamepad2, label: "Konsol Tersedia", value: "50+", color: "text-green-500" },
-    { icon: Trophy, label: "Turnamen Bulanan", value: "12+", color: "text-yellow-500" },
-    { icon: Star, label: "Rating Rata-rata", value: "4.8/5", color: "text-purple-500" },
-  ]
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -109,7 +102,7 @@ export function CategorySlider() {
   return (
     <section
       id="category-section"
-      className="py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900"
+      className="py-16 lg:py-24 bg-muted/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -285,21 +278,6 @@ export function CategorySlider() {
               />
             ))}
           </div>
-        </div>
-
-        {/* Stats Grid */}
-        <div
-          className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 xl:gap-8 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center p-3 sm:p-4 lg:p-6 xl:p-8 hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-              <CardContent className="p-0">
-                <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 mx-auto mb-2 sm:mb-3 lg:mb-4 ${stat.color}`} />
-                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
-                <div className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-300">{stat.label}</div>
-              </CardContent>
-            </Card>
-          ))}
         </div>
       </div>
     </section>
