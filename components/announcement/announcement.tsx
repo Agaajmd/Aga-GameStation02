@@ -4,6 +4,7 @@ import { useState, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -33,6 +34,14 @@ import {
 import Link from "next/link"
 
 export function AnnouncementList() {
+    const categories = [
+      { value: "promo", label: "Promosi & Diskon" },
+      { value: "update", label: "Update & Perubahan" },
+      { value: "event", label: "Event & Turnamen" },
+      { value: "tips", label: "Tips & Tutorial" },
+      { value: "maintenance", label: "Maintenance" },
+      { value: "achievement", label: "Pencapaian" },
+    ];
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<any>(null)
 
   const announcements = [
