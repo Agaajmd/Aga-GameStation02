@@ -7,7 +7,12 @@ import { BookingProvider } from "@/components/providers/booking-provider"
 import { ToastProvider } from "@/components/providers/toast-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-inter"
+})
 
 export const metadata: Metadata = {
   title: "Aga Game - PlayStation Booking",

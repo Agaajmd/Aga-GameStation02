@@ -142,13 +142,13 @@ export function BookingHistory() {
   })
 
   const handleRebook = (booking: any) => {
-    // Handle rebook logic
-    console.log("Rebooking:", booking.id)
+    // Navigate to booking page with pre-filled data
+    window.location.href = '/booking'
   }
 
   const handleDownloadReceipt = (booking: any) => {
-    // Handle download receipt logic
-    console.log("Downloading receipt for:", booking.id)
+    // Generate and download receipt
+    // In production, call API to generate PDF receipt
   }
 
   return (

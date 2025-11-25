@@ -99,7 +99,7 @@ const reportTypes = [
   {
     id: "profit",
     name: "Laporan Keuntungan",
-    icon: PieChart,
+    icon: DollarSign,
     description: "Margin keuntungan dan analisis profitabilitas",
   },
   {
@@ -447,7 +447,7 @@ export function BusinessReports() {
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <BarChart3 className="w-4 h-4" />
+                      <FileText className="w-4 h-4" />
                       <span>Generate Laporan</span>
                     </div>
                   )}

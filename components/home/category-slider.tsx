@@ -85,7 +85,7 @@ export function CategorySlider() {
           setIsVisible(true)
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1, rootMargin: '50px' },
     )
 
     const element = document.getElementById("category-section")
@@ -148,8 +148,12 @@ export function CategorySlider() {
                           src={category.image || "/imgVIP1.jpg"}
                           alt={category.title}
                           fill
+                          loading={index === 0 ? "eager" : "lazy"}
+                          quality={80}
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover"
+                          placeholder="blur"
+                          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 

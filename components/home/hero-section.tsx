@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Play, Star, Gamepad2 } from "lucide-react"
@@ -33,7 +34,7 @@ export function HeroSection() {
     setIsVisible(true)
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
+    }, 8000) // Increase to 8s to reduce re-renders
     return () => clearInterval(interval)
   }, [slides.length])
 
@@ -96,10 +97,16 @@ export function HeroSection() {
           >
             <div className="relative mb-12">
               <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-border/50">
-                <img
+                <Image
                   src={slides[currentSlide].image || "/Ps1.jpg"}
                   alt={slides[currentSlide].alt || "Gaming Setup"}
-                  className="w-full h-full object-cover transition-all duration-500"
+                  fill
+                  priority
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  className="object-cover transition-all duration-500"
+                  placeholder="blur"
+                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 

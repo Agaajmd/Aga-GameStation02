@@ -46,7 +46,7 @@ export function TestimonialCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
+    }, 8000) // Increase to 8s to reduce re-renders
 
     return () => clearInterval(interval)
   }, [])

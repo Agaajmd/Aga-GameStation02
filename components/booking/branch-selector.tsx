@@ -200,9 +200,10 @@ export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
                         src={branch.image} 
                         alt={branch.name}
                         fill
+                        loading={index < 3 ? "eager" : "lazy"}
+                        quality={80}
                         className="object-cover transition-all duration-700 ease-out hover:scale-110"
-                        sizes="100vw"
-                        priority
+                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 350px"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity duration-500" />
                       
@@ -376,6 +377,8 @@ export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
                     src={branch.image} 
                     alt={branch.name}
                     fill
+                    loading="lazy"
+                    quality={80}
                     className="object-cover group-hover:scale-110 transition-all duration-700 ease-out"
                     sizes="(max-width: 1024px) 50vw, 33vw"
                   />

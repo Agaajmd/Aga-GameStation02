@@ -24,18 +24,46 @@ interface BookingContextType {
 const BookingContext = createContext<BookingContextType | undefined>(undefined)
 
 export function BookingProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<BookingItem[]>([])
+  const [cart, setCart] = useState<BookingItem[]>(() => {
+    // Initialize cart from localStorage on client side
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('bookingCart')
+      if (savedCart) {
+        try {
+          return JSON.parse(savedCart)
+        } catch {
+          return []
+        }
+      }
+    }
+    return []
+  })
 
   const addToCart = (item: BookingItem) => {
-    setCart((prev) => [...prev, item])
+    setCart((prev) => {
+      const updated = [...prev, item]
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('bookingCart', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== id))
+    setCart((prev) => {
+      const updated = prev.filter((item) => item.id !== id)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('bookingCart', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const clearCart = () => {
     setCart([])
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('bookingCart')
+    }
   }
 
   const getTotalPrice = () => {

@@ -101,22 +101,27 @@
 
   .animate-float {
     animation: float 3s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-float-subtle {
     animation: floatSubtle 4s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-bounce-subtle {
-    animation: bounceSubtle 2s ease-in-out infinite;
+    animation: bounceSubtle 3s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-pulse-slow {
-    animation: pulseSlow 2s ease-in-out infinite;
+    animation: pulseSlow 3s ease-in-out infinite;
+    will-change: opacity, transform;
   }
 
   .animate-pulse-subtle {
-    animation: pulseSubtle 3s ease-in-out infinite;
+    animation: pulseSubtle 4s ease-in-out infinite;
+    will-change: opacity;
   }
 
   .animate-shine {
@@ -186,12 +191,10 @@
 
   @keyframes float {
     0%, 100% {
-      transform: translateY(0px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(0px) translateZ(0);
     }
     50% {
-      transform: translateY(-15px);
-      box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.35);
+      transform: translateY(-10px) translateZ(0);
     }
   }
 

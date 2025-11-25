@@ -29,7 +29,7 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
+    }, 500) // Reduced from 1000ms to 500ms for faster initial render
 
     return () => clearTimeout(timer)
   }, [])

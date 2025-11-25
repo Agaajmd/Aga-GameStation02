@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -249,7 +249,8 @@ export function AnnouncementList() {
     })
 
   const handleBookmarkAnnouncement = (announcementId: number) => {
-    console.log("Bookmarked announcement:", announcementId)
+    // Save bookmark to localStorage or backend
+    // In production, call API to save bookmark
   }
 
   const handleShareAnnouncement = (announcement: any) => {
