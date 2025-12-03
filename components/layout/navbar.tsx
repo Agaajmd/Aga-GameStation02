@@ -58,7 +58,6 @@ export function Navbar() {
 
   const handleLogout = () => {
     logout()
-    showSuccess("Berhasil logout", "Sampai jumpa lagi!")
     setIsOpen(false)
   }
 

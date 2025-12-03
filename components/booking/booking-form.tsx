@@ -147,8 +147,8 @@ export function BookingForm() {
 
       {/* Login Alert - Show if user is not logged in */}
       {!user && (
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/50 shadow-lg">
-          <CardContent className="p-6">
+        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/50 shadow-lg mx-4">
+          <CardContent className="p-6 sm:p-8">
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-16 h-16 bg-amber-100 dark:bg-amber-800/50 rounded-full flex items-center justify-center">
                 <AlertCircle className="w-8 h-8 text-amber-600 dark:text-amber-400" />
@@ -244,7 +244,7 @@ export function BookingForm() {
       )}
 
       {/* Step 3: Console Selection */}
-      {selectedCategory && (
+      {selectedBranch && selectedCategory && (
         <Card className="animate-slide-up border-border bg-card">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-card-foreground">
@@ -259,7 +259,7 @@ export function BookingForm() {
       )}
 
       {/* Step 4: Date Selection */}
-      {selectedConsole && (
+      {selectedBranch && selectedCategory && selectedConsole && (
         <Card className="animate-slide-up border-border bg-card">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-card-foreground">
@@ -274,7 +274,7 @@ export function BookingForm() {
       )}
 
       {/* Step 5: Time Selection */}
-      {selectedDate && (
+      {selectedBranch && selectedCategory && selectedConsole && selectedDate && (
         <Card className="animate-slide-up border-border bg-card">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-card-foreground">
@@ -289,7 +289,7 @@ export function BookingForm() {
       )}
 
       {/* Step 6: Duration Selection */}
-      {selectedTimeSlot && (
+      {selectedBranch && selectedCategory && selectedConsole && selectedDate && selectedTimeSlot && (
         <Card className="animate-slide-up border-border bg-card">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-card-foreground">

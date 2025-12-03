@@ -20,7 +20,6 @@ export function PasswordUpdate({ onBack }: PasswordUpdateProps) {
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -57,18 +56,18 @@ export function PasswordUpdate({ onBack }: PasswordUpdateProps) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500))
       
-      setShowSuccessModal(true)
+      showSuccess("Password Berhasil Diubah!", "Password Anda telah diperbarui dengan sukses")
+      
       setFormData({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
       })
       
-      // Hide success modal and go back after 2 seconds
+      // Go back after a short delay
       setTimeout(() => {
-        setShowSuccessModal(false)
         onBack()
-      }, 2000)
+      }, 1500)
     } catch (error) {
       showError("Gagal mengubah password", "Silakan coba lagi")
     } finally {
@@ -88,20 +87,6 @@ export function PasswordUpdate({ onBack }: PasswordUpdateProps) {
                 <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
               </div>
               <p className="text-lg font-medium text-gray-900 dark:text-white animate-pulse">Mengubah password...</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Success Modal */}
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-gray-200 dark:border-gray-700 animate-in fade-in zoom-in duration-300">
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center animate-bounce">
-                <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
-              </div>
-              <p className="text-lg font-medium text-gray-900 dark:text-white text-center">Password berhasil diubah!</p>
             </div>
           </div>
         </div>

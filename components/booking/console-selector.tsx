@@ -137,11 +137,11 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <Button
             variant="default"
             size="default"
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-medium transition-all duration-300 w-full h-8 rounded-none rounded-b-lg text-xs px-3"
+            className={`bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0 shadow-lg font-semibold transition-all duration-300 w-full rounded-none rounded-b-lg ${isMobile ? 'h-8 text-[10px] px-2' : 'h-8 text-xs px-3'}`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <Joystick className="w-3 h-3 mr-1.5" />
-            Lihat Games
+            <Joystick className={`${isMobile ? 'w-3 h-3 mr-1' : 'w-3 h-3 mr-1.5'}`} />
+            {isMobile ? 'Lihat Games' : 'Lihat Games'}
           </Button>
         </div>
 
@@ -162,28 +162,28 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           </Badge>
         </div>
 
-        <div className={`p-${isMobile ? '3' : '6'} pt-${isMobile ? '10' : '8'} pb-10 h-full flex flex-col justify-between`}>
+        <div className={`${isMobile ? 'p-2.5 pt-8 pb-8' : 'p-6 pt-8 pb-10'} h-full flex flex-col justify-between`}>
           <div className={`text-center ${isMobile ? 'mb-2' : 'mb-6'}`}>
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '12' : '16'} h-${isMobile ? '12' : '16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white mb-${isMobile ? '2' : '4'} shadow-lg ${!option.available ? 'opacity-50' : ''} mx-auto`}>
-              <CategoryIcon className={`w-${isMobile ? '6' : '8'} h-${isMobile ? '6' : '8'}`} />
+            <div className={`inline-flex items-center justify-center ${isMobile ? 'w-11 h-11' : 'w-16 h-16'} rounded-${isMobile ? 'xl' : '2xl'} bg-gradient-to-r ${categoryColor} text-white ${isMobile ? 'mb-2' : 'mb-4'} shadow-lg ${!option.available ? 'opacity-50' : ''} mx-auto`}>
+              <CategoryIcon className={`${isMobile ? 'w-5 h-5' : 'w-8 h-8'}`} />
             </div>
-            <h4 className={`font-bold text-foreground text-${isMobile ? 'xs' : 'lg'} mb-${isMobile ? '0.5' : '2'} group-hover:text-primary transition-colors ${isMobile ? 'leading-tight line-clamp-1' : ''}`}>
+            <h4 className={`font-bold text-foreground ${isMobile ? 'text-[11px] mb-1 leading-tight' : 'text-lg mb-2'} group-hover:text-primary transition-colors line-clamp-1 px-1`}>
               {option.name}
             </h4>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-primary font-semibold ${isMobile ? 'mb-0' : 'mb-1'}`}>{option.number}</p>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground ${isMobile ? 'leading-tight line-clamp-1' : ''}`}>{option.console}</p>
+            <p className={`${isMobile ? 'text-[10px] mb-0.5' : 'text-sm mb-1'} text-primary font-semibold`}>{option.number}</p>
+            <p className={`${isMobile ? 'text-[10px] leading-tight' : 'text-sm'} text-muted-foreground line-clamp-2 px-1`}>{option.console}</p>
           </div>
 
           {/* Features for VIP/VVIP - Scrollable like Game Library */}
           {(category === "vip" || category === "vvip") && option.features && (
             <div className={`${isMobile ? 'my-2' : 'mb-6'}`}>
-              <p className={`text-${isMobile ? 'xs' : 'sm'} font-semibold text-foreground text-center mb-2`}>Fasilitas:</p>
+              <p className={`${isMobile ? 'text-[10px] mb-1.5' : 'text-sm mb-2'} font-semibold text-foreground text-center`}>Fasilitas:</p>
               <div className={`${isMobile ? 'max-h-20' : 'max-h-32'} overflow-y-auto scrollbar-hide`}>
                 <div className={`space-y-${isMobile ? '1' : '2'}`}>
                   {option.features.map((feature: string, idx: number) => (
-                    <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-gray-50 dark:bg-gray-700 rounded-2xl p-${isMobile ? '2' : '3'} hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors`}>
-                      <div className={`w-${isMobile ? '1.5' : '2'} h-${isMobile ? '1.5' : '2'} bg-primary rounded-full flex-shrink-0`}></div>
-                      <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{feature}</span>
+                    <div key={idx} className={`flex items-center ${isMobile ? 'gap-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg p-1.5' : 'space-x-3 bg-gray-50 dark:bg-gray-700 rounded-2xl p-3'} hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors`}>
+                      <div className={`${isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'} bg-primary rounded-full flex-shrink-0`}></div>
+                      <span className={`${isMobile ? 'text-[9px] leading-tight' : 'text-sm'} text-foreground font-medium`}>{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -194,18 +194,18 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           {/* Selection Status - Above Games Button */}
           <div className="mt-auto">
             {!isSelected && option.available && (
-              <div className={`pt-${isMobile ? '1.5' : '2'} border-t border-gray-200 dark:border-gray-600`}>
-                <p className="text-xs text-muted-foreground text-center group-hover:text-primary transition-colors">
-                  {isMobile ? '👆 Pilih' : '👆 Klik untuk memilih'}
+              <div className={`pt-2 border-t border-gray-200 dark:border-gray-600`}>
+                <p className={`${isMobile ? 'text-[10px]' : 'text-xs'} text-muted-foreground text-center group-hover:text-primary transition-colors`}>
+                  {isMobile ? 'Tap pilih' : '👆 Klik untuk memilih'}
                 </p>
               </div>
             )}
 
             {isSelected && (
-              <div className={`pt-${isMobile ? '1.5' : '2'} border-t border-primary/20`}>
-                <div className="flex items-center justify-center space-x-1 text-primary">
-                  <Check className={`w-${isMobile ? '2.5' : '3'} h-${isMobile ? '2.5' : '3'}`} />
-                  <p className="text-xs font-semibold">Terpilih</p>
+              <div className={`pt-2 border-t border-primary/20`}>
+                <div className="flex items-center justify-center gap-1 text-primary">
+                  <Check className={`${isMobile ? 'w-3 h-3' : 'w-3 h-3'}`} />
+                  <p className={`${isMobile ? 'text-[10px]' : 'text-xs'} font-semibold`}>Terpilih</p>
                 </div>
               </div>
             )}
@@ -223,32 +223,32 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
           <Button
             variant="default"
             size="default"
-            className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-medium transition-all duration-300 w-full h-8 rounded-none rounded-b-lg text-xs px-3"
+            className={`bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white border-0 shadow-lg font-semibold transition-all duration-300 w-full rounded-none rounded-b-lg ${isMobile ? 'h-8 text-[10px] px-2' : 'h-8 text-xs px-3'}`}
             onClick={(e) => toggleFlip(option.id, e)}
           >
-            <RotateCcw className="w-3 h-3 mr-1.5" />
+            <RotateCcw className={`${isMobile ? 'w-3 h-3 mr-1' : 'w-3 h-3 mr-1.5'}`} />
             Kembali
           </Button>
         </div>
 
-        <div className={`p-${isMobile ? '4' : '6'} pt-${isMobile ? '8' : '8'} pb-12 h-full flex flex-col`}>
-          <div className="text-center mb-4">
-            <div className={`inline-flex items-center justify-center w-${isMobile ? '10' : '12'} h-${isMobile ? '10' : '12'} rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mb-3 shadow-lg`}>
-              <Joystick className={`w-${isMobile ? '4' : '6'} h-${isMobile ? '4' : '6'}`} />
+        <div className={`${isMobile ? 'p-2.5 pt-5 pb-8' : 'p-6 pt-8 pb-12'} h-full flex flex-col`}>
+          <div className="text-center mb-2">
+            <div className={`inline-flex items-center justify-center ${isMobile ? 'w-8 h-8' : 'w-12 h-12'} rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white ${isMobile ? 'mb-1.5' : 'mb-3'} shadow-lg`}>
+              <Joystick className={`${isMobile ? 'w-4 h-4' : 'w-6 h-6'}`} />
             </div>
-            <h4 className={`font-bold text-foreground text-${isMobile ? 'sm' : 'lg'} mb-1`}>
+            <h4 className={`font-semibold text-foreground ${isMobile ? 'text-[10px] mb-0.5' : 'text-lg mb-1'}`}>
               Game Library
             </h4>
-            <p className={`text-${isMobile ? 'xs' : 'sm'} text-muted-foreground`}>{option.console}</p>
+            <p className={`${isMobile ? 'text-[9px]' : 'text-sm'} text-muted-foreground line-clamp-1 px-1`}>{option.console}</p>
           </div>
 
           {/* Games List */}
           <div className="flex-grow overflow-hidden">
-            <div className={`grid grid-cols-1 gap-${isMobile ? '1' : '2'} max-h-full overflow-y-auto scrollbar-hide`}>
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-1.5' : 'gap-2'} max-h-full overflow-y-auto scrollbar-hide`}>
               {option.games?.map((game, idx) => (
-                <div key={idx} className={`flex items-center space-x-${isMobile ? '2' : '3'} bg-white/50 dark:bg-gray-700/50 rounded-2xl p-${isMobile ? '2' : '3'} hover:bg-white/70 dark:hover:bg-gray-600/50 transition-colors`}>
-                  <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
-                  <span className={`text-${isMobile ? 'xs' : 'sm'} text-foreground font-medium ${isMobile ? 'leading-tight' : ''}`}>{game}</span>
+                <div key={idx} className={`flex items-center ${isMobile ? 'gap-2 bg-white/60 dark:bg-gray-700/60 rounded-lg p-2' : 'space-x-3 bg-white/50 dark:bg-gray-700/50 rounded-2xl p-3'} hover:bg-white/80 dark:hover:bg-gray-600/60 transition-colors`}>
+                  <div className={`${isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'} bg-indigo-500 rounded-full flex-shrink-0`}></div>
+                  <span className={`${isMobile ? 'text-[10px] leading-relaxed' : 'text-sm'} text-foreground font-medium line-clamp-1`}>{game}</span>
                 </div>
               ))}
             </div>
@@ -306,13 +306,13 @@ export function ConsoleSelector({ category, selected, onSelect }: ConsoleSelecto
       </div>
 
       {/* Mobile & Tablet: 2 columns grid with rows of 2 */}
-      <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:hidden">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:hidden">
         {options.map((option) => {
           const isSelected = selected === option.id
           const isFlipped = flippedCards[option.id] || false
 
           return (
-            <div key={option.id} className="h-[320px] sm:h-[360px]">
+            <div key={option.id} className="aspect-[3/4] w-full">
               <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" containerStyle={{ height: '100%' }}>
                 <div onClick={() => option.available && onSelect(option.id)} className="h-full">
                   {renderFrontCard(option, isSelected, true)}

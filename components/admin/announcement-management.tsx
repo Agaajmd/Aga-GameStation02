@@ -690,14 +690,14 @@ export function AnnouncementManagement() {
               Buat Pengumuman
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
-            <DialogHeader className="px-6 pt-6 pb-4 border-b">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
               <DialogTitle className="text-xl font-bold">Buat Pengumuman Baru</DialogTitle>
             </DialogHeader>
-            <div className="px-6">
-            <AnnouncementForm />
+            <div className="space-y-4">
+              <AnnouncementForm />
             </div>
-            <DialogFooter className="px-6 py-4 border-t bg-muted/30">
+            <DialogFooter className="gap-2 pt-4">
               <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)} className="w-full sm:w-auto">
                 Batal
               </Button>
@@ -961,17 +961,17 @@ export function AnnouncementManagement() {
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
-          <DialogHeader className="px-6 pt-6 pb-4 border-b">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
               <Edit className="w-5 h-5" />
               Edit Pengumuman
             </DialogTitle>
           </DialogHeader>
-          <div className="px-6">
-          <AnnouncementForm />
+          <div className="space-y-4">
+            <AnnouncementForm />
           </div>
-          <DialogFooter className="px-6 py-4 border-t bg-muted/30">
+          <DialogFooter className="gap-2 pt-4">
             <Button variant="outline" onClick={() => {
               setIsEditDialogOpen(false)
               setSelectedAnnouncement(null)

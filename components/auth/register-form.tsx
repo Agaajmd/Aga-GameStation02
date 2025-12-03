@@ -39,17 +39,17 @@ export function RegisterForm() {
     e.preventDefault()
 
     if (!formData.name || !formData.email || !formData.phone || !formData.password || !formData.confirmPassword) {
-      showError("Form tidak lengkap", "Mohon isi semua field yang diperlukan")
+      showError("Form Tidak Lengkap", "Mohon isi semua field yang diperlukan")
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
-      showError("Password tidak cocok", "Password dan konfirmasi password harus sama")
+      showError("Password Tidak Cocok", "Password dan konfirmasi password harus sama")
       return
     }
 
     if (formData.password.length < 6) {
-      showError("Password terlalu pendek", "Password minimal 6 karakter")
+      showError("Password Terlalu Pendek", "Password minimal 6 karakter")
       return
     }
 
@@ -62,13 +62,13 @@ export function RegisterForm() {
         password: formData.password
       })
       if (success) {
-        showSuccess("Registrasi berhasil!", "Akun Anda telah dibuat")
+        showSuccess("Registrasi Berhasil!", "Akun Anda telah dibuat")
         router.push("/")
       } else {
-        showError("Registrasi gagal", "Email sudah terdaftar atau terjadi kesalahan")
+        showError("Registrasi Gagal", "Email sudah terdaftar atau terjadi kesalahan")
       }
     } catch (error) {
-      showError("Terjadi kesalahan", "Silakan coba lagi")
+      showError("Terjadi Kesalahan", "Silakan coba lagi")
     } finally {
       setIsLoading(false)
     }

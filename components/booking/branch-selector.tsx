@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Clock, Star, Check, ChevronLeft, ChevronRight, Gamepad2, CheckCircle2 } from "lucide-react"
+import { MapPin, Clock, Star, Check, Gamepad2, CheckCircle2 } from "lucide-react"
 
 const branches = [
   {
@@ -57,35 +56,6 @@ interface BranchSelectorProps {
 }
 
 export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % branches.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + branches.length) % branches.length)
-  }
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      nextSlide()
-    }
-    if (touchStart - touchEnd < -75) {
-      prevSlide()
-    }
-  }
-
   const handleCardClick = (branchId: string) => {
     if (selected === branchId) {
       onSelect(null as any)
@@ -95,184 +65,157 @@ export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="text-center sm:text-left">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center sm:text-left px-4 sm:px-0">
         <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Pilih Lokasi Gaming Center</h3>
         <p className="text-sm text-muted-foreground">Temukan cabang terdekat dengan fasilitas terbaik</p>
       </div>
 
       {/* Mobile Carousel */}
-      <div className="md:hidden relative">
-        <div 
-          className="overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="relative transition-transform duration-300 ease-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-            <div className="flex">
-              {branches.map((branch, index) => {
-                const isSelected = selected === branch.id
-                const isVisible = index === currentIndex
-                
-                return (
-                  <div 
-                    key={branch.id}
-                    className="w-full flex-shrink-0 px-4"
-                    style={{ display: isVisible ? 'block' : 'none' }}
-                  >
-                    <Card
-                      className={`cursor-pointer transition-all duration-300 overflow-hidden rounded-2xl ${
-                        isSelected 
-                          ? "ring-2 ring-primary shadow-xl border-primary/50 bg-primary/5" 
-                          : "shadow-md border-border/40 bg-card"
-                      }`}
-                      onClick={() => handleCardClick(branch.id)}
-                    >
-                      <CardContent className="p-0 relative h-full flex flex-col">
-                        <div className="relative h-48 overflow-hidden bg-muted/30 rounded-t-2xl">
+      <div className="md:hidden py-6 mt-2 mb-8">
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-6 snap-x snap-mandatory">
+          {branches.map((branch, index) => {
+            const isSelected = selected === branch.id
+            
+            return (
+              <Card
+                key={branch.id}
+                className={`group cursor-pointer transition-all duration-300 overflow-hidden flex-shrink-0 w-[calc(100vw-80px)] max-w-[400px] snap-center ${
+                  isSelected 
+                    ? "shadow-2xl bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 border-transparent scale-[1.02]" 
+                    : "shadow-lg hover:shadow-xl hover:scale-[1.01] border-border/40 bg-card active:scale-[0.98]"
+                }`}
+                onClick={() => handleCardClick(branch.id)}
+              >
+                <CardContent className="p-0 relative h-full flex flex-col">
+                        <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 rounded-t-2xl group">
                           <Image 
                             src={branch.image} 
                             alt={branch.name}
                             fill
                             loading="lazy"
-                            quality={75}
-                            className="object-cover"
-                            sizes="90vw"
+                            quality={85}
+                            className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-1"
+                            sizes="(max-width: 640px) 85vw, 400px"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
-                          <div className="absolute top-2 left-2 flex gap-2">
-                            <div className="flex items-center gap-1 bg-yellow-500/90 px-2 py-1 rounded-full text-xs">
-                              <Star className="w-3 h-3 text-white fill-white" />
-                              <span className="font-bold text-white">{branch.rating}</span>
+                          <div className="absolute top-3 left-3 flex gap-2 z-10">
+                            <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-500 to-yellow-400 backdrop-blur-md px-3 py-1.5 rounded-full text-xs shadow-lg border border-white/20">
+                              <Star className="w-3.5 h-3.5 text-white fill-white drop-shadow" />
+                              <span className="font-bold text-white drop-shadow">{branch.rating}</span>
                             </div>
                             {branch.popular && (
-                              <Badge className="bg-orange-500/90 text-white text-xs px-2 py-1">
+                              <Badge className="bg-gradient-to-r from-orange-500 to-red-500 backdrop-blur-md text-white text-xs px-3 py-1.5 shadow-lg border border-white/20 animate-pulse">
                                 🔥 Populer
                               </Badge>
                             )}
                           </div>
 
                           {isSelected && (
-                            <div className="absolute bottom-2 right-2">
-                              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                                <Check className="w-5 h-5 text-white" />
+                            <div className="absolute bottom-3 right-3 z-10 animate-in zoom-in duration-300">
+                              <div className="w-11 h-11 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-2xl border-2 border-white/30 backdrop-blur-sm">
+                                <Check className="w-6 h-6 text-white drop-shadow-lg" />
                               </div>
                             </div>
                           )}
                         </div>
 
-                        <div className="p-3">
-                          <h4 className="font-bold text-sm mb-1 line-clamp-1">{branch.name}</h4>
-                          <div className="flex items-start gap-1.5 mb-2">
-                            <MapPin className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
-                            <span className="text-xs text-muted-foreground line-clamp-2">
-                              {branch.address}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-2 text-xs">
-                            <div className="flex items-center gap-1">
-                              <Gamepad2 className="w-3 h-3 text-primary" />
-                              <span>{branch.totalPS}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <CheckCircle2 className="w-3 h-3 text-green-500" />
-                              <span className="text-green-500">{branch.availablePS}</span>
-                            </div>
-                            <div className="flex items-center gap-1 ml-auto">
-                              <Clock className="w-3 h-3" />
-                              <span>{branch.openHours}</span>
+                        <div className="p-4 space-y-3 bg-gradient-to-b from-transparent to-muted/20">
+                          <div className="space-y-2">
+                            <h4 className="font-bold text-base tracking-tight line-clamp-1 text-foreground">{branch.name}</h4>
+                            <div className="flex items-start gap-2">
+                              <MapPin className="w-4 h-4 text-primary/80 flex-shrink-0 mt-0.5" />
+                              <span className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                                {branch.address}
+                              </span>
                             </div>
                           </div>
 
-                          <div className="mt-2 pt-2 border-t">
-                            {isSelected ? (
-                              <div className="flex items-center justify-center gap-1 text-primary">
-                                <Check className="w-3 h-3" />
-                                <p className="text-xs font-semibold">Terpilih</p>
+                          <div className="flex items-center gap-3 text-xs bg-gradient-to-r from-muted/40 via-muted/30 to-muted/40 backdrop-blur-sm rounded-xl p-3 border border-border/30 shadow-sm">
+                            <div className="flex items-center gap-1.5">
+                              <div className="p-1 rounded-md bg-primary/10">
+                                <Gamepad2 className="w-3.5 h-3.5 text-primary" />
                               </div>
-                            ) : (
-                              <p className="text-xs text-center text-muted-foreground">Tap untuk pilih</p>
-                            )}
+                              <span className="font-semibold text-foreground">{branch.totalPS}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <div className="p-1 rounded-md bg-green-500/10">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                              </div>
+                              <span className="text-green-600 dark:text-green-400 font-semibold">{branch.availablePS}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 ml-auto">
+                              <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+                              <span className="font-medium text-muted-foreground">{branch.openHours}</span>
+                            </div>
+                          </div>
+
+                          <div className="mt-3 pt-3 border-t border-border/30">
+                            <div className="text-center">
+                              {isSelected ? (
+                                <p className="text-sm font-semibold text-primary">✓ Terpilih · Tap lagi untuk batal</p>
+                              ) : (
+                                <p className="text-xs text-muted-foreground">Tap untuk memilih</p>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </CardContent>
                     </Card>
-                  </div>
-                )
-              })}
+                  )
+                })}
+            </div>
+            
+            {/* Scroll Indicator */}
+            <div className="flex justify-center items-center gap-2.5 mt-6 pt-2">
+              {branches.map((branch, index) => (
+                <div
+                  key={index}
+                  className={`rounded-full transition-all duration-300 shadow-sm ${
+                    selected === branch.id
+                      ? 'w-8 h-2.5 bg-primary shadow-primary/50' 
+                      : 'w-2.5 h-2.5 bg-muted-foreground/30'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="flex items-center justify-center mt-5 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2.5 px-4 py-2.5 bg-muted/30 rounded-full backdrop-blur-sm border border-border/30">
+                <span className="font-medium">← Geser untuk melihat cabang lain →</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <button
-          onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-card/80 backdrop-blur-md rounded-full shadow-lg flex items-center justify-center hover:bg-primary transition-all duration-300 group"
-          aria-label="Previous branch"
-        >
-          <ChevronLeft className="w-5 h-5 text-foreground group-hover:text-white" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-card/80 backdrop-blur-md rounded-full shadow-lg flex items-center justify-center hover:bg-primary transition-all duration-300 group"
-          aria-label="Next branch"
-        >
-          <ChevronRight className="w-5 h-5 text-foreground group-hover:text-white" />
-        </button>
-
-        <div className="flex justify-center items-center space-x-2 mt-4">
-          {branches.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex 
-                  ? 'w-8 h-2 bg-primary' 
-                  : 'w-2 h-2 bg-muted hover:bg-primary/60'
-              }`}
-              aria-label={`Go to branch ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        <div className="flex items-center justify-center mt-4 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2 px-4 py-2 bg-muted/20 rounded-full">
-            <ChevronLeft className="w-4 h-4" />
-            <span>Geser untuk melihat cabang lain</span>
-            <ChevronRight className="w-4 h-4" />
-          </div>
-        </div>
-      </div>
 
       {/* Desktop Grid */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {branches.map((branch) => {
           const isSelected = selected === branch.id
 
           return (
             <Card
               key={branch.id}
-              className={`cursor-pointer transition-all duration-300 ${
+              className={`group cursor-pointer transition-all duration-300 overflow-hidden ${
                 isSelected 
-                  ? "ring-2 ring-primary shadow-lg" 
-                  : "hover:shadow-lg"
+                  ? "ring-2 ring-primary shadow-xl scale-[1.02] bg-primary/5 border-primary" 
+                  : "hover:shadow-xl hover:scale-[1.02] hover:border-primary/50 border-border"
               }`}
               onClick={() => handleCardClick(branch.id)}
             >
               <CardContent className="p-0 relative">
-                <div className="relative h-48 overflow-hidden bg-muted/30 rounded-t-2xl">
+                <div className="relative h-48 overflow-hidden bg-muted/30">
                   <Image 
                     src={branch.image} 
                     alt={branch.name}
                     fill
                     loading="lazy"
                     quality={75}
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                     sizes="(max-width: 1024px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity duration-300 group-hover:from-black/50" />
                 
                   <div className="absolute top-2 left-2 flex gap-2">
                     {branch.popular && (
@@ -342,16 +285,13 @@ export function BranchSelector({ selected, onSelect }: BranchSelectorProps) {
                   </div>
 
                   <div className="mt-3 pt-3 border-t">
-                    {isSelected ? (
-                      <div className="flex items-center justify-center gap-2 text-primary">
-                        <Check className="w-4 h-4" />
-                        <p className="text-xs font-semibold">Cabang dipilih</p>
-                      </div>
-                    ) : (
-                      <p className="text-xs text-muted-foreground text-center">
-                        👆 Klik untuk pilih
-                      </p>
-                    )}
+                    <div className="text-center">
+                      {isSelected ? (
+                        <p className="text-sm font-semibold text-primary">✓ Terpilih · Klik lagi untuk batal</p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">Klik untuk memilih</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </CardContent>

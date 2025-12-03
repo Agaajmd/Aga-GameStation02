@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,8 @@ import Link from "next/link"
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   // Static content - tidak berubah
   const heroContent = {
@@ -31,15 +33,37 @@ export function HeroSection() {
   ]
 
   useEffect(() => {
-    setIsVisible(true)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible) return
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 8000) // Increase to 8s to reduce re-renders
+    }, 8000)
+    
     return () => clearInterval(interval)
-  }, [slides.length])
+  }, [isVisible, slides.length])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
+    <section 
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 gpu-accelerate"
+    >
       {/* Animated Background Pattern */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 dark:from-primary/10 dark:to-purple-500/10" />
@@ -95,18 +119,22 @@ export function HeroSection() {
           <div
             className={`max-w-5xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
           >
-            <div className="relative mb-12">
+            <div className="relative mb-12 gpu-accelerate">
               <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-border/50">
+                {!isImageLoaded && (
+                  <div className="absolute inset-0 shimmer bg-muted" />
+                )}
                 <Image
                   src={slides[currentSlide].image || "/Ps1.jpg"}
                   alt={slides[currentSlide].alt || "Gaming Setup"}
                   fill
                   priority
                   quality={85}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                  className="object-cover transition-all duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1280px) 80vw, 1200px"
+                  className={`object-cover transition-all duration-700 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   placeholder="blur"
                   blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+                  onLoadingComplete={() => setIsImageLoaded(true)}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 

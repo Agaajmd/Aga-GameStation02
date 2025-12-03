@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import toast from "react-hot-toast"
 
 interface User {
   id: string
@@ -14,7 +15,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null
-  login: (email: string, password: string) => Promise<boolean>
+  login: (email: string, password: string) => Promise<{ success: boolean; user?: User }>
   logout: () => void
   register: (userData: any) => Promise<boolean>
   isLoading: boolean
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<{ success: boolean; user?: User }> => {
     setIsLoading(true)
 
     // Simulate API call delay
@@ -86,11 +87,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("user", JSON.stringify(userWithoutPassword))
       }
       setIsLoading(false)
-      return true
+      return { success: true, user: userWithoutPassword }
     }
 
     setIsLoading(false)
-    return false
+    return { success: false }
   }
 
   const register = async (userData: any): Promise<boolean> => {
@@ -116,10 +117,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => {
+    const userName = user?.name || "Pengguna"
     setUser(null)
     if (typeof window !== 'undefined') {
       localStorage.removeItem("user")
+      localStorage.removeItem("cart")
     }
+    toast(
+      <div className="flex flex-col gap-1">
+        <div className="font-bold text-base">Logout Berhasil</div>
+        <div className="text-sm opacity-90">Sampai jumpa lagi, {userName}!</div>
+      </div>,
+      {
+        duration: 3000,
+        position: "top-center",
+        icon: "👋",
+        style: {
+          background: "#3b82f6",
+          color: "#fff",
+          padding: "16px 24px",
+          borderRadius: "12px",
+          boxShadow: "0 10px 40px rgba(59, 130, 246, 0.3)",
+          minWidth: "300px",
+          maxWidth: "500px",
+        },
+      }
+    )
   }
 
   return <AuthContext.Provider value={{ user, login, logout, register, isLoading }}>{children}</AuthContext.Provider>

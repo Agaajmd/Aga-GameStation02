@@ -6,16 +6,15 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Search, Filter, Calendar, Clock, Star, MapPin, Receipt, Download, Eye, RotateCcw } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/providers/toast-provider"
+import { Search, Filter, Calendar, Clock, Star, MapPin, Receipt, Download, Eye, RotateCcw, MessageSquare } from "lucide-react"
 
 export function BookingHistory() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState("all")
-  const [dateFilter, setDateFilter] = useState("all")
-  const [selectedBooking, setSelectedBooking] = useState<any>(null)
-
-  const bookings = [
+  const { showSuccess, showError } = useToast()
+  
+  const initialBookings = [
     {
       id: "BK001",
       date: "2024-01-15",
@@ -44,8 +43,8 @@ export function BookingHistory() {
       totalPrice: "Rp 30.000",
       paymentMethod: "Cash",
       paymentCode: "CASH001",
-      rating: 4,
-      review: "Gaming seru, tapi AC kurang dingin. Overall masih recommended!",
+      rating: null,
+      review: null,
       games: ["GTA V", "The Last of Us", "God of War"],
       promoUsed: null,
       originalPrice: "Rp 30.000",
@@ -104,6 +103,17 @@ export function BookingHistory() {
     },
   ]
 
+  const [searchTerm, setSearchTerm] = useState("")
+  const [statusFilter, setStatusFilter] = useState("all")
+  const [dateFilter, setDateFilter] = useState("all")
+  const [selectedBooking, setSelectedBooking] = useState<any>(null)
+  const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false)
+  const [ratingBooking, setRatingBooking] = useState<any>(null)
+  const [rating, setRating] = useState(0)
+  const [hoverRating, setHoverRating] = useState(0)
+  const [comment, setComment] = useState("")
+  const [bookingsState, setBookingsState] = useState(initialBookings)
+
   const statusOptions = [
     { value: "all", label: "Semua Status" },
     { value: "completed", label: "Selesai" },
@@ -132,7 +142,7 @@ export function BookingHistory() {
     }
   }
 
-  const filteredBookings = bookings.filter((booking) => {
+  const filteredBookings = bookingsState.filter((booking) => {
     const matchesSearch =
       booking.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       booking.console.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -149,6 +159,52 @@ export function BookingHistory() {
   const handleDownloadReceipt = (booking: any) => {
     // Generate and download receipt
     // In production, call API to generate PDF receipt
+  }
+
+  const handleOpenRatingDialog = (booking: any) => {
+    setRatingBooking(booking)
+    setRating(booking.rating || 0)
+    setComment(booking.review || "")
+    setIsRatingDialogOpen(true)
+  }
+
+  const handleSubmitRating = () => {
+    if (rating === 0) {
+      showError("Rating Diperlukan", "Silakan pilih rating bintang terlebih dahulu")
+      return
+    }
+
+    if (comment.trim().length === 0) {
+      showError("Komentar Diperlukan", "Mohon berikan komentar untuk rating Anda")
+      return
+    }
+
+    if (comment.trim().length > 500) {
+      showError("Komentar Terlalu Panjang", "Komentar maksimal 500 karakter")
+      return
+    }
+
+    // Update booking with rating and review
+    const updatedBookings = bookingsState.map((booking) => {
+      if (booking.id === ratingBooking.id) {
+        return {
+          ...booking,
+          rating: rating,
+          review: comment.trim(),
+        }
+      }
+      return booking
+    })
+
+    setBookingsState(updatedBookings)
+    showSuccess("Rating Berhasil", "Terima kasih atas feedback Anda!")
+    
+    // Reset form
+    setIsRatingDialogOpen(false)
+    setRatingBooking(null)
+    setRating(0)
+    setHoverRating(0)
+    setComment("")
   }
 
   return (
@@ -220,7 +276,7 @@ export function BookingHistory() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Menampilkan <span className="font-medium text-blue-600">{filteredBookings.length}</span> dari <span className="font-medium">{bookings.length}</span> booking
+              Menampilkan <span className="font-medium text-blue-600">{filteredBookings.length}</span> dari <span className="font-medium">{bookingsState.length}</span> booking
             </p>
           </div>
           
@@ -436,6 +492,28 @@ export function BookingHistory() {
 
                       {booking.status === "completed" && (
                         <>
+                          {!booking.rating && (
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => handleOpenRatingDialog(booking)}
+                              className="h-10 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white border-0 rounded-full shadow-sm"
+                            >
+                              <Star className="w-4 h-4 mr-2" />
+                              Beri Rating
+                            </Button>
+                          )}
+                          {booking.rating && (
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => handleOpenRatingDialog(booking)}
+                              className="h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl shadow-sm"
+                            >
+                              <MessageSquare className="w-4 h-4 mr-2" />
+                              Lihat Rating
+                            </Button>
+                          )}
                           <Button 
                             variant="outline" 
                             size="sm" 
@@ -495,6 +573,142 @@ export function BookingHistory() {
             </div>
           </div>
         )}
+
+        {/* Rating Dialog */}
+        <Dialog open={isRatingDialogOpen} onOpenChange={setIsRatingDialogOpen}>
+          <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-500" />
+                {ratingBooking?.rating ? "Review Anda" : "Berikan Rating & Review"}
+              </DialogTitle>
+            </DialogHeader>
+            
+            {ratingBooking && (
+              <div className="space-y-6">
+                {/* Booking Info */}
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 p-4 rounded-xl">
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{ratingBooking.console}</h4>
+                  <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <p className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      {new Date(ratingBooking.date).toLocaleDateString("id-ID", { 
+                        weekday: "long", 
+                        year: "numeric", 
+                        month: "long", 
+                        day: "numeric" 
+                      })}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      {ratingBooking.branch}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Star Rating */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3">
+                    Rating <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex items-center gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRating(star)}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onMouseLeave={() => setHoverRating(0)}
+                        className="transition-transform hover:scale-110 focus:outline-none"
+                        disabled={!!ratingBooking.rating}
+                      >
+                        <Star
+                          className={`w-10 h-10 transition-colors ${
+                            star <= (hoverRating || rating)
+                              ? "text-yellow-400 fill-yellow-400"
+                              : "text-gray-300 dark:text-gray-600"
+                          }`}
+                        />
+                      </button>
+                    ))}
+                    {rating > 0 && (
+                      <span className="ml-2 text-lg font-semibold text-gray-900 dark:text-white">
+                        {rating}/5
+                      </span>
+                    )}
+                  </div>
+                  {rating > 0 && (
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                      {rating === 1 && "Sangat buruk"}
+                      {rating === 2 && "Buruk"}
+                      {rating === 3 && "Cukup baik"}
+                      {rating === 4 && "Baik"}
+                      {rating === 5 && "Sangat baik!"}
+                    </p>
+                  )}
+                </div>
+
+                {/* Comment */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white">
+                      Komentar <span className="text-red-500">*</span>
+                    </label>
+                    <span className={`text-xs font-medium ${
+                      comment.length > 500 
+                        ? "text-red-500" 
+                        : comment.length > 450 
+                        ? "text-yellow-500" 
+                        : "text-gray-500"
+                    }`}>
+                      {comment.length}/500
+                    </span>
+                  </div>
+                  <Textarea
+                    placeholder="Bagikan pengalaman gaming Anda..."
+                    value={comment}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 500) {
+                        setComment(e.target.value)
+                      }
+                    }}
+                    disabled={!!ratingBooking.rating}
+                    className="min-h-[120px] resize-none bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    Maksimal 500 karakter. Ceritakan tentang fasilitas, pelayanan, kondisi konsol, atau pengalaman bermain Anda
+                  </p>
+                </div>
+
+                {!ratingBooking.rating && (
+                  <DialogFooter className="gap-2 pt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setIsRatingDialogOpen(false)
+                        setRatingBooking(null)
+                        setRating(0)
+                        setHoverRating(0)
+                        setComment("")
+                      }}
+                      className="w-full sm:w-auto"
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      onClick={handleSubmitRating}
+                      disabled={rating === 0 || comment.trim().length === 0 || comment.length > 500}
+                      className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white border-0"
+                    >
+                      <Star className="w-4 h-4 mr-2" />
+                      Kirim Rating
+                    </Button>
+                  </DialogFooter>
+                )}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )

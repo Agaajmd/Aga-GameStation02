@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -32,6 +33,7 @@ import {
   ExternalLink,
 } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/components/providers/toast-provider"
 
 export function AnnouncementList() {
     const categories = [
@@ -43,6 +45,28 @@ export function AnnouncementList() {
       { value: "achievement", label: "Pencapaian" },
     ];
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<any>(null)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [sortBy, setSortBy] = useState("newest")
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set())
+  const { showSuccess, showError, showInfo } = useToast()
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = parseInt(entry.target.getAttribute('data-id') || '0')
+            setVisibleCards(prev => new Set(prev).add(id))
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    )
+
+    return () => observerRef.current?.disconnect()
+  }, [])
 
   const announcements = [
     {
@@ -221,6 +245,19 @@ export function AnnouncementList() {
   const handleBookmarkAnnouncement = (announcementId: number) => {
     // Save bookmark to localStorage or backend
     // In production, call API to save bookmark
+    try {
+      // Simulate bookmark action
+      const bookmarks = JSON.parse(localStorage.getItem('bookmarkedAnnouncements') || '[]')
+      if (bookmarks.includes(announcementId)) {
+        showInfo('Sudah Dibookmark', 'Pengumuman ini sudah ada di bookmark Anda')
+      } else {
+        bookmarks.push(announcementId)
+        localStorage.setItem('bookmarkedAnnouncements', JSON.stringify(bookmarks))
+        showSuccess('Bookmark Berhasil!', 'Pengumuman telah ditambahkan ke bookmark')
+      }
+    } catch (error) {
+      showError('Bookmark Gagal', 'Terjadi kesalahan saat menyimpan bookmark')
+    }
   }
 
   const handleShareAnnouncement = (announcement: any) => {
@@ -230,8 +267,12 @@ export function AnnouncementList() {
         text: announcement.description,
         url: window.location.href,
       })
+        .then(() => showSuccess('Berhasil Dibagikan!', 'Pengumuman telah dibagikan'))
+        .catch(() => showError('Gagal Berbagi', 'Tidak dapat membagikan pengumuman'))
     } else {
       navigator.clipboard.writeText(window.location.href)
+        .then(() => showSuccess('Link Disalin!', 'Link pengumuman telah disalin ke clipboard'))
+        .catch(() => showError('Gagal Menyalin', 'Tidak dapat menyalin link ke clipboard'))
     }
   }
 

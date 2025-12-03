@@ -17,7 +17,17 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Aga Game - PlayStation Booking",
   description: "Booking PlayStation terbaik dengan fasilitas lengkap",
-  generator: "Aga"
+  generator: "Aga",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" }
+  ],
 }
 
 export default function RootLayout({
@@ -27,11 +37,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="scroll-smooth" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider defaultTheme="system" storageKey="aga-game-theme">
           <ToastProvider>
             <AuthProvider>
-              <BookingProvider>{children}</BookingProvider>
+              <BookingProvider>
+                <div className="min-h-screen flex flex-col">
+                  {children}
+                </div>
+              </BookingProvider>
             </AuthProvider>
           </ToastProvider>
         </ThemeProvider>

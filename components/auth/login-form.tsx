@@ -32,15 +32,23 @@ export function LoginForm() {
 
     setIsLoading(true)
     try {
-      const success = await login(email, password)
-      if (success) {
-        showSuccess("Login berhasil!", "Selamat datang kembali")
-        router.push("/")
+      const result = await login(email, password)
+      if (result.success && result.user) {
+        showSuccess("Login Berhasil!", "Selamat datang kembali")
+        
+        // Redirect based on user role
+        if (result.user.role === "super-admin") {
+          router.push("/super-admin")
+        } else if (result.user.role === "admin") {
+          router.push("/admin")
+        } else {
+          router.push("/")
+        }
       } else {
-        showError("Login gagal", "Email atau password salah")
+        showError("Login Gagal", "Email atau password salah")
       }
     } catch (error) {
-      showError("Terjadi kesalahan", "Silakan coba lagi")
+      showError("Terjadi Kesalahan", "Silakan coba lagi")
     } finally {
       setIsLoading(false)
     }
